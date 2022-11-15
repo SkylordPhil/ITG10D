@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,11 +17,23 @@ public class PlayerController : MonoBehaviour
     private CharacterController2D characterController;
     private PlayerInput playerInput;
 
+
+    private InputAction attack;
+
+
     private void Awake()
     {
         playerControlls = new PlayerControlls();
         characterController = GetComponent<CharacterController2D>();
         playerInput = GetComponent<PlayerInput>();
+        attack = playerControlls.Controlls.Shoot;
+        attack.performed += BaseAttack;
+
+    }
+
+    private void BaseAttack(InputAction.CallbackContext obj)
+    {
+        Debug.Log("HI");
     }
 
     private void OnEnable()
@@ -52,6 +65,10 @@ public class PlayerController : MonoBehaviour
         HandleInput();
         HandleMovement();
     }
+
+    
+
+
 
 
     
