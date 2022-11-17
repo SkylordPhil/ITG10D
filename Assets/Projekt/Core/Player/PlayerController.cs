@@ -4,14 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     [SerializeField] private float rawPlayerSpeed = 5f;
+    [SerializeField] private int baseHealth = 3;
     [SerializeField] private bool isGamePad;
+    [SerializeField] private GameObject baseBullet;
+
+    [SerializeField] private Camera worldCam;
 
 
     private Vector2 movement;
-    private Vector2 aim;
+    private Vector2 aimVector;
+    
 
     private PlayerControlls playerControlls;
     private CharacterController2D characterController;
@@ -19,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
 
     private InputAction attack;
+    private InputAction aimAction;
 
 
     private void Awake()
@@ -27,13 +33,19 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController2D>();
         playerInput = GetComponent<PlayerInput>();
         attack = playerControlls.Controlls.Shoot;
+        aimAction = playerControlls.Controlls.Aim;
         attack.performed += BaseAttack;
 
     }
 
     private void BaseAttack(InputAction.CallbackContext obj)
     {
-        Debug.Log("HI");
+        Vector2 attackDirection = ((Vector2)(worldCam.ScreenToWorldPoint(aimAction.ReadValue<Vector2>()) - transform.position)).normalized;
+        GameObject currentBullet = Instantiate(baseBullet);
+        currentBullet.transform.position = transform.position;
+        currentBullet.GetComponent<Bullet>().getMoveInfo(attackDirection);
+
+        
     }
 
     private void OnEnable()
@@ -49,7 +61,7 @@ public class PlayerController : MonoBehaviour
     void HandleInput()
     {
         movement = playerControlls.Controlls.Movement.ReadValue<Vector2>();
-        aim = playerControlls.Controlls.Aim.ReadValue<Vector2>();
+        aimVector = playerControlls.Controlls.Aim.ReadValue<Vector2>();
     }
     void HandleMovement()
     {
@@ -71,5 +83,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    
+    public void takeDamage(int dmg)
+    {
+    }
 }
