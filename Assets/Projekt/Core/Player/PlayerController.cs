@@ -30,7 +30,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     private InputAction attack;
     private InputAction aimAction;
 
-
+    /// <summary>
+    /// enables all variables and subscribes the controlls to methods
+    /// </summary>
     private void Awake()
     {
         playerControlls = new PlayerControlls();
@@ -40,21 +42,31 @@ public class PlayerController : MonoBehaviour, IDamageable
         aimAction = playerControlls.Controlls.Aim;
         attack.performed += AttackAction;
 
-        tempActions();
+        TempActions();
 
     }
 
-    private void tempActions()
+    /// <summary>
+    /// This is not meant to be in the finaly product.
+    /// Will be deprecated when the Gamemanage has a getPlayer/getCamera functionality
+    /// </summary>
+    private void TempActions()
     {
         worldCam = FindObjectOfType<Camera>();
     }
     
-
+    /// <summary>
+    /// Gets called on ButtonChange of the Attack Button (Pressed and Released)
+    /// </summary>
+    /// <param name="ctx"></param>
     private void AttackAction(InputAction.CallbackContext ctx)
     {
         attackIsPressed = ctx.control.IsPressed();
     }
 
+    /// <summary>
+    /// At the moment it only takes base raw stats and no Buffs work atm
+    /// </summary>
     private void BaseAttack()
     {
         Debug.Log("attack");
@@ -66,21 +78,35 @@ public class PlayerController : MonoBehaviour, IDamageable
         
     }
 
+    /// <summary>
+    /// Enables the playerInput Controls
+    /// </summary>
     private void OnEnable()
     {
         playerControlls.Enable();
     }
 
+    /// <summary>
+    /// Disables the playerInput Controls
+    /// </summary>
     private void OnDisable()
     {
         playerControlls.Disable();
     }
     
+    /// <summary>
+    /// Reads movement and aim 2D Vector
+    /// </summary>
     void HandleInput()
     {
         movement = playerControlls.Controlls.Movement.ReadValue<Vector2>();
         aimVector = playerControlls.Controlls.Aim.ReadValue<Vector2>();
     }
+
+    /// <summary>
+    /// Translates the movement Input into PlayerMovement
+    /// ATM realy basic and needs refinement
+    /// </summary>
     void HandleMovement()
     {
         Vector2 move = new Vector2(movement.x, movement.y);
@@ -104,6 +130,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+    /// <summary>
+    /// Enables the bool attack during the Timer
+    /// </summary>
+    /// <returns></returns>
     IEnumerator attackTimer()
     {
         attackCD = true;
@@ -122,7 +152,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
 
 
-
+    /// <summary>
+    /// needs to be implemented when Enemies are integrated
+    /// </summary>
+    /// <param name="dmg"></param>
     public void takeDamage(int dmg)
     {
     }
