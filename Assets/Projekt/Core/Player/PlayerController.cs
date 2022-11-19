@@ -8,11 +8,15 @@ public class PlayerController : MonoBehaviour, IDamageable
 {
     [SerializeField] private float rawPlayerSpeed = 5f;
     [SerializeField] private int baseHealth = 3;
+    [SerializeField] private float attackSpeed = 1;
     [SerializeField] private bool isGamePad;
     [SerializeField] private GameObject baseBullet;
 
     [SerializeField] private Camera worldCam;
 
+
+    private bool attackCD;
+    private bool attackIsPressed;
 
     private Vector2 movement;
     private Vector2 aimVector;
@@ -34,12 +38,26 @@ public class PlayerController : MonoBehaviour, IDamageable
         playerInput = GetComponent<PlayerInput>();
         attack = playerControlls.Controlls.Shoot;
         aimAction = playerControlls.Controlls.Aim;
-        attack.performed += BaseAttack;
+        attack.performed += AttackAction;
+
+        tempActions();
 
     }
 
-    private void BaseAttack(InputAction.CallbackContext obj)
+    private void tempActions()
     {
+        worldCam = FindObjectOfType<Camera>();
+    }
+    
+
+    private void AttackAction(InputAction.CallbackContext ctx)
+    {
+        attackIsPressed = ctx.control.IsPressed();
+    }
+
+    private void BaseAttack()
+    {
+        Debug.Log("attack");
         Vector2 attackDirection = ((Vector2)(worldCam.ScreenToWorldPoint(aimAction.ReadValue<Vector2>()) - transform.position)).normalized;
         GameObject currentBullet = Instantiate(baseBullet);
         currentBullet.transform.position = transform.position;
@@ -74,8 +92,30 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+
         HandleInput();
         HandleMovement();
+
+        if(attackIsPressed && !attackCD)
+        {
+            BaseAttack();
+            StartCoroutine(attackTimer());
+
+        }
+    }
+
+    IEnumerator attackTimer()
+    {
+        attackCD = true;
+        float time = 0;
+
+        while(time < 1/attackSpeed)
+        {
+            time += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+
+        }
+        attackCD = false;
     }
 
     

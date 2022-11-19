@@ -99,7 +99,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rawPlayerSpeed: 5
+  baseHealth: 3
+  attackSpeed: 1
   isGamePad: 0
+  baseBullet: {fileID: 1597177022687359600, guid: 449fe90b598de3c46b5ccef2d68a0506, type: 3}
+  worldCam: {fileID: 0}
 --- !u!114 &4477690845476374707
 MonoBehaviour:
   m_ObjectHideFlags: 0
