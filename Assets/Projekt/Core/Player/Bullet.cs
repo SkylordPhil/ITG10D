@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
 
         if (dmgInterface != null)
         {
-            dmgInterface.takeDamage(damage);
+            dmgInterface.TakeDamage(damage);
         }
     }
 

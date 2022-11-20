@@ -6,13 +6,37 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
+    [Space(30)]
+    [Header("Health")]
+    [ContextMenuItem("Damage The Player","TakeDamage")]
+    [SerializeField] private int currentHealth;
+    [SerializeField] private int currentMaxHealth;
+    [Space(30)]
+    [Header("Raw Player Stats", order = 0)]
     [SerializeField] private float rawPlayerSpeed = 5f;
-    [SerializeField] private int baseHealth = 3;
-    [SerializeField] private float attackSpeed = 1;
-    [SerializeField] private bool isGamePad;
-    [SerializeField] private GameObject baseBullet;
+    [SerializeField] private int rawHealth = 3;
+    [SerializeField] private float rawAttackSpeed = 1;
+    [SerializeField] private float invulnarableTime = 1f;
 
+    [Space(30)]
+    [Header("Current Base Stats")]
+    [SerializeField] private float basePlayerSpeed;
+    [SerializeField] private int baseHealth;
+    [SerializeField] private float baseAttackSpeed;
+
+    [Space(30)]
+    [Header("References")]
+    [SerializeField] private GameObject baseBullet;
     [SerializeField] private Camera worldCam;
+
+    [Space(30)]
+    [Header("Controls")]
+    [SerializeField] private bool isGamePad;
+
+    [Space(30)]
+    [Header("Player Status")]
+    [SerializeField] private bool isInvulnarable;
+
 
 
     private bool attackCD;
@@ -35,6 +59,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     /// </summary>
     private void Awake()
     {
+        SetupStats();
         playerControlls = new PlayerControlls();
         characterController = GetComponent<CharacterController2D>();
         playerInput = GetComponent<PlayerInput>();
@@ -47,12 +72,23 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
 
     /// <summary>
-    /// This is not meant to be in the finaly product.
-    /// Will be deprecated when the Gamemanage has a getPlayer/getCamera functionality
+    /// <b>This is not meant to be in the finaly product. </b>
+    /// Will be deprecated when the Gamemanager has getPlayer/getCamera functionality
     /// </summary>
     private void TempActions()
     {
         worldCam = FindObjectOfType<Camera>();
+    }
+
+
+
+    /// <summary>
+    /// Assigns base/current stats to their rawValues
+    /// </summary>
+    private void SetupStats()
+    {
+        currentMaxHealth = baseHealth = currentHealth = rawHealth;
+        
     }
     
     /// <summary>
@@ -139,7 +175,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         attackCD = true;
         float time = 0;
 
-        while(time < 1/attackSpeed)
+        while(time < 1/rawAttackSpeed)
         {
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
@@ -151,12 +187,61 @@ public class PlayerController : MonoBehaviour, IDamageable
     
 
 
-
+    
     /// <summary>
     /// needs to be implemented when Enemies are integrated
     /// </summary>
     /// <param name="dmg"></param>
-    public void takeDamage(int dmg)
+    public void TakeDamage(int dmg)
     {
+        if (!isInvulnarable)
+        {
+            currentHealth -= 1;
+
+            if (currentHealth == 0)
+            {
+                //Message Gamamaner
+                //Kill Player
+                return;
+            }
+
+            StartCoroutine(DamageTimer());
+        }
     }
+
+    public void DebugTakeDamage()
+    {
+        if (!isInvulnarable)
+        {
+            currentHealth -= 1;
+
+            if (currentHealth == 0)
+            {
+                //Message Gamamaner
+                //Kill Player
+                return;
+            }
+
+            StartCoroutine(DamageTimer());
+        }
+    }
+
+    /// <summary>
+    /// Timer for the invulnarableity frame after getting hit
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator DamageTimer()
+    {
+        isInvulnarable = true;
+        float timer = 0f;
+        while(timer < invulnarableTime)
+        {
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+
+        }
+        isInvulnarable = false;
+    }
+
+    
 }
