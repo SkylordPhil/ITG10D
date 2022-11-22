@@ -8,21 +8,32 @@ public class PlayerController : MonoBehaviour, IDamageable
 {
     [Space(30)]
     [Header("Health")]
-    [ContextMenuItem("Damage The Player","TakeDamage")]
+    [ContextMenuItem("Damage The Player","DebugTakeDamage")]
     [SerializeField] private int currentHealth;
     [SerializeField] private int currentMaxHealth;
     [Space(30)]
     [Header("Raw Player Stats", order = 0)]
-    [SerializeField] private float rawPlayerSpeed = 5f;
+    [SerializeField] private float rawMoveSpeed = 5f;
     [SerializeField] private int rawHealth = 3;
-    [SerializeField] private float rawAttackSpeed = 1;
+    [SerializeField] private float rawAttackSpeed = 1f;
     [SerializeField] private float invulnarableTime = 1f;
 
     [Space(30)]
     [Header("Current Base Stats")]
-    [SerializeField] private float basePlayerSpeed;
+    [SerializeField] private float baseMoveSpeed;
     [SerializeField] private int baseHealth;
     [SerializeField] private float baseAttackSpeed;
+
+    [Space(30)]
+    [Header("Stat increments")]
+    [SerializeField] private float moveSpeedIncrease = 1f;
+    [ContextMenuItem("Increase Attack Speed by 20%", "DebugMoreAttackSpeed")]
+    [SerializeField] private float attackSpeedIncrease = 1f;
+
+    [Space(30)]
+    [Header("Current Stats")]
+    [SerializeField] private float currentAttackSpeed;
+    [SerializeField] private float currentMoveSpeed;
 
     [Space(30)]
     [Header("References")]
@@ -48,7 +59,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private PlayerControlls playerControlls;
     private CharacterController2D characterController;
-    private PlayerInput playerInput;
+
 
 
     private InputAction attack;
@@ -62,7 +73,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         SetupStats();
         playerControlls = new PlayerControlls();
         characterController = GetComponent<CharacterController2D>();
-        playerInput = GetComponent<PlayerInput>();
         attack = playerControlls.Controlls.Shoot;
         aimAction = playerControlls.Controlls.Aim;
         attack.performed += AttackAction;
@@ -88,29 +98,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void SetupStats()
     {
         currentMaxHealth = baseHealth = currentHealth = rawHealth;
-        
-    }
-    
-    /// <summary>
-    /// Gets called on ButtonChange of the Attack Button (Pressed and Released)
-    /// </summary>
-    /// <param name="ctx"></param>
-    private void AttackAction(InputAction.CallbackContext ctx)
-    {
-        attackIsPressed = ctx.control.IsPressed();
-    }
-
-    /// <summary>
-    /// At the moment it only takes base raw stats and no Buffs work atm
-    /// </summary>
-    private void BaseAttack()
-    {
-        Debug.Log("attack");
-        Vector2 attackDirection = ((Vector2)(worldCam.ScreenToWorldPoint(aimAction.ReadValue<Vector2>()) - transform.position)).normalized;
-        GameObject currentBullet = Instantiate(baseBullet);
-        currentBullet.transform.position = transform.position;
-        currentBullet.GetComponent<Bullet>().getMoveInfo(attackDirection);
-
+        currentAttackSpeed = baseAttackSpeed = rawAttackSpeed;
+        currentMoveSpeed = baseMoveSpeed = rawMoveSpeed;
         
     }
 
@@ -130,26 +119,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         playerControlls.Disable();
     }
     
-    /// <summary>
-    /// Reads movement and aim 2D Vector
-    /// </summary>
-    void HandleInput()
-    {
-        movement = playerControlls.Controlls.Movement.ReadValue<Vector2>();
-        aimVector = playerControlls.Controlls.Aim.ReadValue<Vector2>();
-    }
-
-    /// <summary>
-    /// Translates the movement Input into PlayerMovement
-    /// ATM realy basic and needs refinement
-    /// </summary>
-    void HandleMovement()
-    {
-        Vector2 move = new Vector2(movement.x, movement.y);
-
-        characterController.Move(move * Time.deltaTime * rawPlayerSpeed);
-
-    }
+    
+    
+    
 
     // Update is called once per frame
     void Update()
@@ -161,33 +133,47 @@ public class PlayerController : MonoBehaviour, IDamageable
         if(attackIsPressed && !attackCD)
         {
             BaseAttack();
-            StartCoroutine(attackTimer());
+            StartCoroutine(AttackTimer());
 
         }
     }
+
+    
+
+    
+
+
+    
+    
+
+    #region PlayerInput
+
 
     /// <summary>
-    /// Enables the bool attack during the Timer
+    /// Reads movement and aim 2D Vector
     /// </summary>
-    /// <returns></returns>
-    IEnumerator attackTimer()
+    void HandleInput()
     {
-        attackCD = true;
-        float time = 0;
-
-        while(time < 1/rawAttackSpeed)
-        {
-            time += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-
-        }
-        attackCD = false;
+        movement = playerControlls.Controlls.Movement.ReadValue<Vector2>();
+        aimVector = playerControlls.Controlls.Aim.ReadValue<Vector2>();
     }
 
-    
 
 
-    
+    /// <summary>
+    /// Gets called on ButtonChange of the Attack Button (Pressed and Released)
+    /// </summary>
+    /// <param name="ctx"></param>
+    private void AttackAction(InputAction.CallbackContext ctx)
+    {
+        attackIsPressed = ctx.control.IsPressed();
+    }
+
+
+    #endregion
+
+    #region PlayerHealth
+
     /// <summary>
     /// needs to be implemented when Enemies are integrated
     /// </summary>
@@ -209,6 +195,99 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+
+    /// <summary>
+    /// Timer for the invulnarableity frame after getting hit
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator DamageTimer()
+    {
+        isInvulnarable = true;
+        float timer = 0f;
+        while (timer < invulnarableTime)
+        {
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+
+        }
+        isInvulnarable = false;
+    }
+
+
+    #endregion
+
+    #region Movement
+
+    /// <summary>
+    /// Translates the movement Input into PlayerMovement
+    /// ATM realy basic and needs refinement
+    /// </summary>
+    void HandleMovement()
+    {
+        Vector2 move = new Vector2(movement.x, movement.y);
+
+        characterController.Move(move * Time.deltaTime * currentMoveSpeed);
+
+    }
+
+    #endregion
+
+    #region Attack System
+
+    /// <summary>
+    /// At the moment it only takes base raw stats and no Buffs work atm
+    /// </summary>
+    private void BaseAttack()
+    {
+        Debug.Log("attack");
+        Vector2 attackDirection = ((Vector2)(worldCam.ScreenToWorldPoint(aimAction.ReadValue<Vector2>()) - transform.position)).normalized;
+        GameObject currentBullet = Instantiate(baseBullet);
+        currentBullet.transform.position = transform.position;
+        currentBullet.GetComponent<Bullet>().SetMoveInfo(attackDirection);
+
+
+    }
+
+
+    /// <summary>
+    /// Enables the bool attack during the Timer
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator AttackTimer()
+    {
+        attackCD = true;
+        float time = 0;
+
+        while (time < 1 / currentAttackSpeed)
+        {
+            time += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+
+        }
+        attackCD = false;
+    }
+
+    #endregion
+
+    #region UpgradeSystem
+
+    public void UpgradeAttackSpeed(float increase)
+    {
+        attackSpeedIncrease += increase;
+        currentAttackSpeed = attackSpeedIncrease * baseAttackSpeed;
+
+    }
+
+    public void UpgradeMoveSpeed(float increase)
+    {
+        moveSpeedIncrease += increase;
+        currentMoveSpeed = moveSpeedIncrease * baseMoveSpeed;
+    }
+
+    #endregion
+
+
+    #region DEBUG 
     public void DebugTakeDamage()
     {
         if (!isInvulnarable)
@@ -226,22 +305,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    /// <summary>
-    /// Timer for the invulnarableity frame after getting hit
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator DamageTimer()
+    public void DebugMoreAttackSpeed()
     {
-        isInvulnarable = true;
-        float timer = 0f;
-        while(timer < invulnarableTime)
-        {
-            timer += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-
-        }
-        isInvulnarable = false;
+        UpgradeAttackSpeed(0.20f);
     }
 
+
+    #endregion
     
 }
