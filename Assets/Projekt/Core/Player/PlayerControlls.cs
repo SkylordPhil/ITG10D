@@ -53,6 +53,15 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Special"",
+                    ""type"": ""Button"",
+                    ""id"": ""1003cc67-82d2-4996-b66b-6a657a1ff5ed"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -165,6 +174,28 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b72578f-bb42-43a8-a53e-d3238a71ad46"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Special"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a8c89c9-56d3-4d87-a30d-f1e9148665f6"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Special"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -204,6 +235,7 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
         m_Controlls_Shoot = m_Controlls.FindAction("Shoot", throwIfNotFound: true);
         m_Controlls_Movement = m_Controlls.FindAction("Movement", throwIfNotFound: true);
         m_Controlls_Aim = m_Controlls.FindAction("Aim", throwIfNotFound: true);
+        m_Controlls_Special = m_Controlls.FindAction("Special", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -266,6 +298,7 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Controlls_Shoot;
     private readonly InputAction m_Controlls_Movement;
     private readonly InputAction m_Controlls_Aim;
+    private readonly InputAction m_Controlls_Special;
     public struct ControllsActions
     {
         private @PlayerControlls m_Wrapper;
@@ -273,6 +306,7 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Controlls_Shoot;
         public InputAction @Movement => m_Wrapper.m_Controlls_Movement;
         public InputAction @Aim => m_Wrapper.m_Controlls_Aim;
+        public InputAction @Special => m_Wrapper.m_Controlls_Special;
         public InputActionMap Get() { return m_Wrapper.m_Controlls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -291,6 +325,9 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                 @Aim.started -= m_Wrapper.m_ControllsActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_ControllsActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_ControllsActionsCallbackInterface.OnAim;
+                @Special.started -= m_Wrapper.m_ControllsActionsCallbackInterface.OnSpecial;
+                @Special.performed -= m_Wrapper.m_ControllsActionsCallbackInterface.OnSpecial;
+                @Special.canceled -= m_Wrapper.m_ControllsActionsCallbackInterface.OnSpecial;
             }
             m_Wrapper.m_ControllsActionsCallbackInterface = instance;
             if (instance != null)
@@ -304,6 +341,9 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
+                @Special.started += instance.OnSpecial;
+                @Special.performed += instance.OnSpecial;
+                @Special.canceled += instance.OnSpecial;
             }
         }
     }
@@ -331,5 +371,6 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnSpecial(InputAction.CallbackContext context);
     }
 }
