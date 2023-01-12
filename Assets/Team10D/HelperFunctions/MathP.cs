@@ -33,7 +33,7 @@ namespace Helper
         public static float ConvertLnToDB(float ln)
         {
             float dB = 0;
-            if (ln >= 0)
+            if (ln > 0)
                 dB = 20.0f * Mathf.Log10(ln);
             else
                 dB = -80.0f;
