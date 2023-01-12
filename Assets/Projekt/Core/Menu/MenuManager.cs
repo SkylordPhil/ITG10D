@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Helper;
 
 public class MenuManager : MonoBehaviour
 {
 
+    [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject settingsMenu;
+    [SerializeField] private GameObject audioMenu;
 
+
+    #region MainMenu
     public void StartGame()
     {
         //weiter zu gameManager -> Spiel-Szene laden
@@ -29,7 +34,7 @@ public class MenuManager : MonoBehaviour
 
     public void OpenSettingsMenu()
     {
-        this.gameObject.SetActive(false);
+        mainMenu.SetActive(false);
         settingsMenu.SetActive(true);
     }
 
@@ -37,5 +42,40 @@ public class MenuManager : MonoBehaviour
     { 
         //placeholder
     }
+    #endregion
+
+    #region SettingsMenu
+    public void OpenAudioMenu()
+    {
+        settingsMenu.SetActive(false);
+        audioMenu.SetActive(true);
+    }
+
+    public void CloseSettingsMenu()
+    {
+        settingsMenu.SetActive(false);
+        mainMenu.SetActive(true);
+    }
+    #endregion
+
+    #region AudioMenu
+    public void CloseAudioMenu()
+    {
+        audioMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+    }
+
+    #endregion
+
+    public void DetermineMenuType(MenuType menuType, float currentValue, string stringParam)
+    {
+        //SetExposedParam
+        switch(menuType)
+        {
+            case MenuType.AudioMenu:
+                AudioManager.GetInstance().SetExposedParam(stringParam, currentValue);
+                break;
+
+        }
+    }
 }
-  
