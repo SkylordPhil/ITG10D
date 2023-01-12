@@ -72,6 +72,7 @@ public class AudioManager : MonoBehaviour
         }
 
         GameObject currentObject = audioQueues[-1];
+        audioQueues.Remove(currentObject);
         currentObject.GetComponent<AudioQueue>().SetupSFX(positionTransform, clip, mixerGroup);
     }
 
