@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MathP
+namespace Helper
 {
     public class MathP : MonoBehaviour
     {

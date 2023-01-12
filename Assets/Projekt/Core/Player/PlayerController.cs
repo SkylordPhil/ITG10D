@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
+
     [Space(30)]
     [Header("Health")]
     [ContextMenuItem("Damage The Player","DebugTakeDamage")]

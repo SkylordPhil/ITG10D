@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using MathP;
+using Helper;
 
 
 
@@ -13,12 +13,23 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioMixer mixer;
 
+    [SerializeField]
+    private List<GameObject> audioQueues;
+
+    [SerializeField]
+    private GameObject audioQueuePrefab;
+
+    private AudioSource musicSource;
+
+
 
     public void Start()
     {
-        setInstance();
+        SetInstance();
+        musicSource = this.gameObject.GetComponent<AudioSource>();
+
     }
-    public static AudioManager getInstance()
+    public static AudioManager GetInstance()
     {
         if (instance)
         {
@@ -34,17 +45,34 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void setInstance()
+    public void SetInstance()
     {
         instance = this;
         DontDestroyOnLoad(instance);
     }
 
 
-    public void setVolume(float ln)
+    public void SetVolume(float ln)
     {
-        mixer.SetFloat("MasterVolume", MathP.MathP.ConvertLnToDB(ln));
+        mixer.SetFloat("MasterVolume", MathP.ConvertLnToDB(ln));
     }
 
+
+    public void SetExposedParam(string paramName, float paramValue)
+    {
+        mixer.SetFloat(paramName , MathP.ConvertLnToDB(paramValue));
+    }
+
+    public void PlaySfxAtPosition(Transform positionTransform, AudioClip clip, AudioMixerGroup mixerGroup)
+    {
+        if(audioQueues.Count < 3)
+        {
+            GameObject tmp = Instantiate(audioQueuePrefab);
+            audioQueues.Add(tmp);
+        }
+
+        GameObject currentObject = audioQueues[-1];
+        currentObject.GetComponent<AudioQueue>().SetupSFX(positionTransform, clip, mixerGroup);
+    }
 
 }
