@@ -25,14 +25,21 @@ public class AudioQueue : MonoBehaviour
         this.transform.position = positionTransform.position;
         audioSource.clip = clip;
         audioSource.outputAudioMixerGroup = mixerGroup;
+        audioSource.Play();
+        StartCoroutine(PlaySound());
+
 
 
 
     }
 
-    public IEnumerable PlaySound() 
+    public IEnumerator PlaySound() 
     {
+        while(!audioSource.isPlaying)
+        { 
+            yield return new WaitForEndOfFrame();
+        }
 
-        yield return new WaitForEndOfFrame();
+        AudioManager.GetInstance().SubscribeAudioQueue(this.gameObject);
     }
 }

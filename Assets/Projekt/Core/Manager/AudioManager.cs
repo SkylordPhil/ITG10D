@@ -19,15 +19,22 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private GameObject audioQueuePrefab;
 
-    private AudioSource musicSource;
+    private AudioSource musicSource1;
+    private AudioSource musicSource2;
 
 
 
     public void Start()
     {
         SetInstance();
-        musicSource = this.gameObject.GetComponent<AudioSource>();
 
+        for(int i = 0; i < 3; i++)
+        {
+
+            GameObject tmp = Instantiate(audioQueuePrefab);
+            audioQueues.Add(tmp);
+
+        }
     }
     public static AudioManager GetInstance()
     {
@@ -52,6 +59,11 @@ public class AudioManager : MonoBehaviour
     }
 
 
+
+
+    #region Audio Mixer
+
+
     public void SetVolume(float ln)
     {
         mixer.SetFloat("MasterVolume", MathP.ConvertLnToDB(ln));
@@ -62,6 +74,14 @@ public class AudioManager : MonoBehaviour
     {
         mixer.SetFloat(paramName , MathP.ConvertLnToDB(paramValue));
     }
+
+
+    #endregion 
+
+
+
+    #region Audio SFX
+
 
     public void PlaySfxAtPosition(Transform positionTransform, AudioClip clip, AudioMixerGroup mixerGroup)
     {
@@ -75,5 +95,15 @@ public class AudioManager : MonoBehaviour
         audioQueues.Remove(currentObject);
         currentObject.GetComponent<AudioQueue>().SetupSFX(positionTransform, clip, mixerGroup);
     }
+
+
+    public void SubscribeAudioQueue(GameObject objectToSubscribe)
+    {
+        audioQueues.Add(objectToSubscribe);
+    }
+
+
+    #endregion
+
 
 }
