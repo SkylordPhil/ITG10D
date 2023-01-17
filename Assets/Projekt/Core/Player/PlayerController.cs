@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         attack = playerControlls.Controlls.Shoot;
         aimAction = playerControlls.Controlls.Aim;
         attack.performed += AttackAction;
+        GameManagerController.Instance.SetPlayer(this);
 
         TempActions();
 
