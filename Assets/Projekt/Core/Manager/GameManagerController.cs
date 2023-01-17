@@ -38,4 +38,8 @@ public class GameManagerController : MonoBehaviour
         return Player;
     }
        
+    public void SetPlayer(PlayerController player)
+    {
+        Player = player;
+    }
 }
