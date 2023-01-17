@@ -11,7 +11,7 @@ public class GameManagerController : MonoBehaviour
     {
         get
         {
-            if (_instance = null)
+            if (_instance == null)
                 Debug.LogError("No GameManagerInstance found!");
 
             return _instance;
@@ -24,7 +24,6 @@ public class GameManagerController : MonoBehaviour
         _instance = this;
     }
 
-
     public bool _isGameOver = false;
 
     public void GameOver()
@@ -32,12 +31,11 @@ public class GameManagerController : MonoBehaviour
         _isGameOver = true;
     }
 
-
     public PlayerController getPlayer()
     {
         return Player;
     }
-       
+
     public void SetPlayer(PlayerController player)
     {
         Player = player;
