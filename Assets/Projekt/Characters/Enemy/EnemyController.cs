@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
-
-    public float speed;
+public class EnemyController : MonoBehaviour, IDamageable
+{
+    public float speed = 1f;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -17,4 +19,10 @@ public class EnemyMovement : MonoBehaviour
     {
         
     }
+
+    public void TakeDamage(int dmg)
+    {
+       
+    }
+
 }
