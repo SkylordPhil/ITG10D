@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private GameLevel currentLevel;
 
+    
     [SerializeField] private GameLevel[] allLevels;
 
 
@@ -51,6 +52,13 @@ public class LevelManager : MonoBehaviour
 
     }
     
+
+    /// <summary>
+    /// Load a Level Scene and set it as the current GameLevel.
+    /// </summary>
+    /// <param name="levelNumber">
+    /// Index in the allLevels Array
+    /// </param>
     public void LoadLevel(int levelNumber)
     {
 
@@ -59,12 +67,22 @@ public class LevelManager : MonoBehaviour
 
     }
 
+
+    /// <summary>
+    /// Unload the Current Level and change the currentLevel to null
+    /// </summary>
     public void UnloadCurrentLevel()
     {
         SceneManager.UnloadSceneAsync(currentLevel.levelPath);
         currentLevel = null;
+
     }
 
+    [ContextMenu("Debug Load")]
+    void DebugLoad()
+    {
+        LoadLevel(0);
+    }
 
 
 }
