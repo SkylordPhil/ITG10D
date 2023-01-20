@@ -44,11 +44,18 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Space(30)]
     [Header("Controls")]
     [SerializeField] private bool isGamePad;
+    public string wah;
 
     [Space(30)]
     [Header("Player Status")]
     [SerializeField] private bool isInvulnarable;
 
+
+
+    [Space(30)]
+    [Header("Debug")]
+    [SerializeField] private AudioClip debugClip;
+    [SerializeField] private UnityEngine.Audio.AudioMixerGroup mixerGroup;
 
 
     private bool attackCD;
@@ -77,10 +84,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         attack = playerControlls.Controlls.Shoot;
         aimAction = playerControlls.Controlls.Aim;
         attack.performed += AttackAction;
-        GameManagerController.Instance.SetPlayer(this);
+        
 
         TempActions();
 
+    }
+
+    private void Start()
+    {
+        GameManagerController.Instance.SetPlayer(this);
+        worldCam = GameManagerController.Instance.GetCamera();
     }
 
     /// <summary>
@@ -241,16 +254,22 @@ public class PlayerController : MonoBehaviour, IDamageable
     /// </summary>
     private void BaseAttack()
     {
+
+
         Debug.Log("attack");
         Vector2 attackDirection = ((Vector2)(worldCam.ScreenToWorldPoint(aimAction.ReadValue<Vector2>()) - transform.position)).normalized;
         GameObject currentBullet = Instantiate(baseBullet);
         currentBullet.transform.position = transform.position;
         currentBullet.GetComponent<Bullet>().SetMoveInfo(attackDirection);
+        DebugSound();
 
 
     }
 
-
+    private void DebugSound()
+    {
+        AudioManager.GetInstance().PlaySfxAtPosition(this.transform, debugClip, mixerGroup);
+    }
     /// <summary>
     /// Enables the bool attack during the Timer
     /// </summary>

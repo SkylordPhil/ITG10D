@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManagerController : MonoBehaviour
 {
     public PlayerController Player;
+    [SerializeField] private Camera cameraObject;
 
     private static GameManagerController _instance;
     public static GameManagerController Instance
@@ -39,5 +40,10 @@ public class GameManagerController : MonoBehaviour
     public void SetPlayer(PlayerController player)
     {
         Player = player;
+    }
+
+    public Camera GetCamera()
+    {
+        return cameraObject;
     }
 }

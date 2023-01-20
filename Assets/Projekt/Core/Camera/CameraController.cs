@@ -25,7 +25,10 @@ public class CameraController : MonoBehaviour
         
     }
 
-
+    private void Start()
+    {
+        player = GameManagerController.Instance.getPlayer().gameObject;
+    }
     public void EnableMenuBlur()
     {
         settingsVolume.enabled = true;

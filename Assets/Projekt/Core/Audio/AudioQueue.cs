@@ -35,7 +35,7 @@ public class AudioQueue : MonoBehaviour
 
     public IEnumerator PlaySound() 
     {
-        while(!audioSource.isPlaying)
+        while(audioSource.isPlaying)
         { 
             yield return new WaitForEndOfFrame();
         }

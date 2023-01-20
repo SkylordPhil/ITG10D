@@ -134,6 +134,14 @@ PrefabInstance:
       propertyPath: worldCam
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3175301007005792898, guid: 5a30a762932830a4892f3836862d05a4, type: 3}
+      propertyPath: debugClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 582bca9669af38d4892ac8a0d9c60895, type: 3}
+    - target: {fileID: 3175301007005792898, guid: 5a30a762932830a4892f3836862d05a4, type: 3}
+      propertyPath: mixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: c31b504135249c245a5f07e9795258d6, type: 2}
     - target: {fileID: 4070820651038389163, guid: 5a30a762932830a4892f3836862d05a4, type: 3}
       propertyPath: m_RootOrder
       value: 0

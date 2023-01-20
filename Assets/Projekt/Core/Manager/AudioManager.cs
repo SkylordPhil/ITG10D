@@ -83,7 +83,7 @@ public class AudioManager : MonoBehaviour
     #region Audio SFX
 
 
-    public void PlaySfxAtPosition(Transform positionTransform, AudioClip clip, AudioMixerGroup mixerGroup)
+    public void PlaySfxAtPosition(Transform positionTransform, AudioClip clip, AudioMixerGroup mixerGroup )
     {
         if(audioQueues.Count < 3)
         {
@@ -91,8 +91,9 @@ public class AudioManager : MonoBehaviour
             audioQueues.Add(tmp);
         }
 
-        GameObject currentObject = audioQueues[-1];
+        GameObject currentObject = audioQueues[0];
         audioQueues.Remove(currentObject);
+        Debug.Log(audioQueues.Count);
         currentObject.GetComponent<AudioQueue>().SetupSFX(positionTransform, clip, mixerGroup);
     }
 
