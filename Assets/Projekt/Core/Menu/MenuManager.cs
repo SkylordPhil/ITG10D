@@ -65,6 +65,11 @@ public class MenuManager : MonoBehaviour
         settingsMenu.SetActive(true);
     }
 
+    public void ResetAudioSettings()
+    {
+
+    }
+
     #endregion
 
     public void DetermineMenuType(MenuType menuType, float currentValue, string stringParam)
