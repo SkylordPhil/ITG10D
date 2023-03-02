@@ -8,7 +8,7 @@ public class SettingsData : MonoBehaviour
     private int musicVolumeValue;
     private int sfxVolumeValue;
 
-    public SettingsData(int masterVolumeValue, int musicVolumeValue, int sfxVolumeValue)
+    public void SetSettingsData(int masterVolumeValue, int musicVolumeValue, int sfxVolumeValue)
     {
         this.masterVolumeValue = masterVolumeValue;
         this.musicVolumeValue = musicVolumeValue;
