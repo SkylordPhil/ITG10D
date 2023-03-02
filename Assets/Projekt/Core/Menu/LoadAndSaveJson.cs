@@ -8,6 +8,14 @@ public class LoadAndSaveJson : MonoBehaviour
     private SettingsData settingsData;
     private string file;
 
+    public void Start()
+    {
+        if (File.Exists(file))
+        {
+
+        }
+    }
+
     public void LoadOrCreate()
     {
         if (File.Exists(GetFilePath(file)))
