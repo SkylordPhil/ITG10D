@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4925798731880000499}
   m_Layer: 0
   m_Name: Circle
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,6 +119,7 @@ MonoBehaviour:
   speed: 2
   maxHealth: 1
   currentHealth: 0
+  damage: 1
   Player: {fileID: 0}
 --- !u!50 &5492504562885550709
 Rigidbody2D:
