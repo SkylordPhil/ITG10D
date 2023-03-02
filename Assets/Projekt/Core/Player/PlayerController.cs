@@ -199,7 +199,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             currentHealth -= 1;
 
-            if (currentHealth == 0)
+            if (currentHealth <= 0)
             {
                 //Message Gamamaner
                 //Kill Player
