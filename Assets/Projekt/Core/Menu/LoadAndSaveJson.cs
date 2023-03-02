@@ -40,7 +40,7 @@ public class LoadAndSaveJson : MonoBehaviour
         }
     }
 
-    private (string, void) ReadFromFile(string fileName)
+    private string ReadFromFile(string fileName)
     {
         string path = GetFilePath(fileName);
         if (File.Exists(path))
@@ -51,6 +51,8 @@ public class LoadAndSaveJson : MonoBehaviour
                 return json;
             }
         }
+
+        return "";
     }
 
     private string GetFilePath(string fileName)
