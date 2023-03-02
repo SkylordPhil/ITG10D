@@ -26,13 +26,14 @@ public class Bullet : MonoBehaviour
         transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         IDamageable dmgInterface = collision.gameObject.GetComponent<IDamageable>();
 
         if (dmgInterface != null)
         {
             dmgInterface.TakeDamage(damage);
+            Destroy(this.gameObject);
         }
     }
 
