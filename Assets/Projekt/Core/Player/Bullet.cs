@@ -28,11 +28,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        IDamageable dmgInterface = collision.gameObject.GetComponent<IDamageable>();
 
-        if (dmgInterface != null)
+        if (collision.tag == "Enemy")
         {
-            dmgInterface.TakeDamage(damage);
+
+            collision.gameObject.GetComponent<IDamageable>().TakeDamage(damage);
             Destroy(this.gameObject);
         }
     }
