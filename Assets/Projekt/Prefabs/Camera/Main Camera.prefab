@@ -101,6 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   cameraSpeed: 10
+  isFollowing: 1
+  settingsVolume: {fileID: 0}
+  isIngame: 0
 --- !u!114 &4592704468718240482
 MonoBehaviour:
   m_ObjectHideFlags: 0
