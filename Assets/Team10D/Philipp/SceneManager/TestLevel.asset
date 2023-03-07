@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1690c659310431c4db9a2636045dbd7f, type: 3}
   m_Name: TestLevel
   m_EditorClassIdentifier: 
-  levelPath: Assets/Team10D/Philipp/Scenes/PlayerTest.unity
+  levelPath: Assets/Team10D/Benedikt/Enemy Test.unity

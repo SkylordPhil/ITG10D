@@ -10,26 +10,26 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject audioMenu;
+    [SerializeField] private GameObject controlsMenu;
 
 
     #region MainMenu
     public void StartGame()
     {
+        LevelManager.instance.LoadLevel(0);
+        SceneManager.UnloadSceneAsync("MainMenuScene");
         //weiter zu gameManager -> Spiel-Szene laden
+        CameraController.Instance.isIngame = true;
     }
 
 
     public void QuitGame()
     {
-        /* 
-         * Weiter zu GameManager
         Application.Quit();
-        Debug.Log("Quit Pressed");
         
         #if UNITY_EDITOR
          UnityEditor.EditorApplication.isPlaying = false;
         #endif
-        */
     }
 
     public void OpenSettingsMenu()
@@ -51,6 +51,12 @@ public class MenuManager : MonoBehaviour
         audioMenu.SetActive(true);
     }
 
+    public void OpenControlsMenu()
+    {
+        settingsMenu.SetActive(false);
+        controlsMenu.SetActive(true);
+    }
+
     public void CloseSettingsMenu()
     {
         settingsMenu.SetActive(false);
@@ -70,6 +76,14 @@ public class MenuManager : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region ControlsMenu
+    public void CloseControlsMenu()
+    {
+        controlsMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+    }
     #endregion
 
     public void DetermineMenuType(MenuType menuType, float currentValue, string stringParam)
