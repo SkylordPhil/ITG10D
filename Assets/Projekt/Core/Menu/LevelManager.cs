@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+/// <summary>
+/// Manager that Loads and Unloads the current Selected Game Level
+/// </summary>
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager _instance;
@@ -82,7 +86,8 @@ public class LevelManager : MonoBehaviour
     void DebugLoad()
     {
         LoadLevel(0);
+        
     }
 
-
+    
 }

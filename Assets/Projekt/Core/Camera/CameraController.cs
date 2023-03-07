@@ -6,7 +6,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
+    [SerializeField] private PlayerController player;
     [SerializeField] private float cameraSpeed;
     [SerializeField] private bool isFollowing = true;
     [SerializeField] private PostProcessVolume settingsVolume;
@@ -18,16 +18,16 @@ public class CameraController : MonoBehaviour
     {
         if(isFollowing && isIngame)
         {
-
+            player = GameManagerController.Instance.getPlayer();
             transform.Translate(((Vector2)player.transform.position - (Vector2)transform.position) * Time.deltaTime * cameraSpeed);
         
         }
         
     }
 
-    private void Start()
+    void Start()
     {
-        player = GameManagerController.Instance.getPlayer().gameObject;
+        
     }
     public void EnableMenuBlur()
     {

@@ -40,6 +40,7 @@ public class GameManagerController : MonoBehaviour
     public void SetPlayer(PlayerController player)
     {
         Player = player;
+        
     }
 
     public Camera GetCamera()

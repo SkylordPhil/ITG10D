@@ -202,7 +202,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1147717515867437292, guid: 3597e1db48433874f93889f83300b4bf, type: 3}
       propertyPath: isIngame
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147717515867437292, guid: 3597e1db48433874f93889f83300b4bf, type: 3}
+      propertyPath: isFollowing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1355061276959780384, guid: 3597e1db48433874f93889f83300b4bf, type: 3}
       propertyPath: m_Enabled
