@@ -5,7 +5,7 @@ using System.IO;
 
 public class LoadAndSaveJson : MonoBehaviour
 {
-    private SettingsData settingsData;
+    [SerializeField] private SettingsData settingsData;
     private string path;
 
     public void Start()
@@ -25,7 +25,6 @@ public class LoadAndSaveJson : MonoBehaviour
     }
     private void CreateJsonFile()
     {
-        settingsData = new SettingsData();
         settingsData.SetDefaultData();
         string json = JsonUtility.ToJson(settingsData);
         File.WriteAllText(path, json);
@@ -33,10 +32,11 @@ public class LoadAndSaveJson : MonoBehaviour
 
     private void ReadFromFile()
     {
-        Debug.Log(path);
         string json = File.ReadAllText(path);
         Debug.Log(json);
-        JsonUtility.FromJson<SettingsData>(json);
+        JsonUtility.FromJsonOverwrite(json, settingsData);
+        //settingsData = JsonUtility.FromJson<SettingsData>(json);
+        Debug.Log(settingsData);
     }
 
     private void GetPath()

@@ -2,10 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 [Serializable]
-public class SettingsData
+[CreateAssetMenu(fileName = "settings", menuName = "Settings/SettingsObject", order = 1)]
+public class SettingsData: ScriptableObject
 {
+    private string path;
+
+    //Settings
     public string moveUp;
     public string moveDown;
     public string moveLeft;
@@ -28,4 +33,5 @@ public class SettingsData
         musicVolumeValue = 50;
         sfxVolumeValue = 50;
     }
+    
 }
