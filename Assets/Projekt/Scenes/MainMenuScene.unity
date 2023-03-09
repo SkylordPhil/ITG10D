@@ -217,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controls: 5
   textField: {fileID: 2106918569}
+  action: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
 --- !u!1 &24196753
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controls: 2
   textField: {fileID: 1458480091}
+  action: {fileID: 0}
 --- !u!1 &27907352
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,6 +751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controls: 1
   textField: {fileID: 789219366}
+  action: {fileID: 0}
 --- !u!1 &146709868
 GameObject:
   m_ObjectHideFlags: 0
@@ -4028,6 +4031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controls: 4
   textField: {fileID: 1411413524}
+  action: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
 --- !u!1 &789219364
 GameObject:
   m_ObjectHideFlags: 0
@@ -6435,6 +6439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controls: 0
   textField: {fileID: 1920931575}
+  action: {fileID: 0}
 --- !u!1 &1256440976
 GameObject:
   m_ObjectHideFlags: 0
@@ -7358,6 +7363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controls: 3
   textField: {fileID: 1234522028}
+  action: {fileID: 0}
 --- !u!1 &1364647732
 GameObject:
   m_ObjectHideFlags: 0
