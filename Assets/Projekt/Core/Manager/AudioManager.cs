@@ -28,13 +28,7 @@ public class AudioManager : MonoBehaviour
     {
         SetInstance();
 
-        for(int i = 0; i < 3; i++)
-        {
-
-            GameObject tmp = Instantiate(audioQueuePrefab);
-            audioQueues.Add(tmp);
-
-        }
+        
     }
     public static AudioManager GetInstance()
     {
