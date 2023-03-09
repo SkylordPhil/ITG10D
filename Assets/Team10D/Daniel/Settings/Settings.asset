@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e562f483475284dae16489ffe46fde, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  moveUp: 
-  moveDown: 
-  moveLeft: 
-  moveRight: 
-  mainAttack: 
-  specialAbility: 
-  masterVolumeValue: 0
-  musicVolumeValue: 0
-  sfxVolumeValue: 0
+  moveUp: W
+  moveDown: S
+  moveLeft: A
+  moveRight: D
+  mainAttack: Left Button
+  specialAbility: Right Button
+  masterVolumeValue: 50
+  musicVolumeValue: 50
+  sfxVolumeValue: 50
