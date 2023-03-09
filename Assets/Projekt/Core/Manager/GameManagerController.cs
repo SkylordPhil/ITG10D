@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,12 @@ public class GameManagerController : MonoBehaviour
 {
     public PlayerController Player;
     [SerializeField] private Camera cameraObject;
+
+    [SerializeField] private float ingameTime;
+    [SerializeField] private float baseGameStageTime = 10f;
+    [SerializeField] private float gameStageInt = 0f;
+
+    public Action NextStageEvent;
 
     private static GameManagerController _instance;
     public static GameManagerController Instance
@@ -48,15 +55,23 @@ public class GameManagerController : MonoBehaviour
         return cameraObject;
     }
 
-    private float secondsCount;
+    
+
     void Update()
     {
-        Timer();
+        //GameTimer
+        ingameTime += Time.deltaTime;
+        if(ingameTime > gameStageInt)
+        {
+            gameStageInt += baseGameStageTime;
+            NextStageEvent.Invoke();
+        }
     }
-    public void Timer()
+
+    private void RestartTimer()
     {
-        if (_instance == true)
-            secondsCount += Time.deltaTime;
-            Debug.Log(secondsCount);        
+        ingameTime = 0;
     }
+
+    
 }
