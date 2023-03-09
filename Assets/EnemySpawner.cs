@@ -62,7 +62,8 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(2f);
             Vector3 playerPosition = GameManagerController.Instance.Player.transform.position;
 
-            int entityNumber = gameStage ^ 2;
+            int entityNumber = EnemyNumber(gameStage);
+            //gameStage ^ 2
 
             for (int i = 0; i <= entityNumber; i++)
             {
@@ -71,6 +72,17 @@ public class EnemySpawner : MonoBehaviour
             }
         }
     }
+
+    private int EnemyNumber(int p_gameStage)
+    {
+        int startnumber = 10;
+        int enemynumber;
+
+        enemynumber = startnumber + (p_gameStage * 5);
+             
+        return enemynumber;
+    }
+
 
    private void StageUpdate()
     {
