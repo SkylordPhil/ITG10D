@@ -18,7 +18,8 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isFollowing && isIngame)
+        player = GameManagerController.Instance.getPlayer();
+        if (isFollowing && isIngame && player != null)
         {
             player = GameManagerController.Instance.getPlayer();
             transform.Translate(((Vector2)player.transform.position - (Vector2)transform.position) * Time.deltaTime * cameraSpeed);
