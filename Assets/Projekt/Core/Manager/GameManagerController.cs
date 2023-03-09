@@ -47,4 +47,16 @@ public class GameManagerController : MonoBehaviour
     {
         return cameraObject;
     }
+
+    private float secondsCount;
+    void Update()
+    {
+        Timer();
+    }
+    public void Timer()
+    {
+        if (_instance == true)
+            secondsCount += Time.deltaTime;
+            Debug.Log(secondsCount);        
+    }
 }
