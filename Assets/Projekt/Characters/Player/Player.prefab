@@ -118,8 +118,11 @@ MonoBehaviour:
   isGamePad: 0
   wah: 
   isInvulnarable: 0
+  controlls: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
+  moveUp: {fileID: 3484527343945375709, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
   debugClip: {fileID: 0}
   mixerGroup: {fileID: 0}
+  playerControlls: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
 --- !u!114 &4477690845476374707
 MonoBehaviour:
   m_ObjectHideFlags: 0
