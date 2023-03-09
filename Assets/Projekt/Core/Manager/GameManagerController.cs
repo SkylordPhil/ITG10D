@@ -14,6 +14,8 @@ public class GameManagerController : MonoBehaviour
 
     public Action NextStageEvent;
 
+    private Coroutine coroutine;
+
     private static GameManagerController _instance;
     public static GameManagerController Instance
     {
@@ -55,22 +57,51 @@ public class GameManagerController : MonoBehaviour
         return cameraObject;
     }
 
+    public void StartGameLevel()
+    {
+        RestartTimer();
+        coroutine = StartCoroutine(IngameTimer());
+    }
     
+    public void PauseGameLevel()
+    {
+        StopCoroutine(coroutine);
+    }
+
+    public void ResumeGameLevel()
+    {
+         coroutine = StartCoroutine(IngameTimer());
+    }
+
 
     void Update()
     {
-        //GameTimer
-        ingameTime += Time.deltaTime;
-        if(ingameTime > gameStageInt)
+        
+    }
+
+    private IEnumerator IngameTimer()
+    {
+        while(true)
         {
-            gameStageInt += baseGameStageTime;
-            NextStageEvent.Invoke();
+
+            //GameTimer
+            ingameTime += Time.deltaTime;
+            if (ingameTime > gameStageInt)
+            {
+                gameStageInt += baseGameStageTime;
+                NextStageEvent.Invoke();
+            }
+            yield return new WaitForEndOfFrame();
+
         }
     }
 
+
+    //Should be Called when the Game Stage restarts
     private void RestartTimer()
     {
         ingameTime = 0;
+        gameStageInt = 0;
     }
 
     
