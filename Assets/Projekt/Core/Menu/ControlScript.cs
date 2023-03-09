@@ -13,7 +13,8 @@ public class ControlScript : MonoBehaviour
 
     private bool isPressed = false;
 
-    InputAction inputListener = new InputAction(binding: "/*/<button>");
+    private InputAction inputListener = new InputAction(binding: "/*/<button>");
+    public InputActionAsset action; 
 
     public void Start()
     {
@@ -30,7 +31,8 @@ public class ControlScript : MonoBehaviour
         }
         string pressedKey = obj.control.displayName;
         Debug.Log(obj.control.displayName);
-        saveAndDisplayNewKeybind(obj.control.displayName);
+        saveAndDisplayNewKeybind(obj.control);
+        
         inputListener.Disable();
        
     }
@@ -42,6 +44,7 @@ public class ControlScript : MonoBehaviour
             isPressed = true;
             textField.text = "Press Button";
             inputListener.Enable();
+            
         }
         else
         {
@@ -50,7 +53,7 @@ public class ControlScript : MonoBehaviour
         }
     }
 
-    private void saveAndDisplayNewKeybind(string key)
+    private void saveAndDisplayNewKeybind(InputControl key)
     {
         switch (controls) 
         {
@@ -64,16 +67,19 @@ public class ControlScript : MonoBehaviour
                 break;
 
             case Controls.MoveRight:
+                
                 break;
 
             case Controls.MainAttack:
+                action.FindAction("shoot").ApplyBindingOverride(key.path);
                 break;
 
             case Controls.SpecialAbility:
+                action.FindAction("special").ApplyBindingOverride(key.path);
                 break;
         }
 
-        textField.text = key;
+        textField.text = key.displayName;
     }
     
 }
