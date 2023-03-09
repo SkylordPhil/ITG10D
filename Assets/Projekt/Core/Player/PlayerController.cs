@@ -50,12 +50,18 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Player Status")]
     [SerializeField] private bool isInvulnarable;
 
+    [Space(30)]
+    [Header("InputControlls")]
+    [SerializeField] private InputActionAsset controlls;
+    [SerializeField] private InputActionReference moveUp;
 
 
     [Space(30)]
     [Header("Debug")]
     [SerializeField] private AudioClip debugClip;
     [SerializeField] private UnityEngine.Audio.AudioMixerGroup mixerGroup;
+
+
 
 
     private bool attackCD;
@@ -65,7 +71,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector2 aimVector;
     
 
-    private PlayerControlls playerControlls;
+    public  InputActionAsset playerControlls;
     private CharacterController2D characterController;
 
 
@@ -79,10 +85,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Awake()
     {
         SetupStats();
-        playerControlls = new PlayerControlls();
+
         characterController = GetComponent<CharacterController2D>();
-        attack = playerControlls.Controlls.Shoot;
-        aimAction = playerControlls.Controlls.Aim;
+        attack = playerControlls.FindAction("shoot");
+        aimAction = playerControlls.FindAction("Aim");
         attack.performed += AttackAction;
         
 
@@ -169,8 +175,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     /// </summary>
     void HandleInput()
     {
-        movement = playerControlls.Controlls.Movement.ReadValue<Vector2>();
-        aimVector = playerControlls.Controlls.Aim.ReadValue<Vector2>();
+        movement = playerControlls.FindAction("Movement").ReadValue<Vector2>();
+        aimVector = playerControlls.FindAction("Movement").ReadValue<Vector2>();
     }
 
 
