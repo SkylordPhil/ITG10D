@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-
     private static EnemySpawner _instance;
     [SerializeField] private GameObject Enemy;
     [SerializeField] private GameObject Boss;
     public int gameStage = 1;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(SpawnTicks());
+
+        GameManagerController.Instance.NextStageEvent -= StageUpdate;
+        GameManagerController.Instance.NextStageEvent += StageUpdate;
     }
 
     // Update is called once per frame
@@ -20,6 +23,7 @@ public class EnemySpawner : MonoBehaviour
     {
         
     }
+
     private void Awake()
     {
         if (_instance != null)
@@ -28,11 +32,8 @@ public class EnemySpawner : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-        _instance = this;
+        _instance = this;        
     }
-
-
-
 
     public static EnemySpawner Instance
     {
@@ -51,17 +52,13 @@ public class EnemySpawner : MonoBehaviour
         if(_instance == this)
         {
             _instance = null;
-
         }
     }
-
-    
-
+  
     IEnumerator SpawnTicks()
     {
         while(true)
         {
-
             yield return new WaitForSeconds(2f);
             Vector3 playerPosition = GameManagerController.Instance.Player.transform.position;
 
@@ -71,12 +68,12 @@ public class EnemySpawner : MonoBehaviour
             {
                 Vector3 spawnPosition = playerPosition + (Vector3)Random.insideUnitCircle.normalized * 15;
                 Instantiate(Enemy, spawnPosition, Quaternion.Euler(0, 0, 0));
-
             }
-
-
         }
     }
 
-
+   private void StageUpdate()
+    {
+        gameStage ++;
+    }
 }
