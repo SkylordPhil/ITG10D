@@ -10,7 +10,7 @@ public class GameManagerController : MonoBehaviour
 
     [SerializeField] private float ingameTime;
     [SerializeField] private float baseGameStageTime = 10f;
-    [SerializeField] private float gameStageInt = 0f;
+    [SerializeField] private float gameStageInt = 10f;
 
     public Action NextStageEvent;
 
@@ -101,7 +101,7 @@ public class GameManagerController : MonoBehaviour
     private void RestartTimer()
     {
         ingameTime = 0;
-        gameStageInt = 0;
+        gameStageInt = baseGameStageTime;
     }
 
     

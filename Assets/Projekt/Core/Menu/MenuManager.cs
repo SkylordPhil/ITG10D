@@ -20,6 +20,7 @@ public class MenuManager : MonoBehaviour
         SceneManager.UnloadSceneAsync("MainMenuScene");
         //weiter zu gameManager -> Spiel-Szene laden
         CameraController.Instance.isIngame = true;
+        GameManagerController.Instance.StartGameLevel();
     }
 
 

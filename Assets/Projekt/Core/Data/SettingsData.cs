@@ -1,19 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingsData : MonoBehaviour
+[Serializable]
+public class SettingsData
 {
-    private int masterVolumeValue;
-    private int musicVolumeValue;
-    private int sfxVolumeValue;
+    public string moveUp;
+    public string moveDown;
+    public string moveLeft;
+    public string moveRight;
+    public string mainAttack;
+    public string specialAbility;
+    public int masterVolumeValue;
+    public int musicVolumeValue;
+    public int sfxVolumeValue;
 
-    public void SetSettingsData(int masterVolumeValue, int musicVolumeValue, int sfxVolumeValue)
+    public void SetDefaultData()
     {
-        this.masterVolumeValue = masterVolumeValue;
-        this.musicVolumeValue = musicVolumeValue;
-        this.sfxVolumeValue = sfxVolumeValue;
+        moveUp = "W";
+        moveDown = "S";
+        moveLeft = "A";
+        moveRight = "D";
+        mainAttack = "Left Button";
+        specialAbility = "Right Button";
+        masterVolumeValue = 50;
+        musicVolumeValue = 50;
+        sfxVolumeValue = 50;
     }
-    
-
 }
