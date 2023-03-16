@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Space(30)]
     [Header("Raw Player Stats", order = 0)]
     [SerializeField] private float rawMoveSpeed = 5f;
+
+    
+
     [SerializeField] private int rawHealth = 3;
     [SerializeField] private float rawAttackSpeed = 1f;
     [SerializeField] private float invulnarableTime = 1f;
@@ -311,8 +314,17 @@ public class PlayerController : MonoBehaviour, IDamageable
         currentMoveSpeed = moveSpeedIncrease * baseMoveSpeed;
     }
 
+
+
+
     #endregion
 
+    #region LevelSystem
+    internal void GetXP(int v)
+    {
+        throw new NotImplementedException();
+    }
+    #endregion
 
     #region DEBUG 
     public void DebugTakeDamage()
