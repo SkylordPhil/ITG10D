@@ -14,7 +14,9 @@ public class ControlScript : MonoBehaviour
     private bool isPressed = false;
 
     private InputAction inputListener = new InputAction(binding: "/*/<button>");
-    public InputActionAsset action; 
+    public InputActionAsset action;
+
+    [SerializeField] private SettingsData settingsData;
 
     public void Start()
     {
@@ -34,7 +36,9 @@ public class ControlScript : MonoBehaviour
         saveAndDisplayNewKeybind(obj.control);
         
         inputListener.Disable();
-       
+        inputListener.performed -= InputListener_performed;
+        inputListener.performed += InputListener_performed;
+
     }
 
     public void InitializeKeyChange()
@@ -58,6 +62,12 @@ public class ControlScript : MonoBehaviour
         switch (controls) 
         {
             case Controls.MoveUp:
+                action.FindAction("Movement").ChangeBinding(1).Erase();
+                action.FindAction("Movement").AddCompositeBinding("2DVector")
+                    .With("Up", key.path)
+                    .With("Down", settingsData.moveDown)
+                    .With("Left", settingsData.moveLeft)
+                    .With("Right", settingsData.moveRight);
                 break;
 
             case Controls.MoveDown:
