@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void Awake()
@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-        _instance = this;        
+        _instance = this;
     }
 
     public static EnemySpawner Instance
@@ -49,17 +49,26 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(_instance == this)
+        if (_instance == this)
         {
             _instance = null;
         }
     }
-  
+
     IEnumerator SpawnTicks()
     {
-        while(true)
+        while (true)
         {
-            yield return new WaitForSeconds(2f);
+            if (gameStage == 1)
+            {
+                yield return new WaitForSeconds(5f);
+                gameStage++;
+            }
+            else
+            {
+                yield return new WaitForSeconds(30f);
+            }
+
             Vector3 playerPosition = GameManagerController.Instance.Player.transform.position;
 
             int entityNumber = EnemyNumber(gameStage);
@@ -79,13 +88,13 @@ public class EnemySpawner : MonoBehaviour
         int enemynumber;
 
         enemynumber = startnumber + (p_gameStage * 5);
-             
+
         return enemynumber;
     }
 
 
-   private void StageUpdate()
+    private void StageUpdate()
     {
-        gameStage ++;
+        gameStage++;
     }
 }
