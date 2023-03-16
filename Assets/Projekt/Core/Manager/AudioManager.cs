@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
 
 
 
-    public void Start()
+    public void Awake()
     {
         SetInstance();
 
