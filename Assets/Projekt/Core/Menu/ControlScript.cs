@@ -17,7 +17,7 @@ public class ControlScript : MonoBehaviour
     private InputAction inputListener = new InputAction(binding: "/*/<button>");
     public InputActionAsset action;
 
-    [SerializeField] private SettingsData settingsData;
+
 
     public void Start()
     {
@@ -99,13 +99,30 @@ public class ControlScript : MonoBehaviour
                 break;
 
             case Controls.MoveDown:
+                action.FindAction("Movement").ChangeBinding(1).Erase();
+                action.FindAction("Movement").AddCompositeBinding("2DVector")
+                    .With("Up", settingsData.moveUp)
+                    .With("Down", key.path)
+                    .With("Left", settingsData.moveLeft)
+                    .With("Right", settingsData.moveRight);
                 break;
 
             case Controls.MoveLeft:
+                action.FindAction("Movement").ChangeBinding(1).Erase();
+                action.FindAction("Movement").AddCompositeBinding("2DVector")
+                    .With("Up", settingsData.moveUp)
+                    .With("Down", settingsData.moveDown)
+                    .With("Left", key.path)
+                    .With("Right", settingsData.moveRight);
                 break;
 
             case Controls.MoveRight:
-                
+                action.FindAction("Movement").ChangeBinding(1).Erase();
+                action.FindAction("Movement").AddCompositeBinding("2DVector")
+                    .With("Up", settingsData.moveUp)
+                    .With("Down", settingsData.moveDown)
+                    .With("Left", settingsData.moveLeft)
+                    .With("Right", key.path);
                 break;
 
             case Controls.MainAttack:
