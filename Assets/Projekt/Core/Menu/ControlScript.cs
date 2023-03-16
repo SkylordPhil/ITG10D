@@ -96,6 +96,7 @@ public class ControlScript : MonoBehaviour
                     .With("Down", settingsData.moveDown)
                     .With("Left", settingsData.moveLeft)
                     .With("Right", settingsData.moveRight);
+                settingsData.moveUp = key.displayName;
                 break;
 
             case Controls.MoveDown:
@@ -105,6 +106,7 @@ public class ControlScript : MonoBehaviour
                     .With("Down", key.path)
                     .With("Left", settingsData.moveLeft)
                     .With("Right", settingsData.moveRight);
+                settingsData.moveDown = key.displayName;
                 break;
 
             case Controls.MoveLeft:
@@ -114,6 +116,7 @@ public class ControlScript : MonoBehaviour
                     .With("Down", settingsData.moveDown)
                     .With("Left", key.path)
                     .With("Right", settingsData.moveRight);
+                settingsData.moveLeft = key.displayName;
                 break;
 
             case Controls.MoveRight:
@@ -123,14 +126,17 @@ public class ControlScript : MonoBehaviour
                     .With("Down", settingsData.moveDown)
                     .With("Left", settingsData.moveLeft)
                     .With("Right", key.path);
+                settingsData.moveRight = key.displayName;
                 break;
 
             case Controls.MainAttack:
                 action.FindAction("shoot").ApplyBindingOverride(key.path);
+                settingsData.mainAttack = key.displayName;
                 break;
 
             case Controls.SpecialAbility:
                 action.FindAction("special").ApplyBindingOverride(key.path);
+                settingsData.specialAbility = key.displayName;
                 break;
         }
 
