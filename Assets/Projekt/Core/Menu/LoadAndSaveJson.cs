@@ -30,13 +30,14 @@ public class LoadAndSaveJson : MonoBehaviour
         File.WriteAllText(path, json);
     }
 
+    
+
     private void ReadFromFile()
     {
         string json = File.ReadAllText(path);
         Debug.Log(json);
         JsonUtility.FromJsonOverwrite(json, settingsData);
         //settingsData = JsonUtility.FromJson<SettingsData>(json);
-        Debug.Log(settingsData);
     }
 
     private void GetPath()

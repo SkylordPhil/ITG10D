@@ -7,6 +7,7 @@ using TMPro;
 
 public class SliderScript : MonoBehaviour
 {
+    [SerializeField] private SettingsData settingsData;
     [SerializeField] private MenuType menuType;
     [SerializeField] private MenuManager menuManager;
     [SerializeField] private string stringParam;
@@ -16,7 +17,21 @@ public class SliderScript : MonoBehaviour
     private void Start()
     {
         slider = this.gameObject.GetComponent<Slider>(); 
-        
+
+        switch (stringParam)
+        {
+            case "masterVolume":
+                slider.value = settingsData.masterVolumeValue;
+                break;
+
+            case "musicVolume":
+                slider.value = settingsData.musicVolumeValue;
+                break;
+
+            case "sfxVolume":
+                slider.value = settingsData.sfxVolumeValue;
+                break;
+        }
     }
 
     public void OnChange()

@@ -8,6 +8,7 @@ public enum Controls { MoveUp, MoveDown, MoveLeft, MoveRight, MainAttack, Specia
 
 public class ControlScript : MonoBehaviour
 {
+    [SerializeField] private SettingsData settingsData;
     [SerializeField] private Controls controls;
     [SerializeField] private TextMeshProUGUI textField;
 
@@ -22,6 +23,33 @@ public class ControlScript : MonoBehaviour
     {
         inputListener.performed -= InputListener_performed;
         inputListener.performed += InputListener_performed;
+
+        switch (controls)
+        {
+            case Controls.MoveUp:
+                textField.text = settingsData.moveUp;
+                break;
+
+            case Controls.MoveDown:
+                textField.text = settingsData.moveDown;
+                break;
+
+            case Controls.MoveLeft:
+                textField.text = settingsData.moveLeft;
+                break;
+
+            case Controls.MoveRight:
+                textField.text = settingsData.moveRight;
+                break;
+
+            case Controls.MainAttack:
+                textField.text = settingsData.mainAttack;
+                break;
+
+            case Controls.SpecialAbility:
+                textField.text = settingsData.specialAbility;
+                break;
+        }
     }
 
     //executed if any key has been pressed while the input listener is enabled
