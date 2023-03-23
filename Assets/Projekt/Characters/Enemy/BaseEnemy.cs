@@ -6,6 +6,8 @@ public class BaseEnemy : MonoBehaviour, IDamageable
     public int maxHealth = 1;
     public int currentHealth;
     public int damage = 1;
+    private Vector3 lastPostition;
+    [SerializeField] private GameObject xpPrefab;
 
     public PlayerController Player;
 
@@ -44,13 +46,18 @@ public class BaseEnemy : MonoBehaviour, IDamageable
     {
         if (collision.gameObject.tag == "Player")
         {
-            Player.TakeDamage(damage);            
+            Player.TakeDamage(damage);
         }
     }
 
     // Function for death
     void Death()
-    {
-        Destroy(gameObject);
+    {            
+        lastPostition = transform.position;
+
+        GameObject xpOrbPrefab = xpPrefab;
+        Instantiate(xpOrbPrefab, lastPostition, Quaternion.identity);
+
+        Destroy(gameObject);        
     }
 }

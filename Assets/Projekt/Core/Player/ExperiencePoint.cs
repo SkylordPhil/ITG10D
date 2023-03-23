@@ -7,7 +7,7 @@ public class ExperiencePoint : MonoBehaviour
 {
     public int XP = 1;
     public float speed = 4f;
-    public float range = 5f;
+    public float range = 3f;
     public PlayerController Player;
 
     private bool attracted = false;
@@ -31,16 +31,11 @@ public class ExperiencePoint : MonoBehaviour
         if (attracted)
         {
             transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
-
-            if (transform.position == Player.transform.position)
-            {
-                Destroy(gameObject);
-            }
         }
     }
 
     //mit dem Collider will es gerade noch nicht funktionieren
-    private void OnTriggerEnter(Collider collider)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.CompareTag("Player"))
         {
@@ -48,9 +43,13 @@ public class ExperiencePoint : MonoBehaviour
         }
     }
 
-
     private void OnReachedPlayer()
     {
         GameManagerController.Instance.Player.GetXP(1);
+    }
+
+    public void SpawnXP()
+    {
+
     }
 }
