@@ -6,9 +6,8 @@ using TMPro;
 
 public enum Controls { MoveUp, MoveDown, MoveLeft, MoveRight, MainAttack, SpecialAbility };
 
-public class ControlScript : MonoBehaviour
+public class ControlScript : BaseSaveScript
 {
-    [SerializeField] private SettingsData settingsData;
     [SerializeField] private Controls controls;
     [SerializeField] private TextMeshProUGUI textField;
 
@@ -63,9 +62,10 @@ public class ControlScript : MonoBehaviour
         Debug.Log(obj.control.displayName);
         saveAndDisplayNewKeybind(obj.control);
         
-        inputListener.Disable();
         inputListener.performed -= InputListener_performed;
         inputListener.performed += InputListener_performed;
+
+        inputListener.Disable();
 
     }
 

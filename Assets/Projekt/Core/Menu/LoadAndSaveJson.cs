@@ -44,4 +44,10 @@ public class LoadAndSaveJson : MonoBehaviour
     {
         path = Application.persistentDataPath + "/settings.json";
     }
+
+    public void saveSettings()
+    {
+        string json = JsonUtility.ToJson(settingsData);
+        File.WriteAllText(path, json);
+    }
 }

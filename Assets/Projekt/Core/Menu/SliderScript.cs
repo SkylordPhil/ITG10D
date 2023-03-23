@@ -5,9 +5,8 @@ using Helper;
 using UnityEngine.UI;
 using TMPro;
 
-public class SliderScript : MonoBehaviour
+public class SliderScript : BaseSaveScript
 {
-    [SerializeField] private SettingsData settingsData;
     [SerializeField] private MenuType menuType;
     [SerializeField] private MenuManager menuManager;
     [SerializeField] private string stringParam;
