@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
-public enum Controls { MoveUp, MoveDown, MoveLeft, MoveRight, MainAttack, SpecialAbility };
+public enum Controls { moveUp, moveDown, moveLeft, moveRight, mainAttack, specialAbility };
 
 public class ControlScript : BaseSaveScript
 {
@@ -13,85 +13,92 @@ public class ControlScript : BaseSaveScript
 
     private bool isPressed = false;
 
-    private InputAction inputListener = new InputAction(binding: "/*/<button>");
-    public InputActionAsset action;
+    public InputActionAsset inputActionAsset;
 
 
 
     public void Start()
     {
-        inputListener.performed -= InputListener_performed;
-        inputListener.performed += InputListener_performed;
 
         switch (controls)
         {
-            case Controls.MoveUp:
+            case Controls.moveUp:
                 textField.text = settingsData.moveUp;
                 break;
 
-            case Controls.MoveDown:
+            case Controls.moveDown:
                 textField.text = settingsData.moveDown;
                 break;
 
-            case Controls.MoveLeft:
+            case Controls.moveLeft:
                 textField.text = settingsData.moveLeft;
                 break;
 
-            case Controls.MoveRight:
+            case Controls.moveRight:
                 textField.text = settingsData.moveRight;
                 break;
 
-            case Controls.MainAttack:
+            case Controls.mainAttack:
                 textField.text = settingsData.mainAttack;
                 break;
 
-            case Controls.SpecialAbility:
+            case Controls.specialAbility:
                 textField.text = settingsData.specialAbility;
                 break;
         }
     }
 
-    //executed if any key has been pressed while the input listener is enabled
-    private void InputListener_performed(InputAction.CallbackContext obj)
-    {
-        if (obj.control.displayName == "Any Key" || obj.control.displayName == "Press")
-        {
-            return;
-        }
-        string pressedKey = obj.control.displayName;
-        Debug.Log(obj.control.displayName);
-        saveAndDisplayNewKeybind(obj.control);
-        
-        inputListener.performed -= InputListener_performed;
-        inputListener.performed += InputListener_performed;
-
-        inputListener.Disable();
-
-    }
 
     public void InitializeKeyChange()
     {
-        if (!isPressed)
-        {
             isPressed = true;
-            textField.text = "Press Button";
-            inputListener.Enable();
-            
-        }
-        else
-        {
+            textField.text = "Press Button";            
+
+            Debug.Log("test");
+            switch (controls)
+            {
+                case Controls.moveUp:
+                    textField.text = settingsData.moveUp;
+                    break;
+
+                case Controls.moveDown:
+                    textField.text = settingsData.moveDown;
+                    break;
+
+                case Controls.moveLeft:
+                    textField.text = settingsData.moveLeft;
+                    break;
+
+                case Controls.moveRight:
+                    textField.text = settingsData.moveRight;
+                    break;
+
+                case Controls.mainAttack:
+                    inputActionAsset.FindAction("Shoot").PerformInteractiveRebinding().OnMatchWaitForAnother(0.1f).OnComplete(operation =>
+                    {
+                        string newKeybind = inputActionAsset.FindAction("Shoot").GetBindingDisplayString();
+                        Debug.Log(newKeybind);
+                        settingsData.mainAttack = newKeybind;
+                        textField.text = newKeybind;
+                    }).Start();
+                    textField.text = settingsData.mainAttack;
+                    break;
+
+                case Controls.specialAbility:
+                    textField.text = settingsData.specialAbility;
+                    break;
+            }
+
             isPressed = false;
-            inputListener.Disable();
-        }
     }
 
     private void saveAndDisplayNewKeybind(InputControl key)
     {
         switch (controls) 
         {
-            case Controls.MoveUp:
-                action.FindAction("Movement").ChangeBinding(1).Erase();
-                action.FindAction("Movement").AddCompositeBinding("2DVector")
+            case Controls.moveUp:
+                inputActionAsset.FindAction("Movement").ChangeBinding(1).Erase();
+                inputActionAsset.FindAction("Movement").AddCompositeBinding("2DVector")
                     .With("Up", key.path)
                     .With("Down", settingsData.moveDown)
                     .With("Left", settingsData.moveLeft)
@@ -99,9 +106,9 @@ public class ControlScript : BaseSaveScript
                 settingsData.moveUp = key.displayName;
                 break;
 
-            case Controls.MoveDown:
-                action.FindAction("Movement").ChangeBinding(1).Erase();
-                action.FindAction("Movement").AddCompositeBinding("2DVector")
+            case Controls.moveDown:
+                inputActionAsset.FindAction("Movement").ChangeBinding(1).Erase();
+                inputActionAsset.FindAction("Movement").AddCompositeBinding("2DVector")
                     .With("Up", settingsData.moveUp)
                     .With("Down", key.path)
                     .With("Left", settingsData.moveLeft)
@@ -109,9 +116,9 @@ public class ControlScript : BaseSaveScript
                 settingsData.moveDown = key.displayName;
                 break;
 
-            case Controls.MoveLeft:
-                action.FindAction("Movement").ChangeBinding(1).Erase();
-                action.FindAction("Movement").AddCompositeBinding("2DVector")
+            case Controls.moveLeft:
+                inputActionAsset.FindAction("Movement").ChangeBinding(1).Erase();
+                inputActionAsset.FindAction("Movement").AddCompositeBinding("2DVector")
                     .With("Up", settingsData.moveUp)
                     .With("Down", settingsData.moveDown)
                     .With("Left", key.path)
@@ -119,9 +126,9 @@ public class ControlScript : BaseSaveScript
                 settingsData.moveLeft = key.displayName;
                 break;
 
-            case Controls.MoveRight:
-                action.FindAction("Movement").ChangeBinding(1).Erase();
-                action.FindAction("Movement").AddCompositeBinding("2DVector")
+            case Controls.moveRight:
+                inputActionAsset.FindAction("Movement").ChangeBinding(1).Erase();
+                inputActionAsset.FindAction("Movement").AddCompositeBinding("2DVector")
                     .With("Up", settingsData.moveUp)
                     .With("Down", settingsData.moveDown)
                     .With("Left", settingsData.moveLeft)
@@ -129,13 +136,13 @@ public class ControlScript : BaseSaveScript
                 settingsData.moveRight = key.displayName;
                 break;
 
-            case Controls.MainAttack:
-                action.FindAction("shoot").ApplyBindingOverride(key.path);
+            case Controls.mainAttack:
+                inputActionAsset.FindAction("shoot").ApplyBindingOverride(key.path);
                 settingsData.mainAttack = key.displayName;
                 break;
 
-            case Controls.SpecialAbility:
-                action.FindAction("special").ApplyBindingOverride(key.path);
+            case Controls.specialAbility:
+                inputActionAsset.FindAction("special").ApplyBindingOverride(key.path);
                 settingsData.specialAbility = key.displayName;
                 break;
         }
