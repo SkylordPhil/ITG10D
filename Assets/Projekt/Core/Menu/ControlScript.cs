@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System;
 
 public enum Controls { moveUp, moveDown, moveLeft, moveRight, mainAttack, specialAbility };
 
@@ -19,77 +20,75 @@ public class ControlScript : BaseSaveScript
 
     public void Start()
     {
+        string[] textArray = { };
 
         switch (controls)
         {
             case Controls.moveUp:
-                textField.text = settingsData.moveUp;
+                textArray = settingsData.moveUp.Split("/");
                 break;
 
             case Controls.moveDown:
-                textField.text = settingsData.moveDown;
+                textArray = settingsData.moveDown.Split("/");
                 break;
 
             case Controls.moveLeft:
-                textField.text = settingsData.moveLeft;
+                textArray = settingsData.moveLeft.Split("/");
                 break;
 
             case Controls.moveRight:
-                textField.text = settingsData.moveRight;
+                textArray = settingsData.moveRight.Split("/");
                 break;
 
             case Controls.mainAttack:
-                textField.text = settingsData.mainAttack;
+                textArray = settingsData.mainAttack.Split("/");
                 break;
 
             case Controls.specialAbility:
-                textField.text = settingsData.specialAbility;
+                textArray = settingsData.specialAbility.Split("/");
                 break;
         }
+        
+        string vartext = textArray[textArray.Length - 1];
+        vartext = vartext[0].ToString().ToUpper() + vartext.Substring(1);
+        textField.text = vartext;
     }
 
 
     public void InitializeKeyChange()
     {
-            isPressed = true;
             textField.text = "Press Button";            
 
-            Debug.Log("test");
             switch (controls)
             {
                 case Controls.moveUp:
-                    textField.text = settingsData.moveUp;
-                    break;
-
                 case Controls.moveDown:
-                    textField.text = settingsData.moveDown;
-                    break;
-
                 case Controls.moveLeft:
-                    textField.text = settingsData.moveLeft;
-                    break;
-
                 case Controls.moveRight:
-                    textField.text = settingsData.moveRight;
-                    break;
+                    inputActionAsset.FindAction("Movement").PerformInteractiveRebinding(1).WithExpectedControlType("Button").OnMatchWaitForAnother(0.1f).OnComplete(operation =>
+                    {
+                        saveAndDisplayNewKeybind(operation.selectedControl);
+                        operation.Dispose();
+                    }).Start();
+                break;
 
                 case Controls.mainAttack:
                     inputActionAsset.FindAction("Shoot").PerformInteractiveRebinding().OnMatchWaitForAnother(0.1f).OnComplete(operation =>
                     {
-                        string newKeybind = inputActionAsset.FindAction("Shoot").GetBindingDisplayString();
-                        Debug.Log(newKeybind);
-                        settingsData.mainAttack = newKeybind;
-                        textField.text = newKeybind;
+                        saveAndDisplayNewKeybind(operation.selectedControl);
+                        operation.Dispose();
                     }).Start();
-                    textField.text = settingsData.mainAttack;
                     break;
 
                 case Controls.specialAbility:
-                    textField.text = settingsData.specialAbility;
+                    inputActionAsset.FindAction("special").PerformInteractiveRebinding().OnMatchWaitForAnother(0.1f).OnComplete(operation =>
+                    {
+                        saveAndDisplayNewKeybind(operation.selectedControl);
+                        operation.Dispose();
+                    }).Start();
                     break;
             }
 
-            isPressed = false;
     }
 
     private void saveAndDisplayNewKeybind(InputControl key)
@@ -103,7 +102,7 @@ public class ControlScript : BaseSaveScript
                     .With("Down", settingsData.moveDown)
                     .With("Left", settingsData.moveLeft)
                     .With("Right", settingsData.moveRight);
-                settingsData.moveUp = key.displayName;
+                settingsData.p_moveUp = key.path;
                 break;
 
             case Controls.moveDown:
@@ -113,7 +112,7 @@ public class ControlScript : BaseSaveScript
                     .With("Down", key.path)
                     .With("Left", settingsData.moveLeft)
                     .With("Right", settingsData.moveRight);
-                settingsData.moveDown = key.displayName;
+                settingsData.p_moveDown = key.path;
                 break;
 
             case Controls.moveLeft:
@@ -123,7 +122,7 @@ public class ControlScript : BaseSaveScript
                     .With("Down", settingsData.moveDown)
                     .With("Left", key.path)
                     .With("Right", settingsData.moveRight);
-                settingsData.moveLeft = key.displayName;
+                settingsData.p_moveLeft = key.path;
                 break;
 
             case Controls.moveRight:
@@ -133,17 +132,17 @@ public class ControlScript : BaseSaveScript
                     .With("Down", settingsData.moveDown)
                     .With("Left", settingsData.moveLeft)
                     .With("Right", key.path);
-                settingsData.moveRight = key.displayName;
+                settingsData.p_moveRight = key.path;
                 break;
 
             case Controls.mainAttack:
                 inputActionAsset.FindAction("shoot").ApplyBindingOverride(key.path);
-                settingsData.mainAttack = key.displayName;
+                settingsData.p_mainAttack = key.path;
                 break;
 
             case Controls.specialAbility:
                 inputActionAsset.FindAction("special").ApplyBindingOverride(key.path);
-                settingsData.specialAbility = key.displayName;
+                settingsData.p_specialAbility = key.path;
                 break;
         }
 
