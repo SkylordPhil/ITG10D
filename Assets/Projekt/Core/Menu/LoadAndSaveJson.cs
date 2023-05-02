@@ -70,7 +70,6 @@ public class LoadAndSaveJson : MonoBehaviour
             .With("Right", settingsData.moveRight);
         inputActionAsset.FindAction("shoot").ApplyBindingOverride(settingsData.mainAttack);
         inputActionAsset.FindAction("special").ApplyBindingOverride(settingsData.specialAbility);
-        //settingsData = JsonUtility.FromJson<SettingsData>(json);
     }
 
     private void GetPath()

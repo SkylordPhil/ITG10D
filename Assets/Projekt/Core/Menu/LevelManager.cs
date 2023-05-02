@@ -48,12 +48,23 @@ public class LevelManager : MonoBehaviour
 
     public void LoadMenu()
     {
-        
+        CameraController.Instance.isIngame = false;
+        GameManagerController.Instance.Player.gameObject.SetActive(false);
+        //pauses the update logic
+        Time.timeScale = 0;
+        if (!SceneManager.GetSceneByName("IngameMenuScene").isLoaded)
+        {
+            SceneManager.LoadSceneAsync("IngameMenuScene", LoadSceneMode.Additive);
+        }
     }
 
     public void UnloadMenu()
     {
-
+        CameraController.Instance.isIngame = true;
+        GameManagerController.Instance.Player.gameObject.SetActive(true);
+        //pauses the update logic
+        Time.timeScale = 1;
+        SceneManager.UnloadSceneAsync("IngameMenuScene");
     }
     
 
@@ -66,8 +77,10 @@ public class LevelManager : MonoBehaviour
     public void LoadLevel(int levelNumber)
     {
 
-        SceneManager.LoadScene(allLevels[levelNumber].levelPath, LoadSceneMode.Additive);
+        //SceneManager.LoadScene(allLevels[levelNumber].levelPath, LoadSceneMode.Additive);
+        var load = SceneManager.LoadSceneAsync(allLevels[levelNumber].levelPath, LoadSceneMode.Additive);
         currentLevel = allLevels[levelNumber];
+        StartCoroutine(LoadLevelRoutine(load));
 
     }
 
@@ -87,6 +100,16 @@ public class LevelManager : MonoBehaviour
     {
         LoadLevel(0);
         
+    }
+
+
+    IEnumerator LoadLevelRoutine(AsyncOperation op)
+    {
+        while(!op.isDone)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        SceneManager.SetActiveScene(SceneManager.GetSceneByPath(currentLevel.levelPath));
     }
 
     

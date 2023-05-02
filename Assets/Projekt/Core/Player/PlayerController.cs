@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private InputAction attack;
     private InputAction aimAction;
+    private InputAction openMenuAction;
 
     /// <summary>
     /// enables all variables and subscribes the controlls to methods
@@ -92,12 +93,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         characterController = GetComponent<CharacterController2D>();
         attack = playerControlls.FindAction("shoot");
         aimAction = playerControlls.FindAction("Aim");
+        openMenuAction = playerControlls.FindAction("OpenMenu");
+        openMenuAction.performed += OpenMenu;
         attack.performed += AttackAction;
         
 
         TempActions();
 
     }
+
+    
 
     private void Start()
     {
@@ -191,6 +196,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void AttackAction(InputAction.CallbackContext ctx)
     {
         attackIsPressed = ctx.control.IsPressed();
+    }
+
+    private void OpenMenu(InputAction.CallbackContext obj)
+    {
+        LevelManager.instance.LoadMenu();
     }
 
 

@@ -48,16 +48,16 @@ public class ControlScript : BaseSaveScript
                 textArray = settingsData.specialAbility.Split("/");
                 break;
         }
+
+        //displays the currently binded key
+        textField.text = FormateString(textArray);
         
-        string vartext = textArray[textArray.Length - 1];
-        vartext = vartext[0].ToString().ToUpper() + vartext.Substring(1);
-        textField.text = vartext;
     }
 
 
     public void InitializeKeyChange()
     {
-            textField.text = "Press Button";            
+            textField.text = "Press Button";           
 
             switch (controls)
             {
@@ -65,17 +65,45 @@ public class ControlScript : BaseSaveScript
                 case Controls.moveDown:
                 case Controls.moveLeft:
                 case Controls.moveRight:
-                    inputActionAsset.FindAction("Movement").PerformInteractiveRebinding(1).WithExpectedControlType("Button").OnMatchWaitForAnother(0.1f).OnComplete(operation =>
+                    inputActionAsset.FindAction("Movement").PerformInteractiveRebinding().WithExpectedControlType("Button").OnMatchWaitForAnother(0.1f).OnComplete(operation =>
                     {
-                        saveAndDisplayNewKeybind(operation.selectedControl);
+                        if (!CheckForDoubleBindings(operation.selectedControl))
+                        {
+                            textField.text = FormateString((string)settingsData.GetType().GetField(controls.ToString()).GetValue(settingsData));
+                        }
+                        else
+                        {
+                            saveAndDisplayNewKeybind(operation.selectedControl);
+                        }
+                        operation.Dispose();
+                        operation.Reset();
+                        
+                        
+                    })
+                    .WithCancelingThrough("/Keyboard/escape")
+                    .OnCancel(operation => {
+                        textField.text = FormateString((string)settingsData.GetType().GetField(controls.ToString()).GetValue(settingsData));
                         operation.Dispose();
                     }).Start();
-                break;
+                    break;
 
                 case Controls.mainAttack:
                     inputActionAsset.FindAction("Shoot").PerformInteractiveRebinding().OnMatchWaitForAnother(0.1f).OnComplete(operation =>
                     {
-                        saveAndDisplayNewKeybind(operation.selectedControl);
+                        if (!CheckForDoubleBindings(operation.selectedControl))
+                        {
+                            textField.text = FormateString(settingsData.mainAttack);
+                        } 
+                        else
+                        {
+                            saveAndDisplayNewKeybind(operation.selectedControl);
+                        }
+                        
+                        operation.Dispose();
+                    })
+                    .WithCancelingThrough("/Keyboard/escape")
+                    .OnCancel(operation => {
+                        textField.text = FormateString(settingsData.mainAttack);
                         operation.Dispose();
                     }).Start();
                     break;
@@ -83,7 +111,19 @@ public class ControlScript : BaseSaveScript
                 case Controls.specialAbility:
                     inputActionAsset.FindAction("special").PerformInteractiveRebinding().OnMatchWaitForAnother(0.1f).OnComplete(operation =>
                     {
-                        saveAndDisplayNewKeybind(operation.selectedControl);
+                        if (!CheckForDoubleBindings(operation.selectedControl))
+                        {
+                            textField.text = FormateString(settingsData.specialAbility);
+                        }
+                        else
+                        {
+                            saveAndDisplayNewKeybind(operation.selectedControl);
+                        }
+                        operation.Dispose();
+                    })
+                    .WithCancelingThrough("/Keyboard/escape")
+                    .OnCancel(operation => {
+                        textField.text = FormateString(settingsData.specialAbility);
                         operation.Dispose();
                     }).Start();
                     break;
@@ -93,10 +133,11 @@ public class ControlScript : BaseSaveScript
 
     private void saveAndDisplayNewKeybind(InputControl key)
     {
+        Debug.Log("Remap");
         switch (controls) 
         {
             case Controls.moveUp:
-                inputActionAsset.FindAction("Movement").ChangeBinding(1).Erase();
+                inputActionAsset.FindAction("Movement").ChangeCompositeBinding("2DVector").Erase();
                 inputActionAsset.FindAction("Movement").AddCompositeBinding("2DVector")
                     .With("Up", key.path)
                     .With("Down", settingsData.moveDown)
@@ -106,7 +147,7 @@ public class ControlScript : BaseSaveScript
                 break;
 
             case Controls.moveDown:
-                inputActionAsset.FindAction("Movement").ChangeBinding(1).Erase();
+                inputActionAsset.FindAction("Movement").ChangeBinding(0).Erase();
                 inputActionAsset.FindAction("Movement").AddCompositeBinding("2DVector")
                     .With("Up", settingsData.moveUp)
                     .With("Down", key.path)
@@ -116,7 +157,7 @@ public class ControlScript : BaseSaveScript
                 break;
 
             case Controls.moveLeft:
-                inputActionAsset.FindAction("Movement").ChangeBinding(1).Erase();
+                inputActionAsset.FindAction("Movement").ChangeBinding(0).Erase();
                 inputActionAsset.FindAction("Movement").AddCompositeBinding("2DVector")
                     .With("Up", settingsData.moveUp)
                     .With("Down", settingsData.moveDown)
@@ -126,7 +167,7 @@ public class ControlScript : BaseSaveScript
                 break;
 
             case Controls.moveRight:
-                inputActionAsset.FindAction("Movement").ChangeBinding(1).Erase();
+                inputActionAsset.FindAction("Movement").ChangeBinding(0).Erase();
                 inputActionAsset.FindAction("Movement").AddCompositeBinding("2DVector")
                     .With("Up", settingsData.moveUp)
                     .With("Down", settingsData.moveDown)
@@ -149,4 +190,33 @@ public class ControlScript : BaseSaveScript
         textField.text = key.displayName;
     }
     
+
+    private string FormateString(string[] unformatedArray)
+    {
+        //changes the saved keybind from the json into a easy to read string format for the ui
+        string vartext = unformatedArray[unformatedArray.Length - 1];
+        return vartext[0].ToString().ToUpper() + vartext.Substring(1);
+    }
+    private string FormateString(string unformatedString)
+    {
+        //changes the saved keybind from the json into a easy to read string format for the ui
+        string[] unformatedArray = unformatedString.Split("/"); 
+        string vartext = unformatedArray[unformatedArray.Length - 1];
+        return vartext[0].ToString().ToUpper() + vartext.Substring(1);
+    }
+
+    private bool CheckForDoubleBindings(InputControl key)
+    {
+        InputActionMap[] maps = inputActionAsset.actionMaps.ToArray();
+        foreach(InputActionMap map in maps)
+        {
+            foreach(InputBinding binding in map.bindings)
+            {
+                Debug.Log(binding.path);
+                if (binding.path == key.path) return false;
+            }
+        }
+        return true;
+    }
+
 }
