@@ -33,6 +33,7 @@ public class MenuManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        
         LevelManager.instance.UnloadCurrentLevel();
         SceneManager.UnloadSceneAsync("IngameMenuScene");
         SceneManager.LoadSceneAsync("MainMenuScene", LoadSceneMode.Additive);

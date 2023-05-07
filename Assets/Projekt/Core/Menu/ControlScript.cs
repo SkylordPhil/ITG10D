@@ -65,6 +65,7 @@ public class ControlScript : BaseSaveScript
                 case Controls.moveDown:
                 case Controls.moveLeft:
                 case Controls.moveRight:
+                inputActionAsset.FindAction("Movement").Disable();
                     inputActionAsset.FindAction("Movement").PerformInteractiveRebinding().WithExpectedControlType("Button").OnMatchWaitForAnother(0.1f).OnComplete(operation =>
                     {
                         if (!CheckForDoubleBindings(operation.selectedControl))
@@ -77,13 +78,15 @@ public class ControlScript : BaseSaveScript
                         }
                         operation.Dispose();
                         operation.Reset();
-                        
-                        
+                        inputActionAsset.FindAction("Movement").Enable();
+
+
                     })
                     .WithCancelingThrough("/Keyboard/escape")
                     .OnCancel(operation => {
                         textField.text = FormateString((string)settingsData.GetType().GetField(controls.ToString()).GetValue(settingsData));
                         operation.Dispose();
+                        inputActionAsset.FindAction("Movement").Enable();
                     }).Start();
                     break;
 
@@ -202,6 +205,7 @@ public class ControlScript : BaseSaveScript
         //changes the saved keybind from the json into a easy to read string format for the ui
         string[] unformatedArray = unformatedString.Split("/"); 
         string vartext = unformatedArray[unformatedArray.Length - 1];
+        Debug.Log(vartext);
         return vartext[0].ToString().ToUpper() + vartext.Substring(1);
     }
 

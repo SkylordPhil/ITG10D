@@ -19,6 +19,8 @@ public class LevelManager : MonoBehaviour
     
     [SerializeField] private GameLevel[] allLevels;
 
+    private bool _isLoading;
+
 
     private void Awake()
     {
@@ -48,14 +50,21 @@ public class LevelManager : MonoBehaviour
 
     public void LoadMenu()
     {
+        //prevents LoadSceneAsync from loading two or more ingameMenuScene
+        if(_isLoading)
+        {
+            return;
+        }
+        //makes camera stop following the player
         CameraController.Instance.isIngame = false;
         GameManagerController.Instance.Player.gameObject.SetActive(false);
         //pauses the update logic
         Time.timeScale = 0;
-        if (!SceneManager.GetSceneByName("IngameMenuScene").isLoaded)
-        {
-            SceneManager.LoadSceneAsync("IngameMenuScene", LoadSceneMode.Additive);
-        }
+        //loads the IngameMenuScene
+        var op = SceneManager.LoadSceneAsync("IngameMenuScene", LoadSceneMode.Additive);
+        _isLoading = true;
+        StartCoroutine(LoadMenuRoutine(op));
+
     }
 
     public void UnloadMenu()
@@ -92,7 +101,6 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.UnloadSceneAsync(currentLevel.levelPath);
         currentLevel = null;
-
     }
 
     [ContextMenu("Debug Load")]
@@ -107,10 +115,22 @@ public class LevelManager : MonoBehaviour
     {
         while(!op.isDone)
         {
+            //
             yield return new WaitForEndOfFrame();
         }
+        //sets EnemyTestScene to active scene
         SceneManager.SetActiveScene(SceneManager.GetSceneByPath(currentLevel.levelPath));
     }
 
+    IEnumerator LoadMenuRoutine(AsyncOperation op)
+    {
+        
+        while(!op.isDone)
+        {
+            //executed while loading the IngameMenuScene hasn't been finished
+            yield return new WaitForEndOfFrame();
+        }
+        _isLoading = false;
+    }
     
 }

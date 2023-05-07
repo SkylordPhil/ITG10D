@@ -3404,7 +3404,7 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   menuType: 0
   menuManager: {fileID: 480033379}
-  stringParam: musicVolume
+  audioMenuType: musicVolumeValue
   slider: {fileID: 612489895}
   textMesh: {fileID: 1364647734}
 --- !u!1 &635061429
@@ -4883,8 +4883,8 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   menuType: 0
   menuManager: {fileID: 480033379}
-  stringParam: masterVolume
-  slider: {fileID: 0}
+  audioMenuType: masterVolumeValue
+  slider: {fileID: 951586185}
   textMesh: {fileID: 556394221}
 --- !u!1 &1012666969
 GameObject:
@@ -7230,7 +7230,7 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   menuType: 0
   menuManager: {fileID: 480033379}
-  stringParam: sfxVolume
+  audioMenuType: sfxVolumeValue
   slider: {fileID: 1329053636}
   textMesh: {fileID: 528280414}
 --- !u!1 &1331993975
