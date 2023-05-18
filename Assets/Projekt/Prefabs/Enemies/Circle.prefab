@@ -117,10 +117,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  maxHealth: 1
+  currentSpeed: 0
+  maxHealth: 15
   currentHealth: 0
   damage: 1
   xpPrefab: {fileID: 770071918023915150, guid: 6890c6748b972504cbdfc9362866d7bd, type: 3}
+  baseBullet: {fileID: 1597177022687359600, guid: 449fe90b598de3c46b5ccef2d68a0506, type: 3}
+  MagmaIstance: {fileID: 6759572260524808874, guid: 61ebb06514bfb084a94b4b7d47a22bb0, type: 3}
   Player: {fileID: 0}
 --- !u!50 &5492504562885550709
 Rigidbody2D:

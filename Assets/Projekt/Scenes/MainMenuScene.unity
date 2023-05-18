@@ -218,7 +218,7 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   controls: 5
   textField: {fileID: 2106918569}
-  inputActionAsset: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
+  action: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
 --- !u!1 &24196753
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +314,7 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   controls: 2
   textField: {fileID: 1458480091}
-  inputActionAsset: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
+  action: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
 --- !u!1 &27907352
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,7 +754,7 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   controls: 1
   textField: {fileID: 789219366}
-  inputActionAsset: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
+  action: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
 --- !u!1 &146709868
 GameObject:
   m_ObjectHideFlags: 0
@@ -2355,7 +2355,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &480033378
 Transform:
   m_ObjectHideFlags: 0
@@ -3404,7 +3404,7 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   menuType: 0
   menuManager: {fileID: 480033379}
-  audioMenuType: musicVolumeValue
+  stringParam: musicVolume
   slider: {fileID: 612489895}
   textMesh: {fileID: 1364647734}
 --- !u!1 &635061429
@@ -4036,7 +4036,7 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   controls: 4
   textField: {fileID: 1411413524}
-  inputActionAsset: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
+  action: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
 --- !u!1 &789219364
 GameObject:
   m_ObjectHideFlags: 0
@@ -4883,8 +4883,8 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   menuType: 0
   menuManager: {fileID: 480033379}
-  audioMenuType: masterVolumeValue
-  slider: {fileID: 951586185}
+  stringParam: masterVolume
+  slider: {fileID: 0}
   textMesh: {fileID: 556394221}
 --- !u!1 &1012666969
 GameObject:
@@ -6446,7 +6446,7 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   controls: 0
   textField: {fileID: 1920931575}
-  inputActionAsset: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
+  action: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
 --- !u!1 &1256440976
 GameObject:
   m_ObjectHideFlags: 0
@@ -7230,7 +7230,7 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   menuType: 0
   menuManager: {fileID: 480033379}
-  audioMenuType: sfxVolumeValue
+  stringParam: sfxVolume
   slider: {fileID: 1329053636}
   textMesh: {fileID: 528280414}
 --- !u!1 &1331993975
@@ -7328,7 +7328,7 @@ MonoBehaviour:
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
   controls: 3
   textField: {fileID: 1234522028}
-  inputActionAsset: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
+  action: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
 --- !u!1 &1364647732
 GameObject:
   m_ObjectHideFlags: 0
@@ -9033,7 +9033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1832287152
 Transform:
   m_ObjectHideFlags: 0

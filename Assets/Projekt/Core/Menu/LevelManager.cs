@@ -19,8 +19,6 @@ public class LevelManager : MonoBehaviour
     
     [SerializeField] private GameLevel[] allLevels;
 
-    private bool _isLoading;
-
 
     private void Awake()
     {
@@ -50,30 +48,12 @@ public class LevelManager : MonoBehaviour
 
     public void LoadMenu()
     {
-        //prevents LoadSceneAsync from loading two or more ingameMenuScene
-        if(_isLoading)
-        {
-            return;
-        }
-        //makes camera stop following the player
-        CameraController.Instance.isIngame = false;
-        GameManagerController.Instance.Player.gameObject.SetActive(false);
-        //pauses the update logic
-        Time.timeScale = 0;
-        //loads the IngameMenuScene
-        var op = SceneManager.LoadSceneAsync("IngameMenuScene", LoadSceneMode.Additive);
-        _isLoading = true;
-        StartCoroutine(LoadMenuRoutine(op));
-
+        
     }
 
     public void UnloadMenu()
     {
-        CameraController.Instance.isIngame = true;
-        GameManagerController.Instance.Player.gameObject.SetActive(true);
-        //pauses the update logic
-        Time.timeScale = 1;
-        SceneManager.UnloadSceneAsync("IngameMenuScene");
+
     }
     
 
@@ -86,10 +66,8 @@ public class LevelManager : MonoBehaviour
     public void LoadLevel(int levelNumber)
     {
 
-        //SceneManager.LoadScene(allLevels[levelNumber].levelPath, LoadSceneMode.Additive);
-        var load = SceneManager.LoadSceneAsync(allLevels[levelNumber].levelPath, LoadSceneMode.Additive);
+        SceneManager.LoadScene(allLevels[levelNumber].levelPath, LoadSceneMode.Additive);
         currentLevel = allLevels[levelNumber];
-        StartCoroutine(LoadLevelRoutine(load));
 
     }
 
@@ -101,6 +79,7 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.UnloadSceneAsync(currentLevel.levelPath);
         currentLevel = null;
+
     }
 
     [ContextMenu("Debug Load")]
@@ -110,27 +89,5 @@ public class LevelManager : MonoBehaviour
         
     }
 
-
-    IEnumerator LoadLevelRoutine(AsyncOperation op)
-    {
-        while(!op.isDone)
-        {
-            //
-            yield return new WaitForEndOfFrame();
-        }
-        //sets EnemyTestScene to active scene
-        SceneManager.SetActiveScene(SceneManager.GetSceneByPath(currentLevel.levelPath));
-    }
-
-    IEnumerator LoadMenuRoutine(AsyncOperation op)
-    {
-        
-        while(!op.isDone)
-        {
-            //executed while loading the IngameMenuScene hasn't been finished
-            yield return new WaitForEndOfFrame();
-        }
-        _isLoading = false;
-    }
     
 }

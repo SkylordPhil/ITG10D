@@ -157,7 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9074c1bd9204d234d9c4bbc78a87395e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActionAsset: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
   settingsData: {fileID: 11400000, guid: 27a28dd1003eb8547a1fe038b05fe90d, type: 2}
 --- !u!4 &137909185
 Transform:
@@ -252,7 +251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4592704468718240482, guid: 3597e1db48433874f93889f83300b4bf, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6526449413069579901, guid: 3597e1db48433874f93889f83300b4bf, type: 3}
       propertyPath: m_RootOrder

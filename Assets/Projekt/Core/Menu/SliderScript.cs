@@ -9,14 +9,15 @@ public class SliderScript : BaseSaveScript
 {
     [SerializeField] private MenuType menuType;
     [SerializeField] private MenuManager menuManager;
-    [SerializeField] private string audioMenuType;
+    [SerializeField] private string stringParam;
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI textMesh;
 
     private void Start()
-    { 
+    {
+        slider = this.gameObject.GetComponent<Slider>(); 
 
-        switch (audioMenuType)
+        switch (stringParam)
         {
             case "masterVolume":
                 slider.value = settingsData.masterVolumeValue;
@@ -35,13 +36,7 @@ public class SliderScript : BaseSaveScript
     public void OnChange()
     {
         float convertedSliderValue = slider.value / 100;
-        menuManager.DetermineMenuType(menuType, convertedSliderValue, audioMenuType);
+        menuManager.DetermineMenuType(menuType, convertedSliderValue, stringParam);
         textMesh.text = slider.value.ToString();
-        var currentlySavedValue = settingsData.GetType().GetProperty(audioMenuType).GetValue(settingsData);
-        Debug.Log("currentlySavedValue");
-        if (slider.value != (int)settingsData.GetType().GetProperty(audioMenuType).GetValue(settingsData))
-        {
-            Debug.Log("WOrked");
-        }
     }
 }

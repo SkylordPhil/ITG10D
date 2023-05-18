@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4164381320863792956}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,8 +99,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 15
-  damage: 1
+  baseDamage: 3
+  currentDamage: 0
+  damageIncrease: 0
   lifeTime: 2
+  penetrationAmount: 0
 --- !u!70 &4164381320863792956
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
