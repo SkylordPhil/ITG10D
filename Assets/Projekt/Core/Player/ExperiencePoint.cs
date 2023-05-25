@@ -6,41 +6,31 @@ using UnityEngine.UIElements;
 public class ExperiencePoint : MonoBehaviour
 {
     public int XP = 1;
-    public float speed = 2f;
+    public float speed = 4f;
     public float range = 3f;
-    //public PlayerController Player;
-    private GameObject Player;
-    private GameObject Raven;
-    
+    public PlayerController Player;
 
-    public bool ravenSpecial = false;
+    private bool attracted = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Player = GameManagerController.Instance.getPlayer();
-        Player = GameObject.FindGameObjectWithTag("Player");
-        Raven = GameObject.FindGameObjectWithTag("Raven");
+        Player = GameManagerController.Instance.getPlayer();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float distancePlayer = Vector2.Distance(transform.position, Player.transform.position);
-        if (distancePlayer <= range)
+        float distance = Vector3.Distance(transform.position, Player.transform.position);
+
+        if (distance <= range)
         {
-            Attracted(Player);
+            attracted = true;
         }
 
-        if (Raven != null && !ravenSpecial)
+        if (attracted)
         {
-            float distanceRaven = Vector2.Distance(transform.position, Raven.transform.position);
-            bool pickup = Raven.GetComponent<RavenBase>().pickup;
-
-            if (distanceRaven <= range && pickup)
-            {
-                Attracted(Raven);
-            }
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
         }
     }
 
@@ -50,47 +40,16 @@ public class ExperiencePoint : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
-            OnReachedPlayer();
-        }
-        
-        if (collider.gameObject.CompareTag("Raven"))
-        {
-            Debug.Log("Raben-XP");
-            Destroy(gameObject);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Raven"))
-        {
-            Debug.Log("Raben-XP");
-            Destroy(gameObject);
         }
     }
 
     private void OnReachedPlayer()
     {
-        //GameManagerController.Instance.Player.GetXP(10);
-    }
-    
-    private void Attracted(GameObject target)
-    {
-        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);  
+        GameManagerController.Instance.Player.GetXP(1);
     }
 
     public void SpawnXP()
     {
 
-    }
-
-    public void ModifyRange(float mod)
-    {
-        range = mod;
-    }
-
-    public void ModifySpeed(float mod)
-    {
-        speed = mod;
     }
 }

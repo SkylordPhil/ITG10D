@@ -5,10 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - XP
-  - Raven
-  - Bullet
-  - RavenFull
   layers:
   - Default
   - TransparentFX
