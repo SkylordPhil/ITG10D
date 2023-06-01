@@ -203,7 +203,9 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
             // Set on label (if any).
             if (m_BindingText != null)
+            {
                 m_BindingText.text = displayString;
+            }
 
             // Give listeners a chance to configure UI in response.
             m_UpdateBindingUIEvent?.Invoke(this, displayString, deviceLayoutName, controlPath);
@@ -278,7 +280,10 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                         //Enable action again
                         action.Enable();
                         m_RebindStopEvent?.Invoke(this, operation);
-                        m_RebindOverlay?.SetActive(false);
+                        if (m_RebindOverlay != null)
+                        {
+                            m_RebindOverlay?.SetActive(false);
+                        }
                         UpdateBindingDisplay();
                         CleanUp();
                     })
@@ -355,23 +360,52 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 if (binding.action == newBinding.action) {
                     continue;
                 }
+                Debug.Log("ComparedBinding: " + binding.effectivePath);
+                Debug.Log("NewBinding: " + newBinding.effectivePath);
                 if (binding.effectivePath == newBinding.effectivePath) {
                     Debug.Log("Duplicate Binding Found: " + newBinding.effectivePath);
                     return true;
                 }
             }
 
+            Debug.Log(newBinding.isPartOfComposite);
             //Check for duplicate composite bindings
             if (allCompositeParts)
             {
-                for (int i = 1; i < bindingIndex; ++i)
+                for (int i = 1; i < bindingIndex; i++)
                 {
+                    Debug.Log("ComparedBinding: " + action.bindings[i].effectivePath);
+                    Debug.Log("NewBinding: " + newBinding.effectivePath);
                     if (action.bindings[i].effectivePath == newBinding.effectivePath)
                     {
                         Debug.Log("Duplicate Binding Found: " + newBinding.effectivePath);
                         return true;
                     }
                 }
+            }
+
+            //if the currently rebinded binding is part of a composite we have to check if any other part of the composite has the same binding
+            if (newBinding.isPartOfComposite)
+            {
+                //Ignoring first entry which is a summary of all bindings
+                for (int compositeBindingIndex = 1; compositeBindingIndex < action.bindings.Count; compositeBindingIndex++) 
+                {
+                    InputBinding bindingToCompare = action.bindings[compositeBindingIndex];
+                    Debug.Log(action.bindings[compositeBindingIndex].effectivePath);
+                    Debug.Log(action.bindings[compositeBindingIndex].id);
+                    //checks if the compared binding is the rebinded binding
+                    if (bindingToCompare.id == newBinding.id )
+                    {
+                        continue;
+                    }
+                    //checks if both bindings are binded on the same key
+                    else if (bindingToCompare.effectivePath == newBinding.effectivePath)
+                    {
+                        Debug.Log("Duplicate Binding Found: " + newBinding.effectivePath);
+                        return true;
+                    }
+                }
+                return false;
             }
 
             return false;
