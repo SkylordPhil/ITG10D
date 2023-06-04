@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class ExperiencePoint : MonoBehaviour
 {
-    public int XP = 1;
+    public int XP;
     public float speed = 2f;
     public float range = 3f;
     //public PlayerController Player;
@@ -72,6 +72,7 @@ public class ExperiencePoint : MonoBehaviour
     private void OnReachedPlayer()
     {
         //GameManagerController.Instance.Player.GetXP(10);
+        Player.GetComponent<PlayerController>().GetXP(XP);
     }
     
     private void Attracted(GameObject target)

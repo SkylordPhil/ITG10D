@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: ea04494a3b21bb3489db425e12528ef0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - UserInterface: {fileID: 8721115992907155293, guid: f5a60104c091dc740be560393ba449f9, type: 3}
+  - timeDisplay: {instanceID: 0}
+  - scoreDisplay: {instanceID: 0}
+  - levelDisplay: {instanceID: 0}
+  - levelProgress: {instanceID: 0}
+  - HealthPoint: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -30,6 +30,10 @@ public class BaseEnemy : MonoBehaviour, IDamageable
 
     public PlayerController Player;
 
+    [SerializeField] private ParticleSystem fireEffect;
+    [SerializeField] private ParticleSystem slowedEffect;
+    [SerializeField] private ParticleSystem frozenEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,11 +84,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable
             Cold();
             Ice();
             Magma();
-            bool burning = Player.GetComponent<PlayerController>().fireDmg;
-            if (burning)
-            {
-                Burning();
-            }
+            Burning();
         }
     }
 
@@ -109,24 +109,26 @@ public class BaseEnemy : MonoBehaviour, IDamageable
     private void Cold()
     {
         bool cold = Player.GetComponent<PlayerController>().cold;
-        if (cold)
+        if (cold && slowed != true)
         {
-            Debug.Log("Freezing");
-
             duration_slowed = Player.GetComponent<PlayerController>().coldTime;
             float slowedBy = Player.GetComponent<PlayerController>().coldEffect;
 
             currentSpeed = currentSpeed * (1 - slowedBy);
             slowed = true;
+
+            if (!slowedEffect.isPlaying)
+            {
+                slowedEffect.Play();
+            }
         }
     }
 
     private void Ice()
     {
         bool ice = Player.GetComponent<PlayerController>().ice;
-        if (ice)
+        if (ice && frozen != true)
         {
-            Debug.Log("Iceing over");
             currentSpeed = 0;
 
             float frozen_min = Player.GetComponent<PlayerController>().iceMinTime;
@@ -134,14 +136,29 @@ public class BaseEnemy : MonoBehaviour, IDamageable
             duration_frozen = Random.Range(frozen_min, frozen_max);
 
             frozen = true;
+
+            //frozenEffect.GetComponent<ParticleSystem>().main.duration = duration_frozen;
+            if (!frozenEffect.isPlaying)
+            {
+                frozenEffect.Play();
+            }
         }
     }
 
     public void Burning()
     {
-        fireDmg = Player.GetComponent<PlayerController>().fireDmgAmount;
-        duration_fire = Player.GetComponent<PlayerController>().fireTime;
-        fire = true;
+        bool burning = Player.GetComponent<PlayerController>().fireDmg;
+        if (burning && fire != true)
+        {
+            fireDmg = Player.GetComponent<PlayerController>().fireDmgAmount;
+            duration_fire = Player.GetComponent<PlayerController>().fireTime;
+            fire = true;
+
+            if (!fireEffect.isPlaying)
+            {
+                fireEffect.Play();
+            }
+        }
     }
 
     private void Magma()
@@ -160,8 +177,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable
 
     private void Splinter()
     {
-        Debug.Log("Splintering");
-        
         int amount = Player.GetComponent<PlayerController>().splintersAnz;
         for (int i = 0; i < amount; i++)
         {
@@ -180,8 +195,11 @@ public class BaseEnemy : MonoBehaviour, IDamageable
             duration_slowed -= Time.deltaTime;
             if (duration_slowed <= 0)
             {
+                Debug.Log("Langsam aus");
                 currentSpeed = speed;
                 slowed = false;
+
+                slowedEffect.Stop();
             }
         }
 
@@ -190,8 +208,10 @@ public class BaseEnemy : MonoBehaviour, IDamageable
             duration_frozen -= Time.deltaTime;
             if (duration_frozen <= 0)
             {
+                Debug.Log("Eis aus");
                 currentSpeed = speed;
                 frozen = false;
+                frozenEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             }
         }
 
@@ -201,13 +221,13 @@ public class BaseEnemy : MonoBehaviour, IDamageable
             duration_fire -= Time.deltaTime;
             if (currentTick <= 0)
             {
-                Debug.Log("Brennt");
                 TakeDamage((int)fireDmg);
                 currentTick = fireTick;
             }
             if (duration_fire <= 0)
             {
                 fire = false;
+                fireEffect.Stop();
             }
         }
         

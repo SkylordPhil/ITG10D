@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Unity.Mathematics;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -16,8 +17,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Space(30)]
     [Header("Health")]
     [ContextMenuItem("Damage The Player","DebugTakeDamage")]
-    [SerializeField] private int currentHealth;
-    [SerializeField] private int currentMaxHealth;
+    [SerializeField] public int currentHealth;
+    [SerializeField] public int currentMaxHealth;
     
     [Space(30)]
     [Header("Raw Player Stats", order = 0)]
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private int currentBulletBack;
     [SerializeField] private int maxRaven;
     [SerializeField] private int currentRavens;
+    public int currentLevel;
 
     [Space(30)]
     [Header("Abilities")]
@@ -71,6 +73,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     public bool splinters = false;
     public int splintersAnz = 3;
 
+    [Space(30)]
+    [Header("LevelProgress")]
+    [SerializeField] public int currentXP;
+    [SerializeField] public int neededXP;
 
     [Space(30)]
     [Header("References")]
@@ -121,10 +127,13 @@ public class PlayerController : MonoBehaviour, IDamageable
     private int upgradeTrees_amount = 1;
     private List<UpgradeScriptableObject> selectedUpgrades = new List<UpgradeScriptableObject>();
     private List<UpgradeScriptableObject> choosableUpgrades = new List<UpgradeScriptableObject>();
-    private UpgradeScriptableObject[] upgradeSelection = new UpgradeScriptableObject[3];
+    public UpgradeScriptableObject[] upgradeSelection = new UpgradeScriptableObject[3];
 
 
-    //Abilities
+    /*[Space(30)]
+    [Header("Special")]
+    [SerializeField] public GameObject[] allSpecials;*/
+
     private bool baseSpecialBool = false;
     private bool wurfmeisterSpecialBool = false;
 
@@ -134,6 +143,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool berserkerRage = false;
     private int berserkerNegation = 0;
     private bool wounded = false;
+
+    [Space(30)]
+    [Header("UI-Elements")]
+    public GameObject upgradeUI;
 
     /// <summary>
     /// enables all variables and subscribes the controlls to methods
@@ -157,14 +170,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         GameManagerController.Instance.SetPlayer(this);
         worldCam = GameManagerController.Instance.GetCamera();
-
-        AddUpgrade(allUpgrades[0]);
-        AddUpgrade(allUpgrades[1]);
-        AddUpgrade(allUpgrades[2]);
-        AddUpgrade(allUpgrades[3]);
-
-        SelectSelectableUpgrades();
-        
     }
 
     /// <summary>
@@ -214,8 +219,9 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         HandleInput();
         HandleMovement();
+        CheckLvl();
 
-        if(attackIsPressed && !attackCD)
+        if (attackIsPressed && !attackCD)
         {
             BaseAttack();
             StartCoroutine(AttackTimer());
@@ -346,7 +352,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (currentBulletFront == 2 || currentBulletFront == 3)
         {
-            Debug.Log("attack2");
+            //Debug.Log("attack2");
             GameObject currentBullet1 = Instantiate(baseBullet);
             currentBullet1.transform.position = transform.position;
             Vector2 attackDirection1 = attackDirection * 1.5f;
@@ -701,8 +707,11 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void UpgradeFireDamage(float increase)
     {
-        fireDmg = true;
-        fireDmgAmount += increase;
+        if (increase > 0)
+        {
+            fireDmg = true;
+            fireDmgAmount += increase;
+        }
     }
 
     public void UpgradeRavenAmount(int increase)
@@ -771,9 +780,33 @@ public class PlayerController : MonoBehaviour, IDamageable
     #endregion
 
     #region LevelSystem
+    private void CheckLvl()
+    {
+        if (currentXP >= neededXP)
+        {
+            LevelUp(currentLevel);
+        }
+    }
+    
+    private void LevelUp(int lvl)
+    {
+        int baseValue = 50;
+        int mathLvl = lvl + 1;
+        float power = 1.1f;
+
+        neededXP = baseValue * (int)Mathf.Pow(mathLvl, power);
+        currentXP = 0;
+        currentLevel += 1;
+
+        SelectSelectableUpgrades();
+        UpgradePool();
+
+        Instantiate(upgradeUI);
+    }
+    
     internal void GetXP(int v)
     {
-        throw new NotImplementedException();
+        currentXP += v;
     }
     #endregion
 
