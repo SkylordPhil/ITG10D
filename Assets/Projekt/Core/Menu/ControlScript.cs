@@ -49,7 +49,7 @@ public class ControlScript : BaseSaveScript
 
     public void InitializeKeyChange()
     {
-            isPressed = true;
+            //isPressed = true;
             textField.text = "Press Button";            
 
             Debug.Log("test");
@@ -87,7 +87,7 @@ public class ControlScript : BaseSaveScript
                     break;
             }
 
-            isPressed = false;
+            //isPressed = false;
     }
 
     private void saveAndDisplayNewKeybind(InputControl key)

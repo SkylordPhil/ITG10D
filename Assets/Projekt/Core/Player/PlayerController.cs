@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Start()
     {
         GameManagerController.Instance.SetPlayer(this);
-        worldCam = GameManagerController.Instance.GetCamera();
+        worldCam = CameraController.Instance.gameObject.GetComponent<Camera>();
 
         UserIntContr = UI.GetComponent<UIScript>();
         UserIntContr.UpdateHP(currentHealth, currentMaxHealth);

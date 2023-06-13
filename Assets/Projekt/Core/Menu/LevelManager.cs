@@ -21,8 +21,6 @@ public class LevelManager : MonoBehaviour
     
     [SerializeField] private GameLevel[] allLevels;
 
-    private bool _isLoading;
-
 
     private void Awake()
     {
