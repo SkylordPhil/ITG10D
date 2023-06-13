@@ -8,66 +8,7 @@ using System.IO;
 [CreateAssetMenu(fileName = "settings", menuName = "Settings/SettingsObject", order = 1)]
 public class SettingsData: ScriptableObject
 {
-    public string p_moveUp { 
-        get { return moveUp; }
-        set 
-        { 
-            moveUp = value;
-            LoadAndSaveJson.Instance.saveSettings();
-        }
-    }
-
-    public string p_moveDown
-    {
-        get { return moveDown; }
-        set
-        {
-            moveDown = value;
-            LoadAndSaveJson.Instance.saveSettings();
-        }
-    }
-
-    public string p_moveLeft
-    {
-        get { return moveLeft; }
-        set
-        {
-            moveLeft = value;
-            LoadAndSaveJson.Instance.saveSettings();
-        }
-    }
-
-    public string p_moveRight
-    {
-        get { return moveRight; }
-        set
-        {
-            moveRight = value;
-            LoadAndSaveJson.Instance.saveSettings();
-        }
-    }
-
-    public string p_mainAttack
-    {
-        get { return mainAttack; }
-        set
-        {
-            mainAttack = value;
-            LoadAndSaveJson.Instance.saveSettings();
-        }
-    }
-
-    public string p_specialAbility
-    {
-        get { return specialAbility; }
-        set
-        {
-            specialAbility = value;
-            LoadAndSaveJson.Instance.saveSettings();
-        }
-    }
-
-
+    private string path;
 
     //Settings
     public string moveUp;
@@ -82,12 +23,12 @@ public class SettingsData: ScriptableObject
 
     public void SetDefaultData()
     {
-        moveUp = "/Keyboard/w";
-        moveDown = "/Keyboard/s";
-        moveLeft = "/Keyboard/a";
-        moveRight = "/Keyboard/d";
-        mainAttack = "/Mouse/leftButton";
-        specialAbility = "/Mouse/rightButton";
+        moveUp = "W";
+        moveDown = "S";
+        moveLeft = "A";
+        moveRight = "D";
+        mainAttack = "Left Button";
+        specialAbility = "Right Button";
         masterVolumeValue = 50;
         musicVolumeValue = 50;
         sfxVolumeValue = 50;

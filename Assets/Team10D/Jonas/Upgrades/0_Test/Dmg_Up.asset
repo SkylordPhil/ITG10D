@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4015aa7b8e35667499a0c4dda9b9782c, type: 3}
+  m_Name: Dmg_Up
+  m_EditorClassIdentifier: 
+  upgradeName: Test_Dmg
+  description: Test_Dmg_Upgrade
+  color: {r: 1, g: 0, b: 0, a: 1}
+  level: 2
+  tree: 0
+  bullets_front: 0
+  bullets_back: 0
+  bullet_damage: 0
+  bullets_speed: 0
+  bullet_penetration: 0
+  speed: 0
+  fire_rate: 0
+  health: 0
+  fire: 0
+  fire_dmg: 0
+  raven_amount: 0
+  raven_speed: 0
+  raven_inventory: 0
+  vulcan: 0
+  blitz: 0
+  cold: 0
+  ice: 0
+  splinter: 1

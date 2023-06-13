@@ -6,16 +6,21 @@ public class EnemySpawner : MonoBehaviour
 {
     private static EnemySpawner _instance;
     [SerializeField] private GameObject Enemy;
+    [SerializeField] private GameObject RangedEnemy;
     [SerializeField] private GameObject Boss;
-    public int gameStage = 1;
+    public int gameStage = 0;
+    
+    private int groupnumber;
+    private float startPause = 5f;
+    private float gameStageLength = 30f;
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(SpawnTicks());
 
-        GameManagerController.Instance.NextStageEvent -= StageUpdate;
-        GameManagerController.Instance.NextStageEvent += StageUpdate;
+        /*GameManagerController.Instance.NextStageEvent -= StageUpdate;
+        GameManagerController.Instance.NextStageEvent += StageUpdate;*/
     }
 
     // Update is called once per frame
@@ -61,35 +66,48 @@ public class EnemySpawner : MonoBehaviour
         {
             if (gameStage == 1)
             {
-                yield return new WaitForSeconds(5f);
-                gameStage++;
+                yield return new WaitForSeconds(startPause);
+                StageUpdate();
             }
             else
             {
-                yield return new WaitForSeconds(30f);
+                yield return new WaitForSeconds(gameStageLength);
+                StageUpdate();
             }
 
             Vector3 playerPosition = GameManagerController.Instance.Player.transform.position;
 
-            int entityNumber = EnemyNumber(gameStage);
+            int entityNumber = GroupNumber(gameStage);
             //gameStage ^ 2
 
             for (int i = 0; i <= entityNumber; i++)
             {
-                Vector3 spawnPosition = playerPosition + (Vector3)Random.insideUnitCircle.normalized * 15;
-                Instantiate(Enemy, spawnPosition, Quaternion.Euler(0, 0, 0));
+                Vector3 spawnCircle = playerPosition + (Vector3)Random.insideUnitCircle.normalized * 15;
+
+                int maxAmount = 4;
+                int randEnemyNumb = Random.Range(1 + (gameStage/2), maxAmount + Random.Range(0, gameStage));
+                for (int x = 0; x <= randEnemyNumb; x++)
+                {
+                    Vector3 spawnPosition = spawnCircle + (Vector3)Random.insideUnitCircle.normalized * 2;
+                    Instantiate(Enemy, spawnPosition, Quaternion.Euler(0, 0, 0));
+                }
+
+                float timeBetweenGroup = gameStageLength / entityNumber;
+                float pause = Random.Range(0, timeBetweenGroup * 2);
+                yield return new WaitForSeconds(pause);
             }
         }
     }
 
-    private int EnemyNumber(int p_gameStage)
+    private int GroupNumber(int p_gameStage)
     {
-        int startnumber = 10;
-        int enemynumber;
+        int startnumberGroupes = 3;
 
-        enemynumber = startnumber + (p_gameStage * 5);
+        groupnumber = startnumberGroupes + ((p_gameStage -1) * 3);
 
-        return enemynumber;
+        Debug.Log("GameStage: " + gameStage);
+        Debug.Log("Groupes: " + groupnumber);
+        return groupnumber;
     }
 
 
