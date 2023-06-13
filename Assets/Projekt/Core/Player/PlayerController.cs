@@ -147,6 +147,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Space(30)]
     [Header("UI-Elements")]
     public GameObject upgradeUI;
+    [SerializeField] private GameObject UI;
+    private UIScript UserIntContr;
 
     /// <summary>
     /// enables all variables and subscribes the controlls to methods
@@ -159,8 +161,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         attack = playerControlls.FindAction("shoot");
         aimAction = playerControlls.FindAction("Aim");
         attack.performed += AttackAction;
-
         
+
 
         TempActions();
 
@@ -170,6 +172,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         GameManagerController.Instance.SetPlayer(this);
         worldCam = GameManagerController.Instance.GetCamera();
+
+        UserIntContr = UI.GetComponent<UIScript>();
+        UserIntContr.UpdateHP(currentHealth, currentMaxHealth);
     }
 
     /// <summary>
@@ -283,6 +288,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (!isInvulnarable)
         {
             currentHealth -= 1;
+            //UserIntContr.UpdateHP(currentHealth, currentMaxHealth);
 
             if (currentHealth <= 0)
             {
@@ -802,6 +808,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         UpgradePool();
 
         Instantiate(upgradeUI);
+        Time.timeScale = 0;
     }
     
     internal void GetXP(int v)

@@ -112,7 +112,7 @@ public class RavenBase : MonoBehaviour
 
     private void EmptyInventory()
     {
-        Debug.Log("Rabe stößt an Spieler");
+        //Debug.Log("Rabe stößt an Spieler");
         GameObject xpOrbPrefab = xpPrefab;
         Vector2 lastPostition = transform.position;
 

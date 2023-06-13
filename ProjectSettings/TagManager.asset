@@ -11,6 +11,7 @@ TagManager:
   - RavenFull
   - HP
   - UpgradeContainer
+  - UI
   layers:
   - Default
   - TransparentFX

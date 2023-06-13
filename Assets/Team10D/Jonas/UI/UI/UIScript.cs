@@ -14,7 +14,7 @@ public class UIScript : MonoBehaviour
     private float score = 0;
     private GameObject player;
 
-    public GameObject UserInterface;
+    public GameObject userInterface;
     public GameObject timeDisplay;
     public GameObject scoreDisplay;
     public GameObject levelDisplay;
@@ -69,41 +69,58 @@ public class UIScript : MonoBehaviour
 
     public void UpdateHP(int current, int max)
     {
-        Transform UIParent = this.transform;
-
-        float x = 20;
-        float y = -30;
-        
         if (number < max)
         {
-            for (int i = number; i < max; i++)
-            {
-                GameObject thisHP = Instantiate(HealthPoint);
-                thisHP.GetComponent<RectTransform>().position = new Vector2(x + (x * i), y);
-
-                if (i>0)
-                {
-                    thisHP.GetComponent<RectTransform>().position += new Vector3(5*i, 0, 0);
-                }
-
-                thisHP.transform.SetParent(UIParent, false);
-                number++;
-            }
+            AddMaxHP(max);
         }
 
         if (current < max)
         {
-            if (current >= 0)
-            {
-                GameObject[] hpArray = GameObject.FindGameObjectsWithTag("HP");
+            DamageHP(current, max);
+        }
+    }
 
-                for (int i = current+1; i <= max; i++)
-                {
-                    hpArray[i].GetComponent<RawImage>().color = Color.white;
-                }
+    private void AddMaxHP(int max)
+    {
+        float x = 20;
+        float y = -30;
+        Transform UIParent = this.transform;
+
+        if (HealthPoint == null)
+        {
+            HealthPoint = GameObject.FindGameObjectWithTag("HP");
+        }
+
+        for (int i = number; i < max; i++)
+        {
+            GameObject thisHP = Instantiate(HealthPoint);
+            thisHP.GetComponent<RectTransform>().position = new Vector2(x + (x * i), y);
+
+            if (i > 0)
+            {
+               thisHP.GetComponent<RectTransform>().position += new Vector3(5 * i, 0, 0);
+            }
+
+            thisHP.transform.SetParent(UIParent, false);
+            number++;
+        }
+    }
+
+    private void DamageHP(int current, int max)
+    {
+        GameObject[] hpArray = GameObject.FindGameObjectsWithTag("HP");
+
+        for (int i = 0; i <= max; i++)
+        {
+            if (i <= current)
+            {
+                hpArray[i].GetComponent<RawImage>().color = Color.red;
+            }
+            else
+            {
+                hpArray[i].GetComponent<RawImage>().color = Color.white;
             }
         }
-        
     }
 
     private void Timer()
