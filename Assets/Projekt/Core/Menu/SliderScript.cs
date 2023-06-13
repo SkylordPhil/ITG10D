@@ -16,6 +16,7 @@ public class SliderScript : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(AudioManager.GetInstance());
         int currentVolumeValue = AudioManager.GetInstance().GetExposedParamValue(audioMenuType);
         Debug.Log("currentVolumeValue from SliderScript: " + currentVolumeValue);
         slider.value = currentVolumeValue;

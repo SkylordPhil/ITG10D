@@ -27,7 +27,10 @@ public class AudioManager : MonoBehaviour
     public void Awake()
     {
         SetInstance();
+    }
 
+    private void Start()
+    {
         //loads the saved audio settings into the audio mixer using the audio manager
         if (PlayerPrefs.HasKey("audioVolumeValues"))
         {
@@ -52,7 +55,7 @@ public class AudioManager : MonoBehaviour
                 instance.SetExposedParam(volumeName, 50);
             }
         }
-
+        Debug.Log(instance);
         Debug.Log("Loaded Audio Settings");
     }
 
@@ -78,13 +81,14 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager GetInstance()
     {
+
         if (instance)
         {
             return instance;
 
         }
 
-        Debug.Log("Audio Manager is not Instatiated");
+        Debug.Log("Audio Manager is not Instantiated");
 
         return instance;
         
@@ -95,7 +99,6 @@ public class AudioManager : MonoBehaviour
     public void SetInstance()
     {
         instance = this;
-
     }
 
 
@@ -112,8 +115,8 @@ public class AudioManager : MonoBehaviour
     //function that sets the value of the given mixer to the given value after converting it into decibel
     public void SetExposedParam(string paramName, float paramValue)
     {
-        Debug.Log("Linear to set to: " + paramValue);
-        mixer.SetFloat(paramName, MathP.ConvertLnToDB((paramValue / 100)));
+        Debug.Log("Linear to set to: " + paramValue / 100f);
+        mixer.SetFloat(paramName, MathP.ConvertLnToDB((paramValue / 100f)));
         float value;
         mixer.GetFloat(paramName, out value);
         Debug.Log("Mixer now on: " + value);
@@ -125,9 +128,9 @@ public class AudioManager : MonoBehaviour
         float value;
         mixer.GetFloat(paramName, out value);
 
-        Debug.Log("Mixer is on: " + value);
+        Debug.Log("Mixer is on: " + value + " That means as linear: " + Mathf.RoundToInt(MathP.ConvertDBToLn(value) * 100f));
 
-        return (int)Math.Round(MathP.ConvertDBToLn(value) * 100);
+        return Mathf.RoundToInt(MathP.ConvertDBToLn(value) * 100f);
     }
 
 
