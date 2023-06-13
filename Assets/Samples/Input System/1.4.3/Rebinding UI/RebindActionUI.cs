@@ -341,9 +341,10 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
             // If we have no rebind overlay and no callback but we have a binding text label,
             // temporarily set the binding text label to "Press Key".
-            if (m_RebindOverlay == null && m_RebindText == null && m_RebindStartEvent == null && m_BindingText != null)
-                Debug.Log("Test from change on Rebind");
+            if (m_RebindOverlay == null && m_RebindText == null && m_BindingText != null)
+            {
                 m_BindingText.text = "Press Key";
+            }
 
             // Give listeners a chance to act on the rebind starting.
             m_RebindStartEvent?.Invoke(this, m_RebindOperation);
@@ -360,8 +361,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 if (binding.action == newBinding.action) {
                     continue;
                 }
-                Debug.Log("ComparedBinding: " + binding.effectivePath);
-                Debug.Log("NewBinding: " + newBinding.effectivePath);
+     
                 if (binding.effectivePath == newBinding.effectivePath) {
                     Debug.Log("Duplicate Binding Found: " + newBinding.effectivePath);
                     return true;
@@ -373,9 +373,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             if (allCompositeParts)
             {
                 for (int i = 1; i < bindingIndex; i++)
-                {
-                    Debug.Log("ComparedBinding: " + action.bindings[i].effectivePath);
-                    Debug.Log("NewBinding: " + newBinding.effectivePath);
+                {                  
                     if (action.bindings[i].effectivePath == newBinding.effectivePath)
                     {
                         Debug.Log("Duplicate Binding Found: " + newBinding.effectivePath);
@@ -391,8 +389,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 for (int compositeBindingIndex = 1; compositeBindingIndex < action.bindings.Count; compositeBindingIndex++) 
                 {
                     InputBinding bindingToCompare = action.bindings[compositeBindingIndex];
-                    Debug.Log(action.bindings[compositeBindingIndex].effectivePath);
-                    Debug.Log(action.bindings[compositeBindingIndex].id);
+                  
                     //checks if the compared binding is the rebinded binding
                     if (bindingToCompare.id == newBinding.id )
                     {

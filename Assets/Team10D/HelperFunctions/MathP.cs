@@ -14,7 +14,7 @@ namespace Helper
         /// 0 is full Volume <br/>
         /// -80 is no Volume
         /// </param>
-        public static float ConvertDBToLin(float dB)
+        public static float ConvertDBToLn(float dB)
         {
             float linear = Mathf.Pow(10.0f, dB / 20.0f);
             return linear;

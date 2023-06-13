@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using Helper;
-
-
+using System;
+using Newtonsoft.Json;
 
 public class AudioManager : MonoBehaviour
 {
@@ -28,8 +28,54 @@ public class AudioManager : MonoBehaviour
     {
         SetInstance();
 
-        
+        //loads the saved audio settings into the audio mixer using the audio manager
+        if (PlayerPrefs.HasKey("audioVolumeValues"))
+        {
+            string audioValuesJson = PlayerPrefs.GetString("audioVolumeValues");
+
+            Debug.Log(audioValuesJson);
+
+            Dictionary<string, float> volumeValues = JsonConvert.DeserializeObject<Dictionary<string, float>>(audioValuesJson);
+
+            foreach (KeyValuePair<string, float> volumeValue in volumeValues)
+            {
+                instance.SetExposedParam(volumeValue.Key, volumeValue.Value);
+            }
+        }
+        //if the user loads the game for the first time
+        else
+        {
+            string[] volumeNames = { "masterVolumeValue", "musicVolumeValue", "sfxVolumeValue" };
+
+            foreach (string volumeName in volumeNames)
+            {
+                instance.SetExposedParam(volumeName, 50);
+            }
+        }
+
+        Debug.Log("Loaded Audio Settings");
     }
+
+    public void OnDisable()
+    {
+        //saves the current audio settings as a json in the PlayerPrefs
+        Dictionary<string, float> volumeValues = new Dictionary<string, float>
+        {
+            { "masterVolumeValue", instance.GetExposedParamValue("masterVolumeValue") },
+            { "musicVolumeValue", instance.GetExposedParamValue("musicVolumeValue") },
+            { "sfxVolumeValue", instance.GetExposedParamValue("sfxVolumeValue") }
+        };
+
+        //Serializes the dictionary to a json
+        string volumesJson = JsonConvert.SerializeObject(volumeValues, Formatting.Indented);
+
+        Debug.Log(volumesJson);
+
+        PlayerPrefs.SetString("audioVolumeValues", volumesJson);
+
+        Debug.Log("Saved Audio Settings");
+    }
+
     public static AudioManager GetInstance()
     {
         if (instance)
@@ -63,10 +109,25 @@ public class AudioManager : MonoBehaviour
         mixer.SetFloat("MasterVolume", MathP.ConvertLnToDB(ln));
     }
 
-
+    //function that sets the value of the given mixer to the given value after converting it into decibel
     public void SetExposedParam(string paramName, float paramValue)
     {
-        mixer.SetFloat(paramName , MathP.ConvertLnToDB(paramValue));
+        Debug.Log("Linear to set to: " + paramValue);
+        mixer.SetFloat(paramName, MathP.ConvertLnToDB((paramValue / 100)));
+        float value;
+        mixer.GetFloat(paramName, out value);
+        Debug.Log("Mixer now on: " + value);
+    }
+
+    //function that returns the current value of the given mixer as a float
+    public int GetExposedParamValue(string paramName) 
+    {
+        float value;
+        mixer.GetFloat(paramName, out value);
+
+        Debug.Log("Mixer is on: " + value);
+
+        return (int)Math.Round(MathP.ConvertDBToLn(value) * 100);
     }
 
 
@@ -99,6 +160,7 @@ public class AudioManager : MonoBehaviour
 
 
     #endregion
+
 
 
 }

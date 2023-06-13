@@ -102,15 +102,14 @@ public class MenuManager : MonoBehaviour
     }
     #endregion
 
-    public void DetermineMenuType(MenuType menuType, float currentValue, string stringParam)
+    public void DetermineMenuType(MenuType menuType, float currentValue, string sliderName)
     {
         //SetExposedParam
         switch(menuType)
         {
             case MenuType.AudioMenu:
-                AudioManager.GetInstance().SetExposedParam(stringParam, currentValue);
+                AudioManager.GetInstance().SetExposedParam(sliderName, currentValue);
                 break;
-
         }
     }
 }

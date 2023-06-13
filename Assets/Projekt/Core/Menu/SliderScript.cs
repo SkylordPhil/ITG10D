@@ -4,8 +4,9 @@ using UnityEngine;
 using Helper;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Audio;
 
-public class SliderScript : BaseSaveScript
+public class SliderScript : MonoBehaviour
 {
     [SerializeField] private MenuType menuType;
     [SerializeField] private MenuManager menuManager;
@@ -14,34 +15,16 @@ public class SliderScript : BaseSaveScript
     [SerializeField] private TextMeshProUGUI textMesh;
 
     private void Start()
-    { 
-
-        switch (audioMenuType)
-        {
-            case "masterVolume":
-                slider.value = settingsData.masterVolumeValue;
-                break;
-
-            case "musicVolume":
-                slider.value = settingsData.musicVolumeValue;
-                break;
-
-            case "sfxVolume":
-                slider.value = settingsData.sfxVolumeValue;
-                break;
-        }
+    {
+        int currentVolumeValue = AudioManager.GetInstance().GetExposedParamValue(audioMenuType);
+        Debug.Log("currentVolumeValue from SliderScript: " + currentVolumeValue);
+        slider.value = currentVolumeValue;
+        textMesh.text = currentVolumeValue.ToString();
     }
 
     public void OnChange()
     {
-        float convertedSliderValue = slider.value / 100;
-        menuManager.DetermineMenuType(menuType, convertedSliderValue, audioMenuType);
+        menuManager.DetermineMenuType(menuType, slider.value, audioMenuType);
         textMesh.text = slider.value.ToString();
-        var currentlySavedValue = settingsData.GetType().GetProperty(audioMenuType).GetValue(settingsData);
-        Debug.Log("currentlySavedValue");
-        if (slider.value != (int)settingsData.GetType().GetProperty(audioMenuType).GetValue(settingsData))
-        {
-            Debug.Log("WOrked");
-        }
     }
 }

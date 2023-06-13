@@ -12,8 +12,6 @@ public class ControlScript : BaseSaveScript
     [SerializeField] private Controls controls;
     [SerializeField] private TextMeshProUGUI textField;
 
-    private bool isPressed = false;
-
     public InputActionAsset inputActionAsset;
 
 
