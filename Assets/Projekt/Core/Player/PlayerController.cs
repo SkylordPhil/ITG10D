@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private InputAction attack;
     private InputAction aimAction;
+    private InputAction openMenuAction;
 
     //private Dictionary<int, UpgradeScriptableObject> UpgradeDictiorary1 = new Dictionary<int, UpgradeScriptableObject>();
 
@@ -174,7 +175,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Start()
     {
         GameManagerController.Instance.SetPlayer(this);
-        worldCam = GameManagerController.Instance.GetCamera();
+        worldCam = CameraController.Instance.gameObject.GetComponent<Camera>();
     }
 
     /// <summary>
