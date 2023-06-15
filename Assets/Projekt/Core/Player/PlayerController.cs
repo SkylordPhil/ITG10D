@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Space(30)]
     [Header("LevelProgress")]
     [SerializeField] public int currentXP;
-    [SerializeField] public int neededXP;
+    public int neededXP;
 
     [Space(30)]
     [Header("References")]
@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private bool attackCD;
     private bool attackIsPressed;
+    private bool specialAttackCD;
     private bool specialIsPressed;
 
     private Vector2 movement;
@@ -117,6 +118,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private CharacterController2D characterController;
 
     private InputAction attack;
+    private InputAction specialAttack;
     private InputAction aimAction;
     private InputAction openMenuAction;
 
@@ -161,10 +163,12 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         characterController = GetComponent<CharacterController2D>();
         attack = playerControlls.FindAction("shoot");
+        specialAttack = playerControlls.FindAction("Special");
         aimAction = playerControlls.FindAction("Aim");
         openMenuAction = playerControlls.FindAction("OpenMenu");
         openMenuAction.performed += OpenMenu;
         attack.performed += AttackAction;
+        specialAttack.performed += SpecialAttackAction;
         
 
         TempActions();
@@ -234,6 +238,12 @@ public class PlayerController : MonoBehaviour, IDamageable
             StartCoroutine(AttackTimer());
         }
 
+        if (specialIsPressed && !specialAttackCD)
+        {
+            baseSpecial();
+            StartCoroutine(SpecialAttackTimer());
+        }
+
         if (lightning)
         {
             lightningDelay -= Time.deltaTime;
@@ -274,6 +284,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void AttackAction(InputAction.CallbackContext ctx)
     {
         attackIsPressed = ctx.control.IsPressed();
+    }
+
+    private void SpecialAttackAction(InputAction.CallbackContext ctx)
+    {
+        specialIsPressed = ctx.control.IsPressed();
     }
 
     private void OpenMenu(InputAction.CallbackContext obj)
@@ -436,6 +451,19 @@ public class PlayerController : MonoBehaviour, IDamageable
         attackCD = false;
     }
 
+    IEnumerator SpecialAttackTimer()
+    {
+        specialAttackCD = true;
+        float time = 60;
+
+        while(time > 0)
+        {
+            time -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        specialAttackCD = false;
+    }
+
     #endregion
 
     #region SpecialAbilities
@@ -594,6 +622,11 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (item.name == upgrade.name)
                 {
                     choosableUpgrades.Remove(item);
+                    Debug.Log("Removed Upgrade: " + item.name);
+                    foreach (var i in choosableUpgrades)
+                    {
+                        Debug.Log(i);
+                    }
                 }
             }
         }
@@ -805,9 +838,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         int baseValue = 50;
         int mathLvl = lvl + 1;
-        float power = 1.1f;
+        //float power = 1.1f;
 
-        neededXP = baseValue * (int)Mathf.Pow(mathLvl, power);
+        neededXP = baseValue * mathLvl/*Mathf.Pow(mathLvl, power)*/;
         currentXP = 0;
         currentLevel += 1;
 

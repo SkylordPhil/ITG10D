@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     public int gameStage = 0;
     
     private int groupnumber;
-    private float startPause = 5f;
+    private float wavePause = 5f;
     private float gameStageLength = 30f;
 
     // Start is called before the first frame update
@@ -66,23 +66,17 @@ public class EnemySpawner : MonoBehaviour
         {
             if (gameStage == 1)
             {
-                yield return new WaitForSeconds(startPause);
-                StageUpdate();
-            }
-            else
-            {
-                yield return new WaitForSeconds(gameStageLength);
-                StageUpdate();
+                //StageUpdate();
+                yield return new WaitForSeconds(wavePause/2);
             }
 
             Vector3 playerPosition = GameManagerController.Instance.Player.transform.position;
 
             int entityNumber = GroupNumber(gameStage);
-            //gameStage ^ 2
 
             for (int i = 0; i <= entityNumber; i++)
             {
-                Vector3 spawnCircle = playerPosition + (Vector3)Random.insideUnitCircle.normalized * 15;
+                Vector3 spawnCircle = playerPosition + (Vector3)Random.insideUnitCircle.normalized * 20;
 
                 int maxAmount = 4;
                 int randEnemyNumb = Random.Range(1 + (gameStage/2), maxAmount + Random.Range(0, gameStage));
@@ -96,6 +90,10 @@ public class EnemySpawner : MonoBehaviour
                 float pause = Random.Range(0, timeBetweenGroup * 2);
                 yield return new WaitForSeconds(pause);
             }
+
+            StageUpdate();
+            yield return new WaitForSeconds(wavePause);
+            
         }
     }
 

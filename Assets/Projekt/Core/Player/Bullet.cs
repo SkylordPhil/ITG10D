@@ -6,36 +6,52 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    private float speedIncrease;
-    [SerializeField] private int baseDamage = 3;
+    [SerializeField] private float currentMoveSpeed;
+    private float moveSpeed = 5f;
+    
+
     [SerializeField] public int currentDamage;
-    [SerializeField] private int damageIncrease = 0;
+    private int baseDamage = 3;
+
     [SerializeField] private float lifeTime = 2f;
-
-
     private float currentLifeTime = 0;
-    [SerializeField] private int penetrationAmount = 0;
+
+    [SerializeField] private int currentPenetrationAmount;
+    private int penetrationAmount = 0;
+
+    private float lifeTimeIncrease = 0;
+
     private Vector2 moveDirection;
+
+    private int penetrationAmountIncrease = 0;
+    private int damageIncrease = 0;
+    private int speedIncrease = 0;
+
 
     // Start is called before the first frame update
     void Start()
     {
         //Find Way to Reset Damage and Penetration Increases
+        //penetrationAmountIncrease = 0;
+        //damageIncrease = 0;
+        //speedIncrease = 0;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        currentLifeTime += Time.deltaTime;
-        if(currentLifeTime > lifeTime)
         {
-            Destroy(this.gameObject);
-        }
+            currentLifeTime += Time.deltaTime;
+            if(currentLifeTime > lifeTime)
+            {
+                Destroy(this.gameObject);
+            }
+            
+            currentMoveSpeed = moveSpeed + speedIncrease;
+            currentDamage = baseDamage + damageIncrease;
+            currentPenetrationAmount = penetrationAmount + penetrationAmountIncrease;
 
-        float currentMoveSpeed = moveSpeed + speedIncrease;
-        transform.Translate(moveDirection * currentMoveSpeed * Time.deltaTime);
-    }
+            transform.Translate(moveDirection * currentMoveSpeed * Time.deltaTime);
+        }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -46,13 +62,13 @@ public class Bullet : MonoBehaviour
             collision.gameObject.GetComponent<IDamageable>().TakeDamage(currentDamage);
 
             
-            if (penetrationAmount == 0)
+            if (currentPenetrationAmount == 0)
             {
                 Destroy(this.gameObject);
             }
             else
             {
-                penetrationAmount -= 1;
+                currentPenetrationAmount -= 1;
             }
             
         }
@@ -71,15 +87,16 @@ public class Bullet : MonoBehaviour
 
     public void UpSpeed(float increase)
     {
-        moveSpeed += increase;
+        speedIncrease += (int)increase;
     }
 
     public void UpPenetration(int increase)
     {
-        penetrationAmount += increase;
+        penetrationAmountIncrease += increase;
+        Debug.Log("Penetration increased to " + penetrationAmountIncrease);
     }
 
-    public int GetDamage() { return baseDamage + damageIncrease; }
+    public int GetDamage() { return currentDamage; }
 
     public void ResetValues()
     {

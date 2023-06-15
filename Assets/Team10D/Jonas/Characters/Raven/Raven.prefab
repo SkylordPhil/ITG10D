@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9179207705582368687}
   - component: {fileID: 704488115031844909}
   - component: {fileID: 6087876903093697160}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Raven
   m_TagString: Raven
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.21133333}
@@ -127,6 +127,6 @@ MonoBehaviour:
   speed_current: 5
   inventory_limit: 15
   inventory: 0
-  pickup: 1
+  pickup: 0
   xpPrefab: {fileID: 770071918023915150, guid: 6890c6748b972504cbdfc9362866d7bd, type: 3}
-  Player: {fileID: 0}
+  idleWidth: 1
