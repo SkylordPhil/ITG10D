@@ -17,13 +17,19 @@ public class MenuManager : MonoBehaviour
     #region MainMenu
     public void StartGame()
     {
-        LevelManager.instance.LoadLevel(0);
         SceneManager.UnloadSceneAsync("MainMenuScene");
+        LevelManager.instance.LoadLevel(0);
         //weiter zu gameManager -> Spiel-Szene laden
         CameraController.Instance.isIngame = true;
-        GameManagerController.Instance.StartGameLevel();
+        GameManagerController.Instance.StartGame();
     }
 
+    public void BackToMenu()
+    {
+        SceneManager.UnloadSceneAsync("Enemy Test");
+        SceneManager.UnloadSceneAsync("IngameMenuScene");
+        SceneManager.LoadSceneAsync("MainMenuScene", LoadSceneMode.Additive);
+    }
 
     public void QuitGame()
     {

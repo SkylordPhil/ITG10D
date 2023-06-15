@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
@@ -298,8 +299,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
             if (currentHealth <= 0)
             {
-                //Message Gamamaner
-                //Kill Player
+                //Message Gamemanager
+                GameManagerController.Instance.GameOver();
                 return;
             }
 
