@@ -11,30 +11,22 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject audioMenu;
     [SerializeField] private GameObject controlsMenu;
+    [SerializeField] private GameObject credits;
 
 
     #region MainMenu
     public void StartGame()
     {
-        LevelManager.instance.LoadLevel(0);
         SceneManager.UnloadSceneAsync("MainMenuScene");
+        LevelManager.instance.LoadLevel(0);
         //weiter zu gameManager -> Spiel-Szene laden
         CameraController.Instance.isIngame = true;
-        GameManagerController.Instance.StartGameLevel();
-        Time.timeScale = 1;
+        GameManagerController.Instance.StartGame();
     }
 
-    public void ResumeGame()
+    public void BackToMenu()
     {
-        SceneManager.UnloadSceneAsync("IngameMenuScene");
-        CameraController.Instance.isIngame = true;
-        LevelManager.instance.UnloadMenu();
-    }
-
-    public void ReturnToMenu()
-    {
-        
-        LevelManager.instance.UnloadCurrentLevel();
+        SceneManager.UnloadSceneAsync("Enemy Test");
         SceneManager.UnloadSceneAsync("IngameMenuScene");
         SceneManager.LoadSceneAsync("MainMenuScene", LoadSceneMode.Additive);
     }
@@ -52,11 +44,6 @@ public class MenuManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         settingsMenu.SetActive(true);
-    }
-
-    public void ShowCredits() 
-    { 
-        //placeholder
     }
     #endregion
 
@@ -102,15 +89,30 @@ public class MenuManager : MonoBehaviour
     }
     #endregion
 
-    public void DetermineMenuType(MenuType menuType, float currentValue, string stringParam)
+    #region Credits
+
+    public void OpenCredits()
+    {
+        mainMenu.SetActive(false);
+        credits.SetActive(true);
+    }
+
+    public void CloseCredits()
+    {
+        mainMenu.SetActive(true);
+        credits.SetActive(false);
+    }
+
+    #endregion
+
+    public void DetermineMenuType(MenuType menuType, float currentValue, string sliderName)
     {
         //SetExposedParam
         switch(menuType)
         {
             case MenuType.AudioMenu:
-                AudioManager.GetInstance().SetExposedParam(stringParam, currentValue);
+                AudioManager.GetInstance().SetExposedParam(sliderName, currentValue);
                 break;
-
         }
     }
 }

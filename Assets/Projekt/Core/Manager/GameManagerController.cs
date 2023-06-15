@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManagerController : MonoBehaviour
 {
@@ -39,6 +40,14 @@ public class GameManagerController : MonoBehaviour
     public void GameOver()
     {
         _isGameOver = true;
+        SceneManager.LoadSceneAsync("GameOverScene", LoadSceneMode.Additive);
+        Time.timeScale = 0;
+    }
+
+    public void StartGame() 
+    {
+        Time.timeScale = 1.0f;
+        Instance.StartGameLevel();
     }
 
     public PlayerController getPlayer()

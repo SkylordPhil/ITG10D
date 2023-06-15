@@ -13,6 +13,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Scene mainMenuScene;
     [SerializeField] private Scene inGameMenuScene;
 
+    private bool _isLoading;
+
 
     [SerializeField] private GameLevel currentLevel;
 

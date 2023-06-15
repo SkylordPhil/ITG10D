@@ -5,6 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - XP
+  - Raven
+  - Bullet
+  - RavenFull
+  - HP
+  - UpgradeContainer
+  - UI
+  - RavenXP
+  - TargetedXp
   layers:
   - Default
   - TransparentFX
@@ -12,32 +21,32 @@ TagManager:
   - 
   - Water
   - UI
+  - Enemies
+  - Raven
+  - XP
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0

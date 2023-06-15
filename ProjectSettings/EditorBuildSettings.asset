@@ -29,5 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Projekt/Scenes/IngameMenuScene.unity
     guid: 9098ba9b084af7241acc275c9b7e50dd
-  m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: 0b914eb0f3cb73a42960f92fd9de9b57, type: 2}
+  - enabled: 1
+    path: Assets/Projekt/Scenes/GameOverScene.unity
+    guid: 19e57c7be2dd62346b937049af03ed54
+  m_configObjects: {}

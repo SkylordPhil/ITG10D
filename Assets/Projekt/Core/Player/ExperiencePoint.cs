@@ -5,32 +5,42 @@ using UnityEngine.UIElements;
 
 public class ExperiencePoint : MonoBehaviour
 {
-    public int XP = 1;
-    public float speed = 4f;
+    public int XP;
+    public float speed = 2f;
     public float range = 3f;
-    public PlayerController Player;
+    //public PlayerController Player;
+    private GameObject Player;
+    private GameObject Raven;
+    
 
-    private bool attracted = false;
+    public bool ravenSpecial = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        Player = GameManagerController.Instance.getPlayer();
+        //Player = GameManagerController.Instance.getPlayer();
+        Player = GameObject.FindGameObjectWithTag("Player");
+        Raven = GameObject.FindGameObjectWithTag("Raven");
     }
 
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(transform.position, Player.transform.position);
-
-        if (distance <= range)
+        float distancePlayer = Vector2.Distance(transform.position, Player.transform.position);
+        if (distancePlayer <= range)
         {
-            attracted = true;
+            Attracted(Player);
         }
 
-        if (attracted)
+        if (Raven != null && !ravenSpecial)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
+            float distanceRaven = Vector2.Distance(transform.position, Raven.transform.position);
+            bool pickup = Raven.GetComponent<RavenBase>().pickup;
+
+            if (distanceRaven <= range && pickup)
+            {
+                Attracted(Raven);
+            }
         }
     }
 
@@ -40,16 +50,28 @@ public class ExperiencePoint : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
+            Player.GetComponent<PlayerController>().GetXP(XP);
+        }
+        
+        if (collider.gameObject.CompareTag("Raven"))
+        {
+            Destroy(gameObject);
+            collider.gameObject.GetComponent<RavenBase>().addXP();
         }
     }
-
-    private void OnReachedPlayer()
+    
+    private void Attracted(GameObject target)
     {
-        GameManagerController.Instance.Player.GetXP(1);
+        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);  
     }
 
-    public void SpawnXP()
+    public void ModifyRange(float mod)
     {
+        range = mod;
+    }
 
+    public void ModifySpeed(float mod)
+    {
+        speed = mod;
     }
 }
