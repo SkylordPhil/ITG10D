@@ -238,7 +238,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         /// </summary>
         public void StartInteractiveRebind()
         {
-            Debug.Log("Started");
+            Debug.Log("RebindStarted");
 
             if (!ResolveActionAndBinding(out var action, out var bindingIndex))
                 return;
@@ -266,6 +266,8 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 m_RebindOperation = null;
             }
 
+            //Disable button while rebind process is initialized
+            m_RebindButton.enabled = false;
             // Disalbe action before rebind process is initialized
             action.Disable();
 
@@ -277,8 +279,10 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 .OnCancel(
                     operation =>
                     {
-                        //Enable action again
+                        //Enable action and button again
                         action.Enable();
+                        m_RebindButton.enabled = true;
+
                         m_RebindStopEvent?.Invoke(this, operation);
                         if (m_RebindOverlay != null)
                         {
@@ -290,8 +294,10 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 .OnComplete(
                     operation =>
                     {
-                        //Enable action again
+                        //Enable action and button again
                         action.Enable();
+                        m_RebindButton.enabled = true;
+
                         if (m_RebindOverlay != null)
                         {
                             m_RebindOverlay.SetActive(false);
@@ -464,6 +470,10 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         [SerializeField]
         private string m_BindingId;
+
+        [Tooltip("Button that triggers the rebind (Optional)")]
+        [SerializeField]
+        private Button m_RebindButton;
 
         [SerializeField]
         private InputBinding.DisplayStringOptions m_DisplayStringOptions;

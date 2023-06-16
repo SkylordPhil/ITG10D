@@ -17,6 +17,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         {
             m_ActionProperty = serializedObject.FindProperty("m_Action");
             m_BindingIdProperty = serializedObject.FindProperty("m_BindingId");
+            m_RebindButton = serializedObject.FindProperty("m_RebindButton");
             m_ActionLabelProperty = serializedObject.FindProperty("m_ActionLabel");
             m_BindingTextProperty = serializedObject.FindProperty("m_BindingText");
             m_RebindOverlayProperty = serializedObject.FindProperty("m_RebindOverlay");
@@ -25,6 +26,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             m_RebindStartEventProperty = serializedObject.FindProperty("m_RebindStartEvent");
             m_RebindStopEventProperty = serializedObject.FindProperty("m_RebindStopEvent");
             m_DisplayStringOptionsProperty = serializedObject.FindProperty("m_DisplayStringOptions");
+
 
             RefreshBindingOptions();
         }
@@ -58,6 +60,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             EditorGUILayout.LabelField(m_UILabel, Styles.boldLabel);
             using (new EditorGUI.IndentLevelScope())
             {
+                EditorGUILayout.PropertyField(m_RebindButton);
                 EditorGUILayout.PropertyField(m_ActionLabelProperty);
                 EditorGUILayout.PropertyField(m_BindingTextProperty);
                 EditorGUILayout.PropertyField(m_RebindOverlayProperty);
@@ -151,6 +154,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         private SerializedProperty m_ActionProperty;
         private SerializedProperty m_BindingIdProperty;
+        private SerializedProperty m_RebindButton;
         private SerializedProperty m_ActionLabelProperty;
         private SerializedProperty m_BindingTextProperty;
         private SerializedProperty m_RebindOverlayProperty;
