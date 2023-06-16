@@ -62,6 +62,15 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""76662dad-d11e-4003-b560-421867ef2d51"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -72,17 +81,6 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Shoot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ef883e99-1d6b-4784-a450-c786d1b8ac65"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -144,28 +142,6 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ebfc33eb-4407-4941-acd6-40b8cf932e72"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e6b29b0c-bcd1-483c-9bcb-ad94b179fc7d"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Aim"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""3f01d7c2-19c3-4d82-be74-da6edc7669e6"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
@@ -188,12 +164,12 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1a8c89c9-56d3-4d87-a30d-f1e9148665f6"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""id"": ""7f60ee79-529c-4c98-985b-30264edd116a"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Special"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""OpenMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -236,6 +212,7 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
         m_Controlls_Movement = m_Controlls.FindAction("Movement", throwIfNotFound: true);
         m_Controlls_Aim = m_Controlls.FindAction("Aim", throwIfNotFound: true);
         m_Controlls_Special = m_Controlls.FindAction("Special", throwIfNotFound: true);
+        m_Controlls_OpenMenu = m_Controlls.FindAction("OpenMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -299,6 +276,7 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Controlls_Movement;
     private readonly InputAction m_Controlls_Aim;
     private readonly InputAction m_Controlls_Special;
+    private readonly InputAction m_Controlls_OpenMenu;
     public struct ControllsActions
     {
         private @PlayerControlls m_Wrapper;
@@ -307,6 +285,7 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Controlls_Movement;
         public InputAction @Aim => m_Wrapper.m_Controlls_Aim;
         public InputAction @Special => m_Wrapper.m_Controlls_Special;
+        public InputAction @OpenMenu => m_Wrapper.m_Controlls_OpenMenu;
         public InputActionMap Get() { return m_Wrapper.m_Controlls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -328,6 +307,9 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                 @Special.started -= m_Wrapper.m_ControllsActionsCallbackInterface.OnSpecial;
                 @Special.performed -= m_Wrapper.m_ControllsActionsCallbackInterface.OnSpecial;
                 @Special.canceled -= m_Wrapper.m_ControllsActionsCallbackInterface.OnSpecial;
+                @OpenMenu.started -= m_Wrapper.m_ControllsActionsCallbackInterface.OnOpenMenu;
+                @OpenMenu.performed -= m_Wrapper.m_ControllsActionsCallbackInterface.OnOpenMenu;
+                @OpenMenu.canceled -= m_Wrapper.m_ControllsActionsCallbackInterface.OnOpenMenu;
             }
             m_Wrapper.m_ControllsActionsCallbackInterface = instance;
             if (instance != null)
@@ -344,6 +326,9 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
                 @Special.started += instance.OnSpecial;
                 @Special.performed += instance.OnSpecial;
                 @Special.canceled += instance.OnSpecial;
+                @OpenMenu.started += instance.OnOpenMenu;
+                @OpenMenu.performed += instance.OnOpenMenu;
+                @OpenMenu.canceled += instance.OnOpenMenu;
             }
         }
     }
@@ -372,5 +357,6 @@ public partial class @PlayerControlls : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnSpecial(InputAction.CallbackContext context);
+        void OnOpenMenu(InputAction.CallbackContext context);
     }
 }

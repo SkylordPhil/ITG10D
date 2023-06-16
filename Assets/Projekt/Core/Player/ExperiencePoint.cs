@@ -50,39 +50,19 @@ public class ExperiencePoint : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
-            OnReachedPlayer();
+            Player.GetComponent<PlayerController>().GetXP(XP);
         }
         
         if (collider.gameObject.CompareTag("Raven"))
         {
-            Debug.Log("Raben-XP");
             Destroy(gameObject);
+            collider.gameObject.GetComponent<RavenBase>().addXP();
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Raven"))
-        {
-            Debug.Log("Raben-XP");
-            Destroy(gameObject);
-        }
-    }
-
-    private void OnReachedPlayer()
-    {
-        //GameManagerController.Instance.Player.GetXP(10);
-        Player.GetComponent<PlayerController>().GetXP(XP);
     }
     
     private void Attracted(GameObject target)
     {
         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);  
-    }
-
-    public void SpawnXP()
-    {
-
     }
 
     public void ModifyRange(float mod)

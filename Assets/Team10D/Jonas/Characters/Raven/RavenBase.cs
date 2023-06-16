@@ -6,100 +6,117 @@ using static UnityEngine.GraphicsBuffer;
 
 public class RavenBase : MonoBehaviour
 {
-    private float speed = 5f;
+    private float speed = 8f;
     private float speed_increase;
     public float speed_current;
+
     public int inventory_limit = 15;
     private int inventory_current;
     public int inventory;
+
     private bool returnHome = false;
-    public bool pickup = true;
+    public bool pickup;
 
     [SerializeField] private GameObject xpPrefab;
     private GameObject Player;
-    private GameObject XpOrb;
+    private GameObject[] XpOrb;
+    private GameObject TargetOrb;
 
-    Rigidbody RavenRigBody;
+    private float idleTimer;
+    public float idleWidth = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        XpOrb = GameObject.FindGameObjectWithTag("XP");
+        XpOrb = GameObject.FindGameObjectsWithTag("XP");
         Player = GameObject.FindGameObjectWithTag("Player");
 
         speed_current = speed;
+        inventory_current = inventory_limit;
+
+        idleTimer = 0;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        XpOrb = GameObject.FindGameObjectWithTag("XP");
+        XpOrb = GameObject.FindGameObjectsWithTag("XP");
         Player = GameObject.FindGameObjectWithTag("Player");
-
-        //CollectXP();
-        //ReturnToPlayer();
-
-        if (returnHome == false && XpOrb != null)
+        
+        if (returnHome == false && (XpOrb.Length != 0 || TargetOrb != null))
         {
             CollectXP();
+            InventoryCheck();
         }
-        else if (returnHome == true || XpOrb == null)
+        else if(returnHome == true || XpOrb.Length == 0)
         {
             ReturnToPlayer();
+
+            Vector2 diff = transform.position - Player.transform.position;
+            Vector2 ak_diff = new Vector2(0.05f, 0.05f);
+            if (diff.x <= ak_diff.x && diff.y <= ak_diff.y && inventory > 0)
+            {
+                EmptyInventory();
+            }
         }
         else
         {
-            IdleState();
+            ReturnToPlayer();
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "XP")
-        {
-            inventory += 1;
-            InventoryCheck();
-        }
-
-        if (collision.gameObject.tag == "Player" && inventory == inventory_current)
-        {
-            EmptyInventory();
-        }
-    }
-
-    private void Move(GameObject destination)
-    {
-        transform.position = Vector2.MoveTowards(transform.position, destination.transform.position, speed_current * Time.deltaTime);
-        //RavenRigBody.MovePosition(destination.transform.position /*+ speed_current * Time.deltaTime*/);
+    private void Move(GameObject destinationObject)
+    { 
+        transform.position = Vector2.MoveTowards(transform.position, destinationObject.transform.position, speed_current * Time.deltaTime);
     }
 
     private void CollectXP()
     {
-        //Transform XpPosition = XpOrb.transform;
-        //Move(XpPosition);
-        Move(XpOrb);
+       if (TargetOrb == null)
+       {
+            int random = Random.Range(0, XpOrb.Length);
+            XpOrb[random].tag = "TargetedXp";
+            TargetOrb = GameObject.FindGameObjectWithTag("TargetedXp");
+        }
+       else
+       {
+           Move(TargetOrb);
+           XpOrb = GameObject.FindGameObjectsWithTag("XP");
+        }
     }
 
     private void ReturnToPlayer()
     {
-        //Transform Playerposition = Player.transform;
-        //Move(Playerposition);
         Move(Player);
     }
 
-    private void IdleState()
+    private void IdleMovement()
     {
-        if (inventory != 0)
-        {
-            ReturnToPlayer();
-        }
-        else
-        {
-            //Implement Idle Movement instead of ReturnToPlayer
-            ReturnToPlayer();
-        }
+        Vector2 center = Player.transform.position;
+        float radius = 2.0f;
+
+        float angle =+ speed_current * Time.deltaTime;
+
+        var offset = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle)) * radius;
+        transform.position = center + offset;
     }
-    
+
+    public void EmptyInventory()
+    {
+        int xpValue = xpPrefab.GetComponent<ExperiencePoint>().XP;
+        Vector2 lastPostition = transform.position;
+
+        for (int i = inventory; i >= 0; i--)
+        {
+            Player.GetComponent<PlayerController>().GetXP(xpValue);
+            inventory--;
+        }
+
+        inventory = 0;
+        returnHome = false;
+        gameObject.tag = "Raven";
+    }
+
     private void InventoryCheck()
     {
         if (inventory == inventory_current)
@@ -110,32 +127,28 @@ public class RavenBase : MonoBehaviour
         }
     }
 
-    private void EmptyInventory()
+    public void addXP()
     {
-        //Debug.Log("Rabe stößt an Spieler");
-        GameObject xpOrbPrefab = xpPrefab;
-        Vector2 lastPostition = transform.position;
-
-        for (int i = inventory; i >= 0; i--)
-        {
-            Instantiate(xpOrbPrefab, lastPostition, Quaternion.identity);
-            inventory--;
-        }
-
-        inventory = 0;
-        returnHome = false;
-        gameObject.tag = "Raven";
+        inventory++;
+        InventoryCheck();
     }
 
     public void InventoryUp(int increase)
     {
-        inventory_current = inventory_limit + increase;
+        int inventoryIncrease = increase;
+        inventory_current += inventoryIncrease;
+        Debug.Log("Raven Inventory: " + inventory_current);
     }
 
     public void SpeedUp(float increase)
     {
-        speed_increase += increase;
-        speed_current = speed + speed_increase;
+        speed_increase = increase;
+        speed_current += speed_increase;
+    }
+
+    public void EnablePickup()
+    {
+        pickup = true;
     }
 
     public void ResetValues()

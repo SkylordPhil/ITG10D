@@ -21,13 +21,13 @@ public class BerserkerSpecial : MonoBehaviour
         int damageIncrease = baseBullet.GetComponent<Bullet>().GetDamage();
 
         player.GetComponent<PlayerController>().UpgradeMoveSpeed(speedIncrease);
-        baseBullet.GetComponent<Bullet>().UpDamage(damageIncrease);
+        //baseBullet.GetComponent<Bullet>().UpDamage(damageIncrease);
 
         //If Time runs out
         if (false)
         {
             player.GetComponent<PlayerController>().UpgradeMoveSpeed(speedIncrease);
-            baseBullet.GetComponent<Bullet>().UpDamage(-damageIncrease);
+            //baseBullet.GetComponent<Bullet>().UpDamage(-damageIncrease);
 
             if (berserkerNegation <= 0)
             {

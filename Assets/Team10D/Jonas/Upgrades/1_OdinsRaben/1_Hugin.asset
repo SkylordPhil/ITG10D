@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: 1_Hugin
   m_EditorClassIdentifier: 
   upgradeName: Hugin
-  description: Ruft einen der Raben Odins, der XP zum Spieler bringt.
+  description: +1 Raven
+  color: {r: 0, g: 0, b: 0, a: 1}
   level: 1
   tree: 1
   bullets_front: 0
@@ -29,8 +30,10 @@ MonoBehaviour:
   raven_amount: 1
   raven_speed: 0
   raven_inventory: 0
+  ravenMagnet: 0
   vulcan: 0
   blitz: 0
+  blitzTargets: 0
   cold: 0
   ice: 0
   splinter: 0

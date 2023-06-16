@@ -28,7 +28,7 @@ MonoBehaviour:
   fire: 0
   fire_dmg: 0
   raven_amount: 0
-  raven_speed: 0
+  raven_speed: 50
   raven_inventory: 0
   vulcan: 0
   blitz: 0

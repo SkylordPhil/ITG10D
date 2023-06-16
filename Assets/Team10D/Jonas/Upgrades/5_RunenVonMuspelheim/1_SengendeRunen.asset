@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4015aa7b8e35667499a0c4dda9b9782c, type: 3}
   m_Name: 1_SengendeRunen
   m_EditorClassIdentifier: 
-  upgradeName: Sengende Runen
-  description: Getroffene Gegner werden in Brannd gesteckt.
+  upgradeName: Searing Runes
+  description: +3 Fire Damage
+  color: {r: 1, g: 0.6938923, b: 0, a: 1}
   level: 1
   tree: 5
   bullets_front: 0
@@ -25,12 +26,14 @@ MonoBehaviour:
   fire_rate: 0
   health: 0
   fire: 1
-  fire_dmg: 5
+  fire_dmg: 3
   raven_amount: 0
   raven_speed: 0
   raven_inventory: 0
+  ravenMagnet: 0
   vulcan: 0
   blitz: 0
+  blitzTargets: 0
   cold: 0
   ice: 0
   splinter: 0

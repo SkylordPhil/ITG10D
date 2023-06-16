@@ -98,12 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28b2be6c0a06f1c47b281dd8572a45b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
-  baseDamage: 3
+  currentMoveSpeed: 0
   currentDamage: 0
-  damageIncrease: 0
   lifeTime: 2
-  penetrationAmount: 0
+  currentPenetrationAmount: 0
 --- !u!70 &4164381320863792956
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
