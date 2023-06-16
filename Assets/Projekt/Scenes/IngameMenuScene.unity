@@ -194,7 +194,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: S
+  m_Text: 4 (Zehnertastatur)
 --- !u!222 &31032192
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1414,7 +1414,7 @@ MonoBehaviour:
   mainMenu: {fileID: 334435250}
   settingsMenu: {fileID: 963770019}
   audioMenu: {fileID: 1680244062}
-  controlsMenu: {fileID: 0}
+  controlsMenu: {fileID: 616240066}
   credits: {fileID: 0}
 --- !u!4 &334435252
 Transform:
@@ -3935,7 +3935,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: W
+  m_Text: 8 (Zehnertastatur)
 --- !u!222 &916368366
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8003,7 +8003,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: D
+  m_Text: 6 (Zehnertastatur)
 --- !u!222 &1840495534
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8631,7 +8631,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: A
+  m_Text: 2 (Zehnertastatur)
 --- !u!222 &1888625577
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9206,7 +9206,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 334435251}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
         m_MethodName: CloseControlsMenu
         m_Mode: 1
