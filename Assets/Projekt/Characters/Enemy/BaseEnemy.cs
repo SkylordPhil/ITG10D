@@ -64,6 +64,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        Debug.Log("Damage: " + damage);
         currentHealth -= damage;
 
         if (currentHealth <= 0)
@@ -195,7 +196,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable
             duration_slowed -= Time.deltaTime;
             if (duration_slowed <= 0)
             {
-                Debug.Log("Langsam aus");
                 currentSpeed = speed;
                 slowed = false;
 
@@ -208,7 +208,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable
             duration_frozen -= Time.deltaTime;
             if (duration_frozen <= 0)
             {
-                Debug.Log("Eis aus");
                 currentSpeed = speed;
                 frozen = false;
                 frozenEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -221,6 +220,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable
             duration_fire -= Time.deltaTime;
             if (currentTick <= 0)
             {
+                Debug.Log("Fire-Damage: " + fireDmg);
                 TakeDamage((int)fireDmg);
                 currentTick = fireTick;
             }

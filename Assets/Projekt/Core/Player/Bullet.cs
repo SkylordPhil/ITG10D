@@ -6,34 +6,50 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    private float speedIncrease;
-    [SerializeField] private int baseDamage = 3;
+    [SerializeField] private float currentMoveSpeed;
+    private float moveSpeed = 10f;
+    
+
     [SerializeField] public int currentDamage;
-    [SerializeField] private int damageIncrease = 0;
-    [SerializeField] private float lifeTime = 2f;
+    //private int baseDamage = 3;
 
-
+    [SerializeField] private float lifeTime = 1f;
     private float currentLifeTime = 0;
-    [SerializeField] private int penetrationAmount = 0;
+
+    [SerializeField] private int currentPenetrationAmount;
+    private int penetrationAmount = 0;
+
+    private float lifeTimeIncrease = 0;
+
     private Vector2 moveDirection;
+
+    private int penetrationAmountIncrease = 0;
+    //private int damageIncrease = 0;
+    private int speedIncrease = 0;
+
+    public PlayerController Player;
 
     // Start is called before the first frame update
     void Start()
     {
         //Find Way to Reset Damage and Penetration Increases
+        //currentDamage = baseDamage;
+        currentMoveSpeed = moveSpeed;
+        currentPenetrationAmount = penetrationAmount;
+
+        Player = GameManagerController.Instance.getPlayer();
     }
 
     // Update is called once per frame
     void Update()
     {
+        currentDamage = Player.currentDamage;
         currentLifeTime += Time.deltaTime;
         if(currentLifeTime > lifeTime)
         {
             Destroy(this.gameObject);
         }
 
-        float currentMoveSpeed = moveSpeed + speedIncrease;
         transform.Translate(moveDirection * currentMoveSpeed * Time.deltaTime);
     }
 
@@ -42,17 +58,17 @@ public class Bullet : MonoBehaviour
 
         if (collision.tag == "Enemy")
         {
-            currentDamage = baseDamage + damageIncrease;
-            collision.gameObject.GetComponent<IDamageable>().TakeDamage(currentDamage);
+            //currentDamage = baseDamage + damageIncrease;
+            collision.gameObject.GetComponent<BaseEnemy>().TakeDamage(currentDamage);
 
             
-            if (penetrationAmount == 0)
+            if (currentPenetrationAmount == 0)
             {
                 Destroy(this.gameObject);
             }
             else
             {
-                penetrationAmount -= 1;
+                currentPenetrationAmount -= 1;
             }
             
         }
@@ -64,28 +80,24 @@ public class Bullet : MonoBehaviour
         moveDirection = dir;
     }
 
-    public void UpDamage(int increase)
+    /*public void UpDamage(int increase)
     {
         damageIncrease += increase;
-    }
+        currentDamage += damageIncrease;
+        Debug.Log("Bullet Damage: " + currentDamage);
+    }*/
 
     public void UpSpeed(float increase)
     {
-        moveSpeed += increase;
+        speedIncrease += (int)increase;
+        currentMoveSpeed += speedIncrease;
     }
 
     public void UpPenetration(int increase)
     {
-        penetrationAmount += increase;
+        penetrationAmountIncrease += increase;
+        currentPenetrationAmount += penetrationAmountIncrease;
     }
 
-    public int GetDamage() { return baseDamage + damageIncrease; }
-
-    public void ResetValues()
-    {
-        //Has to be called when the game Ends
-        damageIncrease = 0;
-        speedIncrease = 0;
-        penetrationAmount = 0;
-    }
+    public int GetDamage() { return currentDamage; }
 }

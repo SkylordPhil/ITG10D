@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3175301007005792898}
   - component: {fileID: 4477690845476374707}
   - component: {fileID: 1876257643566620353}
-  - component: {fileID: 2428244031097010346}
+  - component: {fileID: 876665234973743928}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -116,8 +116,29 @@ MonoBehaviour:
   currentMoveSpeed: 0
   currentBulletFront: 1
   currentBulletBack: 0
+  maxRaven: 0
+  currentRavens: 0
+  currentLevel: 0
+  fireDmg: 0
+  fireDmgAmount: 0
+  fireTime: 5
+  firefountain: 0
+  lightning: 0
+  lightningTargets: 2
+  lightningDelay: 3
+  cold: 0
+  coldTime: 10
+  coldEffect: 0.25
+  ice: 0
+  iceMinTime: 5
+  iceMaxTime: 10
+  splinters: 0
+  splintersAnz: 3
+  currentXP: 0
+  neededXP: 50
   baseBullet: {fileID: 1597177022687359600, guid: 449fe90b598de3c46b5ccef2d68a0506, type: 3}
   worldCam: {fileID: 0}
+  raven: {fileID: 5382729539248074216, guid: a95ebe63b90ae7b43b5e0407cdd8831b, type: 3}
   isGamePad: 0
   wah: 
   isInvulnarable: 0
@@ -127,10 +148,41 @@ MonoBehaviour:
   mixerGroup: {fileID: 0}
   playerControlls: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
   allUpgrades:
-  - {fileID: 11400000, guid: 1aaf31e26f3b8514fa3cb82f36095ab1, type: 2}
-  - {fileID: 11400000, guid: 187240064421a224db5477f146ad0fb3, type: 2}
-  - {fileID: 11400000, guid: 5d9b901a12d129b4c876c40c590cbd98, type: 2}
-  - {fileID: 11400000, guid: a5def024bafa495468e3d5a1eab56ad6, type: 2}
+  - {fileID: 11400000, guid: f5a728ab277c23346bdb5c39c639ebcb, type: 2}
+  - {fileID: 11400000, guid: 475250e4177272942bc9a7e40c5a99c4, type: 2}
+  - {fileID: 11400000, guid: 12cdd135794bc2241acb4227896abe39, type: 2}
+  - {fileID: 11400000, guid: c510b1ffc26140d4a911140a58f8de2e, type: 2}
+  - {fileID: 11400000, guid: d5d600abc45405c4f9e333a3193b6ae4, type: 2}
+  - {fileID: 11400000, guid: 46423e2a51463fd4aa8fcaa9c4464d7e, type: 2}
+  - {fileID: 11400000, guid: 902319f8aa652da469d44c59e8e2522d, type: 2}
+  - {fileID: 11400000, guid: a8491f930191bf04bb0f6e2d682ecd49, type: 2}
+  - {fileID: 11400000, guid: 59db7eb515155bf4fbf50f8aa5c17a05, type: 2}
+  - {fileID: 11400000, guid: 019901c7a159c6443a5ce38e5ff3cb28, type: 2}
+  - {fileID: 11400000, guid: 767d9993e7518e443a4ea7f44c4afa42, type: 2}
+  - {fileID: 11400000, guid: bc9220b05941dfa49baf184171982c7a, type: 2}
+  - {fileID: 11400000, guid: ddf5d1c08f4c75042986a8559d0898a9, type: 2}
+  - {fileID: 11400000, guid: cf5158b9fc1ed8b40841f78b9eaca196, type: 2}
+  - {fileID: 11400000, guid: 6bb1c62d5017abd418f024bc2faceb2e, type: 2}
+  - {fileID: 11400000, guid: 3d86adf53d64d5b4da86aaa50adba3e6, type: 2}
+  - {fileID: 11400000, guid: 5e311c36075ac2844bd6048590e322c7, type: 2}
+  - {fileID: 11400000, guid: 3c183ccada83b5140b18114feec684dd, type: 2}
+  - {fileID: 11400000, guid: 486cac844b57542419b87332116b287d, type: 2}
+  - {fileID: 11400000, guid: a8bec4fd5ef71bb429a991d8fac53327, type: 2}
+  - {fileID: 11400000, guid: 455e069164e353345a39fc283b9c8be4, type: 2}
+  - {fileID: 11400000, guid: 5f774a22bc424ae4a9a38bc3763340bd, type: 2}
+  - {fileID: 11400000, guid: ffeb1c32fc3a09f48a39906500dea0d8, type: 2}
+  - {fileID: 11400000, guid: f7a7624a6d43d7940bc3669c693bfb10, type: 2}
+  - {fileID: 11400000, guid: 89d218e3b59f6c845a5554432ff84368, type: 2}
+  - {fileID: 11400000, guid: 33f12979c6f48c84db10416eccbde620, type: 2}
+  - {fileID: 11400000, guid: 87b3437a0e8266042ac87db120e27c10, type: 2}
+  - {fileID: 11400000, guid: 6a302561baba5124397d9bdf1a508554, type: 2}
+  upgradeTrees_amount: 7
+  upgradeSelection:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  upgradeUI: {fileID: 2826092036823305202, guid: 1e41811afbc472340988b609e946283a, type: 3}
+  UI: {fileID: 0}
 --- !u!114 &4477690845476374707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,8 +216,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &2428244031097010346
-BoxCollider2D:
+--- !u!58 &876665234973743928
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -177,19 +229,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.21133333}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: -0.005081713}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.28358495
 --- !u!1001 &2078838583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -203,7 +245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1355061276959780384, guid: 3597e1db48433874f93889f83300b4bf, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4592704468718240482, guid: 3597e1db48433874f93889f83300b4bf, type: 3}
       propertyPath: m_Enabled
@@ -215,11 +257,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6526449413069579901, guid: 3597e1db48433874f93889f83300b4bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.2564526
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6526449413069579901, guid: 3597e1db48433874f93889f83300b4bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.33807117
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6526449413069579901, guid: 3597e1db48433874f93889f83300b4bf, type: 3}
       propertyPath: m_LocalPosition.z

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4015aa7b8e35667499a0c4dda9b9782c, type: 3}
   m_Name: 2_WurfInsBlaue
   m_EditorClassIdentifier: 
-  upgradeName: Wurf ins Blaue
-  description: Spieler wirft eine weitere Axt nach hinten.
+  upgradeName: Throw into the Blue
+  description: +1 Axt thrown Backwards
+  color: {r: 0.5294118, g: 0.49019608, b: 0.49019608, a: 1}
   level: 2
   tree: 2
   bullets_front: 0
@@ -29,8 +30,10 @@ MonoBehaviour:
   raven_amount: 0
   raven_speed: 0
   raven_inventory: 0
+  ravenMagnet: 0
   vulcan: 0
   blitz: 0
+  blitzTargets: 0
   cold: 0
   ice: 0
   splinter: 0

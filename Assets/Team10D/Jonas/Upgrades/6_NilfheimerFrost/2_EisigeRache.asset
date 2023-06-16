@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: 2_EisigeRache
   m_EditorClassIdentifier: 
   upgradeName: Eisige Rache
-  description: Stirbt ein eingefrorenes Monster, setzt dieses Eissplinter frei.
+  description: 
+  color: {r: 0, g: 0.3529412, b: 1, a: 1}
   level: 2
   tree: 6
   bullets_front: 0
@@ -29,8 +30,10 @@ MonoBehaviour:
   raven_amount: 0
   raven_speed: 0
   raven_inventory: 0
+  ravenMagnet: 0
   vulcan: 0
   blitz: 0
+  blitzTargets: 0
   cold: 0
-  ice: 1
-  splinter: 1
+  ice: 0
+  splinter: 0

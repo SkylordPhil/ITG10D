@@ -22,7 +22,7 @@ MonoBehaviour:
   bullet_damage: 0
   bullets_speed: 2
   bullet_penetration: 1
-  speed: 0
+  speed: 1
   fire_rate: 2
   health: 0
   fire: 0

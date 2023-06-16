@@ -14,128 +14,117 @@ using static UnityEditor.Progress;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
-
-    [Space(30)]
     [Header("Health")]
-    [ContextMenuItem("Damage The Player","DebugTakeDamage")]
+    //[ContextMenuItem("Damage The Player","DebugTakeDamage")]
     [SerializeField] public int currentHealth;
     [SerializeField] public int currentMaxHealth;
-    
-    [Space(30)]
-    [Header("Raw Player Stats", order = 0)]
-    [SerializeField] private float rawMoveSpeed = 5f;
     [SerializeField] private int rawHealth = 3;
-    [SerializeField] private float rawAttackSpeed = 1f;
-    [SerializeField] private float invulnarableTime = 1f;
-    //private bool baseAttack = true;
 
-    [Space(30)]
-    [Header("Current Base Stats")]
-    [SerializeField] private float baseMoveSpeed;
-    [SerializeField] private int baseHealth;
-    [SerializeField] private float baseAttackSpeed;
-
-    [Space(30)]
-    [Header("Stat increments")]
-    [SerializeField] private float moveSpeedIncrease = 1f;
-    [ContextMenuItem("Increase Attack Speed by 20%", "DebugMoreAttackSpeed")]
-    [SerializeField] private float attackSpeedIncrease = 1f;
-
-    [Space(30)]
-    [Header("Current Stats")]
-    [SerializeField] private float currentAttackSpeed;
+    [Header("Movement Speed")]
     [SerializeField] private float currentMoveSpeed;
+    [SerializeField] private float moveSpeedIncrease = 1f;
+    [SerializeField] private float rawMoveSpeed = 5f;
+
+    [Header("Attack Speed")]
+    [SerializeField] private float rawAttackSpeed = 1f;
+    [SerializeField] private float attackSpeedIncrease = 1f;
+    [SerializeField] private float currentAttackSpeed;
+
+    [Header("Level")]
+    public int currentLevel;
+    public int currentXP;
+    public int neededXP;
+
+    [Header("Invulnarability")]
+    [SerializeField] private float invulnarableTime = 1f;
+    [SerializeField] private bool isInvulnarable;
+
+    [Header("Bullets")]
     [SerializeField] private int currentBulletFront;
     [SerializeField] private int currentBulletBack;
+    [Space(5)]
+    [SerializeField] public int currentDamage;
+    private int baseDamage = 3;
+    private int damageIncrease;
+
+    [Header("Attack Cooldown")]
+    private bool attackCD;
+    private bool attackIsPressed;
+    private bool specialAttackCD;
+    private bool specialIsPressed;
+
+    [Header("Raven")]
     [SerializeField] private int maxRaven;
     [SerializeField] private int currentRavens;
-    public int currentLevel;
-
-    [Space(30)]
+    
     [Header("Abilities")]
     public bool fireDmg = false;
     public float fireDmgAmount;
     public float fireTime = 5f;
-
+    [Space(5)]
     public bool firefountain = false;
-
+    [Space(5)]
     public bool lightning = false;
-    public int lightningTargets = 2;
-    public float lightningDelay = 3;
-    
+    public int lightningTargets = 1;
+    public float lightningDelay = 10;
+    [Space(5)]
     public bool cold = false;
     public float coldTime = 10;
-    public float coldEffect = 0.25f;
-
+    public float coldEffect = 0.5f;
+    [Space(5)]
     public bool ice = false;
     public float iceMinTime = 5;
     public float iceMaxTime = 10;
-
+    [Space(5)]
     public bool splinters = false;
     public int splintersAnz = 3;
 
-    [Space(30)]
-    [Header("LevelProgress")]
-    [SerializeField] public int currentXP;
-    [SerializeField] public int neededXP;
-
-    [Space(30)]
-    [Header("References")]
-    [SerializeField] private GameObject baseBullet;
-    [SerializeField] private Camera worldCam;
-    [SerializeField] private GameObject raven;
-
-    [Space(30)]
-    [Header("Controls")]
-    [SerializeField] private bool isGamePad;
-    public string wah;
-
-    [Space(30)]
-    [Header("Player Status")]
-    [SerializeField] private bool isInvulnarable;
-
-    [Space(30)]
-    [Header("InputControlls")]
-    [SerializeField] private InputActionAsset controlls;
-    [SerializeField] private InputActionReference moveUp;
-
-
-    [Space(30)]
-    [Header("Debug")]
-    [SerializeField] private AudioClip debugClip;
-    [SerializeField] private UnityEngine.Audio.AudioMixerGroup mixerGroup;
-
-    private bool attackCD;
-    private bool attackIsPressed;
-    private bool specialIsPressed;
-
-    private Vector2 movement;
-    private Vector2 aimVector;
-    
-
-    public  InputActionAsset playerControlls;
-    private CharacterController2D characterController;
-
-    private InputAction attack;
-    private InputAction aimAction;
-    private InputAction openMenuAction;
-
-    //private Dictionary<int, UpgradeScriptableObject> UpgradeDictiorary1 = new Dictionary<int, UpgradeScriptableObject>();
-
-    [Space(30)]
-    [Header("Test_Upgrades")]
+    [Header("Upgrades")]
     [SerializeField] public UpgradeScriptableObject[] allUpgrades;
-
-    private int upgradeTrees_amount = 1;
+    [Space(5)]
+    [SerializeField] private int upgradeTrees_amount = 7;
     private List<UpgradeScriptableObject> selectedUpgrades = new List<UpgradeScriptableObject>();
     private List<UpgradeScriptableObject> choosableUpgrades = new List<UpgradeScriptableObject>();
     public UpgradeScriptableObject[] upgradeSelection = new UpgradeScriptableObject[3];
 
+    [Header("UI-Elements")]
+    public GameObject upgradeUI;
+    [SerializeField] private GameObject UI;
+    private UIScript UserIntContr;
 
+    [Header("References")]
+    [SerializeField] private GameObject baseBullet;
+    [SerializeField] private Camera worldCam;
+    [SerializeField] private GameObject raven;
+    
+    [Header("Controls")]
+    [SerializeField] private bool isGamePad;
+    public string wah;
+    
+    [Header("InputControlls")]
+    [SerializeField] private InputActionAsset controlls;
+    [SerializeField] private InputActionReference moveUp;
+    public InputActionAsset playerControlls;
+    private CharacterController2D characterController;
+
+    [Header("InputActions")]
+    private InputAction attack;
+    private InputAction specialAttack;
+    private InputAction aimAction;
+    private InputAction openMenuAction;
+
+    [Header("Debug")]
+    [SerializeField] private AudioClip debugClip;
+    [SerializeField] private UnityEngine.Audio.AudioMixerGroup mixerGroup;
+
+
+    [Header("Vectors")]
+    private Vector2 movement;
+    private Vector2 aimVector;
+    
     /*[Space(30)]
-    [Header("Special")]
-    [SerializeField] public GameObject[] allSpecials;*/
-
+    [Header("Special")]*/
+    //Not Implemented
     private bool baseSpecialBool = false;
     private bool wurfmeisterSpecialBool = false;
 
@@ -145,12 +134,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool berserkerRage = false;
     private int berserkerNegation = 0;
     private bool wounded = false;
-
-    [Space(30)]
-    [Header("UI-Elements")]
-    public GameObject upgradeUI;
-    [SerializeField] private GameObject UI;
-    private UIScript UserIntContr;
+    
+    
 
     /// <summary>
     /// enables all variables and subscribes the controlls to methods
@@ -161,15 +146,18 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         characterController = GetComponent<CharacterController2D>();
         attack = playerControlls.FindAction("shoot");
+        specialAttack = playerControlls.FindAction("Special");
         aimAction = playerControlls.FindAction("Aim");
         openMenuAction = playerControlls.FindAction("OpenMenu");
         openMenuAction.performed += OpenMenu;
         attack.performed += AttackAction;
+        specialAttack.performed += SpecialAttackAction;
         
 
         TempActions();
-
     }
+
+    
 
     
 
@@ -195,9 +183,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     /// </summary>
     private void SetupStats()
     {
-        currentMaxHealth = baseHealth = currentHealth = rawHealth;
-        currentAttackSpeed = baseAttackSpeed = rawAttackSpeed;
-        currentMoveSpeed = baseMoveSpeed = rawMoveSpeed;
+        currentMaxHealth = currentHealth = rawHealth;
+        currentAttackSpeed = rawAttackSpeed;
+        currentMoveSpeed = rawMoveSpeed;
+        currentDamage = baseDamage;
     }
 
     /// <summary>
@@ -234,27 +223,28 @@ public class PlayerController : MonoBehaviour, IDamageable
             StartCoroutine(AttackTimer());
         }
 
+        if (specialIsPressed && !specialAttackCD)
+        {
+            baseSpecial();
+            StartCoroutine(SpecialAttackTimer());
+        }
+
         if (lightning)
         {
             lightningDelay -= Time.deltaTime;
             if (lightningDelay <= 0)
             {
-                Lightning();
+                for (int i = lightningTargets; i >= 0; i--)
+                {
+                    Lightning();
+                }
                 lightningDelay = 3;
             }
         }
     }
 
-    
-
-    
-
-
-    
-    
 
     #region PlayerInput
-
 
     /// <summary>
     /// Reads movement and aim 2D Vector
@@ -274,6 +264,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void AttackAction(InputAction.CallbackContext ctx)
     {
         attackIsPressed = ctx.control.IsPressed();
+    }
+
+    private void SpecialAttackAction(InputAction.CallbackContext ctx)
+    {
+        specialIsPressed = ctx.control.IsPressed();
     }
 
     private void OpenMenu(InputAction.CallbackContext obj)
@@ -396,20 +391,13 @@ public class PlayerController : MonoBehaviour, IDamageable
             Debug.Log("Blitz");
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-            if (enemies != null)
+            if (enemies != null && enemies.Length >= lightningTargets)
             {
                 int rand = UnityEngine.Random.Range(0, enemies.Length / 2);
-                int rand2 = UnityEngine.Random.Range(rand, enemies.Length / 2) + rand;
 
-                if (rand2 > enemies.Length)
-                {
-                    rand2 = enemies.Length;
-                }
-
-                int dmg = baseBullet.GetComponent<Bullet>().GetDamage();
+                int dmg = currentDamage;
 
                 enemies[rand].GetComponent<IDamageable>().TakeDamage(dmg);
-                enemies[rand2].GetComponent<IDamageable>().TakeDamage(dmg);
             }
         }
     }
@@ -434,6 +422,19 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         }
         attackCD = false;
+    }
+
+    IEnumerator SpecialAttackTimer()
+    {
+        specialAttackCD = true;
+        float time = 60;
+
+        while(time > 0)
+        {
+            time -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        specialAttackCD = false;
     }
 
     #endregion
@@ -485,6 +486,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+    /*
     private void BerserkerSpecial()
     {
         berserkerRage = true;
@@ -508,6 +510,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             }
         }
     }
+    
 
     private void WoundedStatus()
     {
@@ -525,6 +528,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             UpgradeMoveSpeed(-speedDecrease);
         }
     }
+    */
 
     private void RavenSpecial()
     {
@@ -538,18 +542,13 @@ public class PlayerController : MonoBehaviour, IDamageable
             orb.GetComponent<ExperiencePoint>().ravenSpecial = true;
         }
     }
-
-    private void WurfmeisterSpecial()
-    {
-        //Implement Funktion that allowes to use the base Attack as fast as one can click the attack Button
-    }
     #endregion
 
     #region UpgradeSystem
     public void SelectSelectableUpgrades()
     {
         //Bestimmt Anzahl der gewählten Level 2 Upgrades in einem Upgradebaum (entspricht Arraystelle +1)
-        int[] levelTwo = new int[upgradeTrees_amount];
+        int[] levelTwo = new int[upgradeTrees_amount+1];
         if (selectedUpgrades.Count > 0)
         {
             foreach(var item in selectedUpgrades)
@@ -594,6 +593,12 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (item.name == upgrade.name)
                 {
                     choosableUpgrades.Remove(item);
+
+                    Debug.Log("Removed Upgrade: " + item.name);
+                    /*foreach (var i in choosableUpgrades)
+                    {
+                        Debug.Log(i);
+                    }*/
                 }
             }
         }
@@ -666,9 +671,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         UpgradeRavenAmount(obj.raven_amount); //RavenAmountUp
         UpgradeRavenSpeed(obj.raven_speed); //RavenSpeedUp
         UpgradeRavenInventory(obj.raven_inventory); //RavenInventoryUp
+        AktivateRavenMagnet(obj.ravenMagnet);
 
         AktivateVulcano(obj.vulcan);
         AktivatBlitz(obj.blitz);
+        UpgradeBlitzAmount(obj.blitzTargets);
         AktivateCold(obj.cold);
         AktivateIce(obj.ice);
         AktivateSplinter(obj.splinter);
@@ -686,7 +693,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void UpgradeBulletDamage(int increase)
     {
-        baseBullet.GetComponent<Bullet>().UpDamage(increase);
+        //baseBullet.GetComponent<Bullet>().UpDamage(increase);
+        damageIncrease += increase;
+        currentDamage = baseDamage + damageIncrease;
+
     }
 
     public void UpgradeBulletSpeed(float increase) 
@@ -702,13 +712,13 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void UpgradeMoveSpeed(float increase)
     {
         moveSpeedIncrease += increase;
-        currentMoveSpeed = moveSpeedIncrease * baseMoveSpeed;
+        currentMoveSpeed = rawMoveSpeed * moveSpeedIncrease;
     }
 
     public void UpgradeAttackSpeed(float increase)
     {
         attackSpeedIncrease += increase;
-        currentAttackSpeed = attackSpeedIncrease * baseAttackSpeed;
+        currentAttackSpeed = attackSpeedIncrease * rawAttackSpeed;
 
     }
 
@@ -750,6 +760,14 @@ public class PlayerController : MonoBehaviour, IDamageable
         raven.GetComponent<RavenBase>().InventoryUp(increase);
     }
 
+    public void AktivateRavenMagnet(bool aktivate)
+    {
+        if (aktivate)
+        {
+            raven.GetComponent<RavenBase>().EnablePickup();
+        }
+    }
+
     public void AktivateVulcano(bool aktivate)
     {
         if (aktivate)
@@ -764,6 +782,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             lightning = true;
         }
+    }
+
+    public void UpgradeBlitzAmount(int increase)
+    {
+        lightningTargets += increase;
     }
 
     public void AktivateCold(bool aktivate)
@@ -805,9 +828,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         int baseValue = 50;
         int mathLvl = lvl + 1;
-        float power = 1.1f;
+        //float power = 1.1f;
 
-        neededXP = baseValue * (int)Mathf.Pow(mathLvl, power);
+        neededXP = baseValue * mathLvl/*Mathf.Pow(mathLvl, power)*/;
         currentXP = 0;
         currentLevel += 1;
 

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5492504562885550667}
   - component: {fileID: 5492504562885550709}
   - component: {fileID: 4925798731880000499}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -184,6 +184,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slowed
       objectReference: {fileID: 0}
+    - target: {fileID: 6052215750020708673, guid: 21ab1a8f83eb81d44b60007a13fe9947, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 9127676998026799456, guid: 21ab1a8f83eb81d44b60007a13fe9947, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -250,6 +254,10 @@ PrefabInstance:
     - target: {fileID: 996400463351912498, guid: 56f1db1ede7da0c44ad4d7f4d4a1bdde, type: 3}
       propertyPath: m_Name
       value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 996400463351912498, guid: 56f1db1ede7da0c44ad4d7f4d4a1bdde, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4505283470853154821, guid: 56f1db1ede7da0c44ad4d7f4d4a1bdde, type: 3}
       propertyPath: m_RootOrder
@@ -321,6 +329,10 @@ PrefabInstance:
     - target: {fileID: 1005523528359458227, guid: 9584451f57a33ed46b3eb51745f5f564, type: 3}
       propertyPath: m_Name
       value: Ice
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005523528359458227, guid: 9584451f57a33ed46b3eb51745f5f564, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7020811574382907904, guid: 9584451f57a33ed46b3eb51745f5f564, type: 3}
       propertyPath: m_RootOrder

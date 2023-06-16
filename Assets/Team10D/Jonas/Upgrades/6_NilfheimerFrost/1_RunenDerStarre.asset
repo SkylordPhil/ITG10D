@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: 1_RunenDerStarre
   m_EditorClassIdentifier: 
   upgradeName: Runen der Starre
-  description: "Getroffene Monster werden tr\xE4ge."
+  description: Slowes hit Monsters
+  color: {r: 0, g: 0.3510604, b: 1, a: 1}
   level: 1
   tree: 6
   bullets_front: 0
@@ -29,8 +30,10 @@ MonoBehaviour:
   raven_amount: 0
   raven_speed: 0
   raven_inventory: 0
+  ravenMagnet: 0
   vulcan: 0
   blitz: 0
+  blitzTargets: 0
   cold: 1
   ice: 0
   splinter: 0
