@@ -13,8 +13,6 @@ public class GameManagerController : MonoBehaviour
     [SerializeField] private float baseGameStageTime = 10f;
     [SerializeField] private float gameStageInt = 10f;
 
-    public Action NextStageEvent;
-
     private Coroutine coroutine;
 
     private static GameManagerController _instance;
@@ -28,7 +26,6 @@ public class GameManagerController : MonoBehaviour
             return _instance;
         }
     }
-
 
     private void Awake()
     {
@@ -58,7 +55,6 @@ public class GameManagerController : MonoBehaviour
     public void SetPlayer(PlayerController player)
     {
         Player = player;
-        
     }
 
     public Camera GetCamera()
@@ -82,7 +78,6 @@ public class GameManagerController : MonoBehaviour
          coroutine = StartCoroutine(IngameTimer());
     }
 
-
     void Update()
     {
         
@@ -92,26 +87,20 @@ public class GameManagerController : MonoBehaviour
     {
         while(true)
         {
-
             //GameTimer
             ingameTime += Time.deltaTime;
             if (ingameTime > gameStageInt)
             {
                 gameStageInt += baseGameStageTime;
-                NextStageEvent.Invoke();
             }
             yield return new WaitForEndOfFrame();
-
         }
     }
-
 
     //Should be Called when the Game Stage restarts
     private void RestartTimer()
     {
         ingameTime = 0;
         gameStageInt = baseGameStageTime;
-    }
-
-    
+    } 
 }
