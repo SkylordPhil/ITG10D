@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
     private float wavePause = 5f;
     private float gameStageLength = 30f;
 
-    private int baseMaxEnemieHp;
+    [SerializeField] int baseMaxEnemieHp = 10;
     public int currentEnemieHp;
     [SerializeField] private int hpIncrease = 2;
 
@@ -22,6 +22,7 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         baseMaxEnemieHp = Enemy.GetComponent<BaseEnemy>().maxHealth;
+        currentEnemieHp = baseMaxEnemieHp;
         StartCoroutine(SpawnTicks());
 
         /*GameManagerController.Instance.NextStageEvent -= StageUpdate;

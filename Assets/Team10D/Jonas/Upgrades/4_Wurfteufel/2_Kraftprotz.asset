@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: 2_Kraftprotz
   m_EditorClassIdentifier: 
   upgradeName: Muscle man
-  description: 
+  description: +1 Axe Speed
   color: {r: 0.13725491, g: 0.78039217, b: 0.83137256, a: 1}
-  level: 0
-  tree: 0
+  level: 2
+  tree: 4
   bullets_front: 0
   bullets_back: 0
   bullet_damage: 0
-  bullets_speed: 0
+  bullets_speed: 1
   bullet_penetration: 0
   speed: 0
   fire_rate: 0
@@ -37,3 +37,4 @@ MonoBehaviour:
   cold: 0
   ice: 0
   splinter: 0
+  iceHealing: 0
