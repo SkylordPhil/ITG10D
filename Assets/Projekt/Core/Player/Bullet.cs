@@ -7,36 +7,20 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float currentMoveSpeed;
-    private float moveSpeed = 10f;
-    
-
-    [SerializeField] public int currentDamage;
-    //private int baseDamage = 3;
+    [SerializeField] private int currentDamage;
+    [SerializeField] private int currentPenetrationAmount;
 
     [SerializeField] private float lifeTime = 1f;
     private float currentLifeTime = 0;
-
-    [SerializeField] private int currentPenetrationAmount;
-    private int penetrationAmount = 0;
-
     private float lifeTimeIncrease = 0;
-
+    
     private Vector2 moveDirection;
-
-    private int penetrationAmountIncrease = 0;
-    //private int damageIncrease = 0;
-    private int speedIncrease = 0;
 
     public PlayerController Player;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Find Way to Reset Damage and Penetration Increases
-        //currentDamage = baseDamage;
-        currentMoveSpeed = moveSpeed;
-        currentPenetrationAmount = penetrationAmount;
-
         Player = GameManagerController.Instance.getPlayer();
     }
 
@@ -44,6 +28,9 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         currentDamage = Player.currentDamage;
+        currentPenetrationAmount = Player.currentPenetrationAmount;
+        currentMoveSpeed = Player.currentBulletSpeed;
+
         currentLifeTime += Time.deltaTime;
         if(currentLifeTime > lifeTime)
         {
@@ -78,25 +65,6 @@ public class Bullet : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(dir.x, dir.y, 0f);
         moveDirection = dir;
-    }
-
-    /*public void UpDamage(int increase)
-    {
-        damageIncrease += increase;
-        currentDamage += damageIncrease;
-        Debug.Log("Bullet Damage: " + currentDamage);
-    }*/
-
-    public void UpSpeed(float increase)
-    {
-        speedIncrease += (int)increase;
-        currentMoveSpeed += speedIncrease;
-    }
-
-    public void UpPenetration(int increase)
-    {
-        penetrationAmountIncrease += increase;
-        currentPenetrationAmount += penetrationAmountIncrease;
     }
 
     public int GetDamage() { return currentDamage; }

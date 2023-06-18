@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 3_Thorsammer
   m_EditorClassIdentifier: 
   upgradeName: Thorshammer
-  description: 
+  description: +5 Damage, +2 Axe Speed, +1 Axe Penetration
   color: {r: 1, g: 1, b: 1, a: 1}
   level: 3
   tree: 7
@@ -37,3 +37,4 @@ MonoBehaviour:
   cold: 0
   ice: 0
   splinter: 0
+  iceHealing: 0

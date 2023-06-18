@@ -51,5 +51,5 @@ public class UpgradeScriptableObject : ScriptableObject
     public bool ice;
     public bool splinter;
 
-
+    public bool iceHealing;
 }

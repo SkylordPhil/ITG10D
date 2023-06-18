@@ -74,10 +74,7 @@ public class UIScript : MonoBehaviour
             AddMaxHP(max);
         }
 
-        if (current < max)
-        {
-            DamageHP(current, max);
-        }
+        DamageHP(current, max);
     }
 
     private void AddMaxHP(int max)

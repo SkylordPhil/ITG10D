@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4015aa7b8e35667499a0c4dda9b9782c, type: 3}
   m_Name: "3_NilfheimerZ\xE4hne"
   m_EditorClassIdentifier: 
-  upgradeName: "Nilfheimer Z\xE4hne"
+  upgradeName: Nilfheimer Teeth
   description: Defeated Enemys splinter into Ice-Shards
   color: {r: 0, g: 0.3529412, b: 1, a: 1}
   level: 3
@@ -37,3 +37,4 @@ MonoBehaviour:
   cold: 0
   ice: 0
   splinter: 1
+  iceHealing: 0

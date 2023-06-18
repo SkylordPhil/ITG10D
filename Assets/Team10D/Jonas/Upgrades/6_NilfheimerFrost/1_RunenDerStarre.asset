@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4015aa7b8e35667499a0c4dda9b9782c, type: 3}
   m_Name: 1_RunenDerStarre
   m_EditorClassIdentifier: 
-  upgradeName: Runen der Starre
+  upgradeName: Rune of Numbness
   description: Slowes hit Monsters
   color: {r: 0, g: 0.3510604, b: 1, a: 1}
   level: 1
@@ -37,3 +37,4 @@ MonoBehaviour:
   cold: 1
   ice: 0
   splinter: 0
+  iceHealing: 0
