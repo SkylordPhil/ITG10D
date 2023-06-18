@@ -6,6 +6,7 @@ public class BaseEnemy : MonoBehaviour, IDamageable
     public float speed = 2f;
     public float currentSpeed;
     public int maxHealth = 10;
+    public int currentMaxHealth;
     public int currentHealth;
     public int damage = 1;
     private int splinterCount = 0;
@@ -29,18 +30,25 @@ public class BaseEnemy : MonoBehaviour, IDamageable
     [SerializeField] private GameObject MagmaIstance;
 
     public PlayerController Player;
+    public EnemySpawner Spawner;
 
     [SerializeField] private ParticleSystem fireEffect;
     [SerializeField] private ParticleSystem slowedEffect;
     [SerializeField] private ParticleSystem frozenEffect;
+    [SerializeField] public ParticleSystem lightningEffect;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
+        Spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>();
+        currentMaxHealth = Spawner.currentEnemieHp;
+        
+        currentHealth = currentMaxHealth;
         currentSpeed = speed;
         currentTick = fireTick;
+
         Player = GameManagerController.Instance.getPlayer();
+        
     }
 
     // Update is called once per frame
@@ -69,6 +77,10 @@ public class BaseEnemy : MonoBehaviour, IDamageable
 
         if (currentHealth <= 0)
         {
+            if (Player.GetComponent<PlayerController>().iceSpecial)
+            {
+                Player.GetComponent<PlayerController>().enemiesToHealCurrent++;
+            }
             Death();
         }
     }

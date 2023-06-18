@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4015aa7b8e35667499a0c4dda9b9782c, type: 3}
   m_Name: 2_Gletscherfrost
   m_EditorClassIdentifier: 
-  upgradeName: Gletscherfrost
+  upgradeName: Glacial Frost
   description: Freezes hit Monsters
   color: {r: 0, g: 0.3529412, b: 1, a: 1}
   level: 2
@@ -37,3 +37,4 @@ MonoBehaviour:
   cold: 0
   ice: 1
   splinter: 0
+  iceHealing: 0

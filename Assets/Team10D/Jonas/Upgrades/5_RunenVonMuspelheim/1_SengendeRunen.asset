@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1_SengendeRunen
   m_EditorClassIdentifier: 
   upgradeName: Searing Runes
-  description: +3 Fire Damage
+  description: +1 Fire Damage
   color: {r: 1, g: 0.6938923, b: 0, a: 1}
   level: 1
   tree: 5
@@ -26,7 +26,7 @@ MonoBehaviour:
   fire_rate: 0
   health: 0
   fire: 1
-  fire_dmg: 3
+  fire_dmg: 1
   raven_amount: 0
   raven_speed: 0
   raven_inventory: 0
@@ -37,3 +37,4 @@ MonoBehaviour:
   cold: 0
   ice: 0
   splinter: 0
+  iceHealing: 0

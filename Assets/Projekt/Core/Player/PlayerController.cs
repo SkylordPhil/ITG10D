@@ -46,6 +46,14 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] public int currentDamage;
     private int baseDamage = 3;
     private int damageIncrease;
+    [Space(5)]
+    [SerializeField] public int currentPenetrationAmount;
+    private int penetrationAmount = 0;
+    private int penetrationAmountIncrease = 0;
+    [Space(5)]
+    [SerializeField] public float currentBulletSpeed;
+    private float bulletSpeed = 10f;
+    private int bulletSpeedIncrease = 0;
 
     [Header("Attack Cooldown")]
     private bool attackCD;
@@ -56,7 +64,15 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Raven")]
     [SerializeField] private int maxRaven;
     [SerializeField] private int currentRavens;
-    
+    [Space(5)]
+    private float ravenSpeed = 8f;
+    private float ravenSpeedIncrease;
+    public float ravenSpeedCurrent;
+    [Space(5)]
+    private int ravenInventoryLimitBase = 5;
+    public int ravenInventoryLimitCurrent;
+    private int ravenInventoryLimitIncrease;
+
     [Header("Abilities")]
     public bool fireDmg = false;
     public float fireDmgAmount;
@@ -65,8 +81,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     public bool firefountain = false;
     [Space(5)]
     public bool lightning = false;
-    public int lightningTargets = 1;
-    public float lightningDelay = 10;
+    private int lightningTargets = 1;
+    private float lightningDelay = 10;
     [Space(5)]
     public bool cold = false;
     public float coldTime = 10;
@@ -78,6 +94,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Space(5)]
     public bool splinters = false;
     public int splintersAnz = 3;
+    [Space(5)]
+    public bool iceSpecial = false;
+    private int enemiesToHeal = 50;
+    public int enemiesToHealCurrent;
 
     [Header("Upgrades")]
     [SerializeField] public UpgradeScriptableObject[] allUpgrades;
@@ -116,26 +136,24 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Debug")]
     [SerializeField] private AudioClip debugClip;
     [SerializeField] private UnityEngine.Audio.AudioMixerGroup mixerGroup;
-
-
+    
     [Header("Vectors")]
     private Vector2 movement;
     private Vector2 aimVector;
-    
-    /*[Space(30)]
-    [Header("Special")]*/
+
+    /* Auskommentiert da nicht implementiert
+    [Space(30)]
+    [Header("Special")]
     //Not Implemented
     private bool baseSpecialBool = false;
     private bool wurfmeisterSpecialBool = false;
 
-    private int enemiesToHeal = 50;
-    private int enemiesToHealCurrent;
-
     private bool berserkerRage = false;
     private int berserkerNegation = 0;
     private bool wounded = false;
-    
-    
+    */
+
+
 
     /// <summary>
     /// enables all variables and subscribes the controlls to methods
@@ -186,7 +204,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         currentMaxHealth = currentHealth = rawHealth;
         currentAttackSpeed = rawAttackSpeed;
         currentMoveSpeed = rawMoveSpeed;
+
         currentDamage = baseDamage;
+        currentPenetrationAmount = penetrationAmount;
+        currentBulletSpeed = bulletSpeed;
+
+        ravenInventoryLimitCurrent = ravenInventoryLimitBase;
     }
 
     /// <summary>
@@ -204,10 +227,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         playerControlls.Disable();
     }
-    
-    
-    
-    
 
     // Update is called once per frame
     void Update()
@@ -240,6 +259,11 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
                 lightningDelay = 3;
             }
+        }
+
+        if (iceSpecial)
+        {
+            IceSpecial();
         }
     }
 
@@ -394,9 +418,9 @@ public class PlayerController : MonoBehaviour, IDamageable
             if (enemies != null && enemies.Length >= lightningTargets)
             {
                 int rand = UnityEngine.Random.Range(0, enemies.Length / 2);
-
                 int dmg = currentDamage;
 
+                enemies[rand].GetComponent<BaseEnemy>().lightningEffect.Play();
                 enemies[rand].GetComponent<IDamageable>().TakeDamage(dmg);
             }
         }
@@ -469,24 +493,14 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void IceSpecial()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        foreach (var enemie in enemies)
+        if (enemiesToHealCurrent >= enemiesToHeal)
         {
-            if (enemie.GetComponent<BaseEnemy>().frozen == true)
-            {
-                enemie.GetComponent<BaseEnemy>().Death();
-                enemiesToHealCurrent += 1;
-
-                if (enemiesToHealCurrent >= enemiesToHeal)
-                {
-                    currentHealth += 1;
-                }
-            }
+            currentHealth += 1;
+            enemiesToHealCurrent -= enemiesToHeal;
         }
     }
 
-    /*
+    /* Auskommentiert, da noch nicht implementiert
     private void BerserkerSpecial()
     {
         berserkerRage = true;
@@ -528,7 +542,6 @@ public class PlayerController : MonoBehaviour, IDamageable
             UpgradeMoveSpeed(-speedDecrease);
         }
     }
-    */
 
     private void RavenSpecial()
     {
@@ -542,6 +555,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             orb.GetComponent<ExperiencePoint>().ravenSpecial = true;
         }
     }
+    */
     #endregion
 
     #region UpgradeSystem
@@ -655,7 +669,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void UpgradesAktivieren(UpgradeScriptableObject obj)
+    private void UpgradesAktivieren(UpgradeScriptableObject obj)
     {
         UpgradeBulletFront(obj.bullets_front); //BulletFrontUp       
         UpgradeBulletBack(obj.bullets_back); //BulletBackUp
@@ -679,56 +693,57 @@ public class PlayerController : MonoBehaviour, IDamageable
         AktivateCold(obj.cold);
         AktivateIce(obj.ice);
         AktivateSplinter(obj.splinter);
+        AktivateIceSpecial(obj.iceHealing);
     }
 
-    public void UpgradeBulletFront(int increase)
+    private void UpgradeBulletFront(int increase)
     {
         currentBulletFront += increase;
     }
 
-    public void UpgradeBulletBack(int increase)
+    private void UpgradeBulletBack(int increase)
     {
         currentBulletBack += increase;
     }
 
-    public void UpgradeBulletDamage(int increase)
+    private void UpgradeBulletDamage(int increase)
     {
-        //baseBullet.GetComponent<Bullet>().UpDamage(increase);
         damageIncrease += increase;
         currentDamage = baseDamage + damageIncrease;
 
     }
-
-    public void UpgradeBulletSpeed(float increase) 
+    private void UpgradeBulletSpeed(float increase) 
     {
-        baseBullet.GetComponent<Bullet>().UpSpeed(increase);
+        bulletSpeedIncrease += (int)increase;
+        currentBulletSpeed = bulletSpeed + bulletSpeedIncrease;
     }
 
-    public void UpgradeBulletPenetration(int increase)
+    private void UpgradeBulletPenetration(int increase)
     {
-        baseBullet.GetComponent<Bullet>().UpPenetration(increase);
+        penetrationAmountIncrease += increase;
+        currentPenetrationAmount = penetrationAmount + penetrationAmountIncrease;
     }
 
-    public void UpgradeMoveSpeed(float increase)
+    private void UpgradeMoveSpeed(float increase)
     {
         moveSpeedIncrease += increase;
         currentMoveSpeed = rawMoveSpeed * moveSpeedIncrease;
     }
 
-    public void UpgradeAttackSpeed(float increase)
+    private void UpgradeAttackSpeed(float increase)
     {
         attackSpeedIncrease += increase;
         currentAttackSpeed = attackSpeedIncrease * rawAttackSpeed;
 
     }
 
-    public void UpgradeHealth(int increase)
+    private void UpgradeHealth(int increase)
     {
         currentHealth += increase;
         currentMaxHealth += increase;
     }
 
-    public void UpgradeFireDamage(float increase)
+    private void UpgradeFireDamage(float increase)
     {
         if (increase > 0)
         {
@@ -737,7 +752,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void UpgradeRavenAmount(int increase)
+    private void UpgradeRavenAmount(int increase)
     {
         maxRaven += increase;
 
@@ -750,17 +765,19 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void UpgradeRavenSpeed(float increase)
+    private void UpgradeRavenSpeed(float increase)
     {
-        raven.GetComponent<RavenBase>().SpeedUp(increase);
+        ravenSpeedIncrease += increase;
+        ravenSpeedCurrent = ravenSpeed + ravenSpeedIncrease;
     }
 
-    public void UpgradeRavenInventory(int increase)
+    private void UpgradeRavenInventory(int increase)
     {
-        raven.GetComponent<RavenBase>().InventoryUp(increase);
+        ravenInventoryLimitIncrease += increase;
+        ravenInventoryLimitCurrent = ravenInventoryLimitBase + ravenInventoryLimitIncrease;
     }
 
-    public void AktivateRavenMagnet(bool aktivate)
+    private void AktivateRavenMagnet(bool aktivate)
     {
         if (aktivate)
         {
@@ -768,7 +785,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void AktivateVulcano(bool aktivate)
+    private void AktivateVulcano(bool aktivate)
     {
         if (aktivate)
         {
@@ -776,7 +793,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void AktivatBlitz(bool aktivate)
+    private void AktivatBlitz(bool aktivate)
     {
         if (aktivate)
         {
@@ -784,12 +801,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void UpgradeBlitzAmount(int increase)
+    private void UpgradeBlitzAmount(int increase)
     {
         lightningTargets += increase;
     }
 
-    public void AktivateCold(bool aktivate)
+    private void AktivateCold(bool aktivate)
     {
         if (aktivate)
         {
@@ -797,7 +814,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void AktivateIce(bool aktivate)
+    private void AktivateIce(bool aktivate)
     {
         if (aktivate)
         {
@@ -805,11 +822,19 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void AktivateSplinter(bool aktivate)
+    private void AktivateSplinter(bool aktivate)
     {
         if (aktivate)
         {
             splinters = true;
+        }
+    }
+
+    private void AktivateIceSpecial(bool aktivate)
+    {
+        if (aktivate)
+        {
+            iceSpecial = true;
         }
     }
 
@@ -828,9 +853,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         int baseValue = 50;
         int mathLvl = lvl + 1;
-        //float power = 1.1f;
 
-        neededXP = baseValue * mathLvl/*Mathf.Pow(mathLvl, power)*/;
+        neededXP = baseValue * mathLvl;
         currentXP = 0;
         currentLevel += 1;
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1148149438515899345}
   m_Layer: 0
   m_Name: EnemySpawner
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,5 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 5492504562885550671, guid: 1b065753027840e4293b175563e524d8, type: 3}
+  RangedEnemy: {fileID: 0}
   Boss: {fileID: 0}
   gameStage: 1
+  currentEnemieHp: 0
+  hpIncrease: 2

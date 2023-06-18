@@ -14,9 +14,14 @@ public class EnemySpawner : MonoBehaviour
     private float wavePause = 5f;
     private float gameStageLength = 30f;
 
+    private int baseMaxEnemieHp;
+    public int currentEnemieHp;
+    [SerializeField] private int hpIncrease = 2;
+
     // Start is called before the first frame update
     void Start()
     {
+        baseMaxEnemieHp = Enemy.GetComponent<BaseEnemy>().maxHealth;
         StartCoroutine(SpawnTicks());
 
         /*GameManagerController.Instance.NextStageEvent -= StageUpdate;
@@ -92,6 +97,7 @@ public class EnemySpawner : MonoBehaviour
             }
 
             StageUpdate();
+            HpUpdate();
             yield return new WaitForSeconds(wavePause);
             
         }
@@ -108,6 +114,11 @@ public class EnemySpawner : MonoBehaviour
         return groupnumber;
     }
 
+    private void HpUpdate()
+    {
+        Debug.Log("Enemies grow stronger.");
+        currentEnemieHp = baseMaxEnemieHp + hpIncrease;
+    }
 
     private void StageUpdate()
     {

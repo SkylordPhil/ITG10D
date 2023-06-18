@@ -6,12 +6,9 @@ using static UnityEngine.GraphicsBuffer;
 
 public class RavenBase : MonoBehaviour
 {
-    private float speed = 8f;
-    private float speed_increase;
     public float speed_current;
 
-    public int inventory_limit = 15;
-    private int inventory_current;
+    public int inventory_current;
     public int inventory;
 
     private bool returnHome = false;
@@ -19,6 +16,7 @@ public class RavenBase : MonoBehaviour
 
     [SerializeField] private GameObject xpPrefab;
     private GameObject Player;
+    private PlayerController PlayerContr;
     private GameObject[] XpOrb;
     private GameObject TargetOrb;
 
@@ -30,9 +28,10 @@ public class RavenBase : MonoBehaviour
     {
         XpOrb = GameObject.FindGameObjectsWithTag("XP");
         Player = GameObject.FindGameObjectWithTag("Player");
+        PlayerContr = GameManagerController.Instance.getPlayer();
 
-        speed_current = speed;
-        inventory_current = inventory_limit;
+        speed_current = PlayerContr.ravenSpeedCurrent;
+        inventory_current = PlayerContr.ravenInventoryLimitCurrent;
 
         idleTimer = 0;
     }
@@ -42,7 +41,10 @@ public class RavenBase : MonoBehaviour
     {
         XpOrb = GameObject.FindGameObjectsWithTag("XP");
         Player = GameObject.FindGameObjectWithTag("Player");
-        
+
+        speed_current = PlayerContr.ravenSpeedCurrent;
+        inventory_current = PlayerContr.ravenInventoryLimitCurrent;
+
         if (returnHome == false && (XpOrb.Length != 0 || TargetOrb != null))
         {
             CollectXP();
@@ -133,28 +135,8 @@ public class RavenBase : MonoBehaviour
         InventoryCheck();
     }
 
-    public void InventoryUp(int increase)
-    {
-        int inventoryIncrease = increase;
-        inventory_current += inventoryIncrease;
-        Debug.Log("Raven Inventory: " + inventory_current);
-    }
-
-    public void SpeedUp(float increase)
-    {
-        speed_increase = increase;
-        speed_current += speed_increase;
-    }
-
     public void EnablePickup()
     {
         pickup = true;
-    }
-
-    public void ResetValues()
-    {
-        //Has to be called when the game Ends
-        inventory_current = inventory_limit;
-        speed_increase = 0;
     }
 }
