@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4477690845476374707}
   - component: {fileID: 1876257643566620353}
   - component: {fileID: 876665234973743928}
+  - component: {fileID: 6713731210351988667}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 183a94cef7dd52349837c562a1c9949d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,29 +104,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   currentMaxHealth: 0
-  rawMoveSpeed: 5
   rawHealth: 3
-  rawAttackSpeed: 1
-  invulnarableTime: 1
-  baseMoveSpeed: 0
-  baseHealth: 3
-  baseAttackSpeed: 0
+  currentMoveSpeed: 0
   moveSpeedIncrease: 1
+  rawMoveSpeed: 5
+  rawAttackSpeed: 1
   attackSpeedIncrease: 1
   currentAttackSpeed: 0
-  currentMoveSpeed: 0
+  currentLevel: 0
+  currentXP: 0
+  neededXP: 50
+  invulnarableTime: 1
+  isInvulnarable: 0
   currentBulletFront: 1
   currentBulletBack: 0
+  currentDamage: 0
+  currentPenetrationAmount: 0
+  currentBulletSpeed: 0
   maxRaven: 0
   currentRavens: 0
-  currentLevel: 0
+  ravenSpeedCurrent: 0
+  ravenInventoryLimitCurrent: 0
   fireDmg: 0
   fireDmgAmount: 0
   fireTime: 5
   firefountain: 0
   lightning: 0
-  lightningTargets: 2
-  lightningDelay: 3
   cold: 0
   coldTime: 10
   coldEffect: 0.25
@@ -134,19 +138,8 @@ MonoBehaviour:
   iceMaxTime: 10
   splinters: 0
   splintersAnz: 3
-  currentXP: 0
-  neededXP: 50
-  baseBullet: {fileID: 1597177022687359600, guid: 449fe90b598de3c46b5ccef2d68a0506, type: 3}
-  worldCam: {fileID: 0}
-  raven: {fileID: 5382729539248074216, guid: a95ebe63b90ae7b43b5e0407cdd8831b, type: 3}
-  isGamePad: 0
-  wah: 
-  isInvulnarable: 0
-  controlls: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
-  moveUp: {fileID: 3484527343945375709, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
-  debugClip: {fileID: 0}
-  mixerGroup: {fileID: 0}
-  playerControlls: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
+  iceSpecial: 0
+  enemiesToHealCurrent: 0
   allUpgrades:
   - {fileID: 11400000, guid: f5a728ab277c23346bdb5c39c639ebcb, type: 2}
   - {fileID: 11400000, guid: 475250e4177272942bc9a7e40c5a99c4, type: 2}
@@ -183,6 +176,16 @@ MonoBehaviour:
   - {fileID: 0}
   upgradeUI: {fileID: 2826092036823305202, guid: 1e41811afbc472340988b609e946283a, type: 3}
   UI: {fileID: 0}
+  baseBullet: {fileID: 1597177022687359600, guid: 449fe90b598de3c46b5ccef2d68a0506, type: 3}
+  worldCam: {fileID: 0}
+  raven: {fileID: 5382729539248074216, guid: a95ebe63b90ae7b43b5e0407cdd8831b, type: 3}
+  isGamePad: 0
+  wah: 
+  controlls: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
+  moveUp: {fileID: 3484527343945375709, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
+  playerControlls: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
+  debugClip: {fileID: 0}
+  mixerGroup: {fileID: 0}
 --- !u!114 &4477690845476374707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,6 +235,26 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.005081713}
   serializedVersion: 2
   m_Radius: 0.28358495
+--- !u!95 &6713731210351988667
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4312246878855048460}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fa206aaee70d80f4c8b6a8086585ba3f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2078838583
 PrefabInstance:
   m_ObjectHideFlags: 0
