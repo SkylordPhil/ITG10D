@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 2_Zorn
   m_EditorClassIdentifier: 
   upgradeName: Rage
-  description: +3 Damage, +3 Penetration, +25% Throwing Rate
+  description: +1 Axe Penetration, +3 Axe Damage, +25% Throwing Speed
   color: {r: 1, g: 0, b: 0, a: 1}
   level: 2
   tree: 3
@@ -37,3 +37,4 @@ MonoBehaviour:
   cold: 0
   ice: 0
   splinter: 0
+  iceHealing: 0

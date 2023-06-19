@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Space(5)]
     public bool cold = false;
     public float coldTime = 10;
-    public float coldEffect = 0.5f;
+    public float coldEffect = 1f;
     [Space(5)]
     public bool ice = false;
     public float iceMinTime = 5;

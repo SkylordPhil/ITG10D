@@ -37,3 +37,4 @@ MonoBehaviour:
   cold: 0
   ice: 0
   splinter: 0
+  iceHealing: 0
