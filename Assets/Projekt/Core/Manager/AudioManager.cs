@@ -38,6 +38,8 @@ public class AudioManager : MonoBehaviour
 
             Debug.Log(audioValuesJson);
 
+            Debug.Log(JsonConvert.DeserializeObject<Dictionary<string, float>>(audioValuesJson));
+
             Dictionary<string, float> volumeValues = JsonConvert.DeserializeObject<Dictionary<string, float>>(audioValuesJson);
 
             foreach (KeyValuePair<string, float> volumeValue in volumeValues)
@@ -72,11 +74,8 @@ public class AudioManager : MonoBehaviour
         //Serializes the dictionary to a json
         string volumesJson = JsonConvert.SerializeObject(volumeValues, Formatting.Indented);
 
-        Debug.Log(volumesJson);
-
         PlayerPrefs.SetString("audioVolumeValues", volumesJson);
 
-        Debug.Log("Saved Audio Settings");
     }
 
     public static AudioManager GetInstance()

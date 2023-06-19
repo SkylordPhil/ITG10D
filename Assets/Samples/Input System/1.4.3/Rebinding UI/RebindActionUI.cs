@@ -238,8 +238,6 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         /// </summary>
         public void StartInteractiveRebind()
         {
-            Debug.Log("RebindStarted");
-
             if (!ResolveActionAndBinding(out var action, out var bindingIndex))
                 return;
 

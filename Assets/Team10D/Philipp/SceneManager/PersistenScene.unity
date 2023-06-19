@@ -183,6 +183,26 @@ PrefabInstance:
       propertyPath: tmp
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2732807976989013315, guid: d1be000e5ab6e7c42850782848291649, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2732807976989013315, guid: d1be000e5ab6e7c42850782848291649, type: 3}
+      propertyPath: m_Volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2732807976989013315, guid: d1be000e5ab6e7c42850782848291649, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 81cd7be434a17734b8e80b2b75ba88c4, type: 3}
+    - target: {fileID: 2732807976989013315, guid: d1be000e5ab6e7c42850782848291649, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2732807976989013315, guid: d1be000e5ab6e7c42850782848291649, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 2432712713503445981, guid: c31b504135249c245a5f07e9795258d6, type: 2}
     - target: {fileID: 6130854783618868132, guid: d1be000e5ab6e7c42850782848291649, type: 3}
       propertyPath: m_Name
       value: AudioManager
