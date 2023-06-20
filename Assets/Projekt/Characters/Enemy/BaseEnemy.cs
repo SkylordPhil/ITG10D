@@ -48,7 +48,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable
         currentTick = fireTick;
 
         Player = GameManagerController.Instance.getPlayer();
-        
     }
 
     // Update is called once per frame
@@ -241,7 +240,6 @@ public class BaseEnemy : MonoBehaviour, IDamageable
                 fire = false;
                 fireEffect.Stop();
             }
-        }
-        
+        } 
     }
 }
