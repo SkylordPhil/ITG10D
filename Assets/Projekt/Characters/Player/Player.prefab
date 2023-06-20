@@ -179,6 +179,7 @@ MonoBehaviour:
   baseBullet: {fileID: 1597177022687359600, guid: 449fe90b598de3c46b5ccef2d68a0506, type: 3}
   worldCam: {fileID: 0}
   raven: {fileID: 5382729539248074216, guid: a95ebe63b90ae7b43b5e0407cdd8831b, type: 3}
+  playerSprite: {fileID: 1997530710173118638}
   isGamePad: 0
   wah: 
   controlls: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
