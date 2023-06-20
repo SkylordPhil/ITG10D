@@ -110,6 +110,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("UI-Elements")]
     public GameObject upgradeUI;
     [SerializeField] private GameObject UI;
+    [SerializeField] private UIScript uiscriptelement;
     private UIScript UserIntContr;
 
     [Header("References")]
@@ -170,6 +171,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         openMenuAction.performed += OpenMenu;
         attack.performed += AttackAction;
         specialAttack.performed += SpecialAttackAction;
+        specialAttack.canceled += SpecialAttackAction;
+
         
 
         TempActions();
@@ -451,13 +454,16 @@ public class PlayerController : MonoBehaviour, IDamageable
     IEnumerator SpecialAttackTimer()
     {
         specialAttackCD = true;
-        float time = 60;
+        uiscriptelement.ChangeSpecialCooldownVisibility();
+        float time = 30;
 
         while(time > 0)
         {
             time -= Time.deltaTime;
+            uiscriptelement.ChangeCooldownTime(MathF.Round(time));
             yield return new WaitForEndOfFrame();
         }
+        uiscriptelement.ChangeSpecialCooldownVisibility();
         specialAttackCD = false;
     }
 
