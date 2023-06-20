@@ -11,18 +11,16 @@ using UnityEngine.UI;
 public class UIScript : MonoBehaviour
 {
     private float time;
-    private float score = 0;
     private GameObject player;
 
-    public GameObject userInterface;
     public GameObject timeDisplay;
-    public GameObject scoreDisplay;
     public GameObject levelDisplay;
     public GameObject levelProgress;
     public GameObject HealthPoint;
+    [SerializeField] private GameObject specialCooldown;
+    [SerializeField] private TextMeshProUGUI specialCooldownText;
 
     TextMeshProUGUI time_text;
-    TextMeshProUGUI score_text;
     TextMeshProUGUI level_text;
 
     private int number = 0;
@@ -33,7 +31,6 @@ public class UIScript : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         time_text = timeDisplay.GetComponent<TextMeshProUGUI>();
-        score_text = scoreDisplay.GetComponent<TextMeshProUGUI>();
         level_text = levelDisplay.GetComponent<TextMeshProUGUI>();
     }
 
@@ -50,7 +47,6 @@ public class UIScript : MonoBehaviour
         UpdateLevelProgress(currentXP, neededXP);
         UpdateHP(currentHP, maxHP);
         Timer();
-        ScoreCounter();
     }
 
     private void UpdateLevel(int lvl)
@@ -130,8 +126,20 @@ public class UIScript : MonoBehaviour
         time_text.text = string.Format("{0}:{1}", minutes, seconds);
     }
 
-    private void ScoreCounter()
+    public void ChangeSpecialCooldownVisibility()
     {
-       score_text.text = score.ToString();
+        if (specialCooldown.activeSelf)
+        {
+            specialCooldown.SetActive(false);
+        }
+        else
+        {
+            specialCooldown.SetActive(true);
+        }
+    }
+
+    public void ChangeCooldownTime(float currentCooldown)
+    {
+        specialCooldownText.text = currentCooldown.ToString();
     }
 }
