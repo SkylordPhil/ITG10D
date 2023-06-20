@@ -31,6 +31,7 @@ public class LevelManager : MonoBehaviour
             return;
         }
         _instance = this;
+        SceneManager.LoadSceneAsync("MainMenuScene", LoadSceneMode.Additive);
     }
 
 
@@ -71,7 +72,7 @@ public class LevelManager : MonoBehaviour
     {
         CameraController.Instance.isIngame = true;
         GameManagerController.Instance.Player.gameObject.SetActive(true);
-        //pauses the update logic
+        //resumes the update logic
         Time.timeScale = 1;
         SceneManager.UnloadSceneAsync("IngameMenuScene");
     }
