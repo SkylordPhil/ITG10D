@@ -176,6 +176,7 @@ MonoBehaviour:
   - {fileID: 0}
   upgradeUI: {fileID: 2826092036823305202, guid: 1e41811afbc472340988b609e946283a, type: 3}
   UI: {fileID: 0}
+  uiscriptelement: {fileID: 0}
   baseBullet: {fileID: 1597177022687359600, guid: 449fe90b598de3c46b5ccef2d68a0506, type: 3}
   worldCam: {fileID: 0}
   raven: {fileID: 5382729539248074216, guid: a95ebe63b90ae7b43b5e0407cdd8831b, type: 3}
@@ -185,8 +186,8 @@ MonoBehaviour:
   controlls: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
   moveUp: {fileID: 3484527343945375709, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
   playerControlls: {fileID: -944628639613478452, guid: ef624f03b2d013a498bdc5a215b94a2b, type: 3}
-  debugClip: {fileID: 0}
-  mixerGroup: {fileID: 0}
+  debugClip: {fileID: 8300000, guid: f7fc2f167a30cef429921ecac18fbfc1, type: 3}
+  mixerGroup: {fileID: -1346776902878787221, guid: c31b504135249c245a5f07e9795258d6, type: 2}
 --- !u!114 &4477690845476374707
 MonoBehaviour:
   m_ObjectHideFlags: 0

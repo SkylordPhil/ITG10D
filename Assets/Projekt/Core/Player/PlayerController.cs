@@ -292,6 +292,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void OpenMenu(InputAction.CallbackContext obj)
     {
         LevelManager.instance.LoadMenu();
+        attackCD = false;
     }
 
 
