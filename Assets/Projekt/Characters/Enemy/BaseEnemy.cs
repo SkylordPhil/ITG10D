@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour, IDamageable
 {
+    [SerializeField] private SpriteRenderer enemySprite;
+
     public float speed = 2f;
     public float currentSpeed;
     public int maxHealth = 10;
@@ -61,6 +63,15 @@ public class BaseEnemy : MonoBehaviour, IDamageable
         if (Vector2.Distance(Playerposition.position, transform.position) > 1.0f)
         {
             transform.position += (displacement * currentSpeed * Time.deltaTime);
+
+            if (displacement.x > 0)
+            {
+                enemySprite.flipX = true;
+            }
+            else if (displacement.x < 0)
+            {
+                enemySprite.flipX = false;
+            }
         }
 
         if (slowed || frozen || fire)

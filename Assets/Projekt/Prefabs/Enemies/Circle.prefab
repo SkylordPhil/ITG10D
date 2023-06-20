@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5492504562885550667}
   - component: {fileID: 5492504562885550709}
   - component: {fileID: 4925798731880000499}
+  - component: {fileID: 6285851570999891900}
   m_Layer: 6
   m_Name: Circle
   m_TagString: Enemy
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5492504562885550671}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.9679737, y: -0.02033639, z: 0}
+  m_LocalPosition: {x: -5.131, y: 0.632, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -81,8 +82,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: -2413806693520163455, guid: 348e5bee68d642d4997f4eef142a9193, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.053825855, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 35a152ff15b307f42aa4bc1150f5c9e5, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -105,7 +106,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.25}
   serializedVersion: 2
   m_Radius: 0.5
 --- !u!114 &5492504562885550667
@@ -120,9 +121,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c2b3f2beff390a4f80de0bff39673cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySprite: {fileID: 5492504562885550665}
   speed: 2
   currentSpeed: 0
   maxHealth: 10
+  currentMaxHealth: 0
   currentHealth: 0
   damage: 1
   frozen: 0
@@ -130,6 +133,7 @@ MonoBehaviour:
   baseBullet: {fileID: 1597177022687359600, guid: 449fe90b598de3c46b5ccef2d68a0506, type: 3}
   MagmaIstance: {fileID: 6759572260524808874, guid: 61ebb06514bfb084a94b4b7d47a22bb0, type: 3}
   Player: {fileID: 0}
+  Spawner: {fileID: 0}
   fireEffect: {fileID: 8499123445697739948}
   slowedEffect: {fileID: 4423763028537506040}
   frozenEffect: {fileID: 2669194115142721073}
@@ -146,7 +150,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7853982
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -168,9 +172,29 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.25}
   serializedVersion: 2
   m_Radius: 0.52
+--- !u!95 &6285851570999891900
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5492504562885550671}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f24865deef552c74ebc8a41b57bd56b3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &182558294334111000
 PrefabInstance:
   m_ObjectHideFlags: 0
