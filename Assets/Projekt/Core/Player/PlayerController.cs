@@ -116,7 +116,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private GameObject baseBullet;
     [SerializeField] private Camera worldCam;
     [SerializeField] private GameObject raven;
-    [SerializeField] private SpriteRenderer playerSprite;
     
     [Header("Controls")]
     [SerializeField] private bool isGamePad;
@@ -154,6 +153,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool wounded = false;
     */
 
+
+
     /// <summary>
     /// enables all variables and subscribes the controlls to methods
     /// </summary>
@@ -170,8 +171,13 @@ public class PlayerController : MonoBehaviour, IDamageable
         attack.performed += AttackAction;
         specialAttack.performed += SpecialAttackAction;
         
+
         TempActions();
     }
+
+    
+
+    
 
     private void Start()
     {
@@ -187,6 +193,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         worldCam = FindObjectOfType<Camera>();
     }
+
+
 
     /// <summary>
     /// Assigns base/current stats to their rawValues
@@ -223,6 +231,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+
         HandleInput();
         HandleMovement();
         CheckLvl();
@@ -351,14 +360,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         characterController.Move(move * Time.deltaTime * currentMoveSpeed);
 
-        if (movement.x > 0)
-        {
-            playerSprite.flipX = true;
-        }
-        else if (movement.x < 0)
-        {
-            playerSprite.flipX = false;
-        }
     }
 
     #endregion

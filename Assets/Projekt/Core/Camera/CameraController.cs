@@ -14,15 +14,16 @@ public class CameraController : MonoBehaviour
 
     private static CameraController _instance;
 
+
     // Update is called once per frame
     void Update()
     {
         player = GameManagerController.Instance.getPlayer();
-
         if (isFollowing && isIngame && player != null)
         {
             player = GameManagerController.Instance.getPlayer();
             transform.Translate(((Vector2)player.transform.position - (Vector2)transform.position) * Time.deltaTime * cameraSpeed);
+        
         }
         
     }
@@ -52,6 +53,9 @@ public class CameraController : MonoBehaviour
         _instance = this;
     }
 
+
+
+
     public static CameraController Instance
     {
         get
@@ -63,4 +67,7 @@ public class CameraController : MonoBehaviour
             return _instance;
         }
     }
+
+
+
 }
