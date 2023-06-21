@@ -86,6 +86,7 @@ public class EnemySpawner : MonoBehaviour
 
                 int maxAmount = 4;
                 int randEnemyNumb = Random.Range(1 + (gameStage/2), maxAmount + Random.Range(0, gameStage));
+
                 for (int x = 0; x <= randEnemyNumb; x++)
                 {
                     Vector3 spawnPosition = spawnCircle + (Vector3)Random.insideUnitCircle.normalized * 2;

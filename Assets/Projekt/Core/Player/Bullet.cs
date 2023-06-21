@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentDamage = Player.currentDamage;
+        currentDamage = Player.currentDamage;w
         currentPenetrationAmount = Player.currentPenetrationAmount;
         currentMoveSpeed = Player.currentBulletSpeed;
 
