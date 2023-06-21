@@ -911,6 +911,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 767e87befcce48a4da8a36217d42eea9, type: 3}
+--- !u!114 &53228768 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2070010881949171220, guid: 767e87befcce48a4da8a36217d42eea9, type: 3}
+  m_PrefabInstance: {fileID: 53228767}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea04494a3b21bb3489db425e12528ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &53228769 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7607433836826874304, guid: 767e87befcce48a4da8a36217d42eea9, type: 3}
@@ -6517,7 +6528,7 @@ PrefabInstance:
     - target: {fileID: 3175301007005792898, guid: 5a30a762932830a4892f3836862d05a4, type: 3}
       propertyPath: uiscriptelement
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 53228768}
     - target: {fileID: 3175301007005792898, guid: 5a30a762932830a4892f3836862d05a4, type: 3}
       propertyPath: allSpecials.Array.size
       value: 10
