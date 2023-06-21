@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070010881949171217, guid: 767e87befcce48a4da8a36217d42eea9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2070010881949171220, guid: 767e87befcce48a4da8a36217d42eea9, type: 3}
       propertyPath: specialCooldown
@@ -236,7 +236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070010883259199754, guid: 767e87befcce48a4da8a36217d42eea9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 767e87befcce48a4da8a36217d42eea9, type: 3}
