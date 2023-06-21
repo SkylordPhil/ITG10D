@@ -100,7 +100,6 @@ public class EnemySpawner : MonoBehaviour
             StageUpdate();
             HpUpdate();
             yield return new WaitForSeconds(wavePause);
-            
         }
     }
 

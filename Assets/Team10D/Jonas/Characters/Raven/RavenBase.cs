@@ -15,6 +15,7 @@ public class RavenBase : MonoBehaviour
     public bool pickup;
 
     [SerializeField] private GameObject xpPrefab;
+    [SerializeField] private SpriteRenderer _sprite;
     private GameObject Player;
     private PlayerController PlayerContr;
     private GameObject[] XpOrb;
@@ -68,8 +69,14 @@ public class RavenBase : MonoBehaviour
     }
 
     private void Move(GameObject destinationObject)
-    { 
+    {
+        Vector3 direction = destinationObject.transform.position - transform.position;
         transform.position = Vector2.MoveTowards(transform.position, destinationObject.transform.position, speed_current * Time.deltaTime);
+        if(direction.x < 0)
+        {
+            _sprite.flipX = true;
+        }
+        else { _sprite.flipX = false; }
     }
 
     private void CollectXP()

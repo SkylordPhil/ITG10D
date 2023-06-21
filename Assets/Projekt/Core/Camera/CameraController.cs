@@ -24,7 +24,6 @@ public class CameraController : MonoBehaviour
             player = GameManagerController.Instance.getPlayer();
             transform.Translate(((Vector2)player.transform.position - (Vector2)transform.position) * Time.deltaTime * cameraSpeed);
         }
-        
     }
 
     void Start()
